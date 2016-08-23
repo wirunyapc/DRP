@@ -1,0 +1,120 @@
+<div class="row">
+    <table class="brpbar">
+        <tr>
+            <th style="background-color: #C0C0C0">
+                BMI : {{vm.detail.bmi}}
+            </th>
+            <th style="background-color: #A4C8F0">
+                Budget : {{vm.detail.budget}}
+            </th>
+            <th style="background-color: #FFDDDD">
+                Diet : {{vm.detail.diet}}
+            </th>
+            <th style="background-color: #F4EFAF">
+                Activity : {{vm.detail.activity}}
+            </th>
+            <th style="background-color: #D0B3E1">
+                Net : {{vm.detail.net}}
+            </th>
+            <th style="background-color: #B9E3AE">
+                Under : {{vm.detail.under}}
+            </th>
+        </tr>
+    </table>
+</div>
+<div class="row" style="margin-top: 30px">
+    <div class="col-md-5 col-md-offset-1">
+    <calendar-md flex layout layout-fill
+                 calendar-direction="direction"
+                 on-prev-month="prevMonth"
+                 on-next-month="nextMonth"
+                 on-day-click="dayClick"
+                 title-format="'MMMM y'"
+                 ng-model='selectedDate'
+                 day-format="'d'"
+                 day-label-format="'EEE'"
+                 day-label-tooltip-format="'EEEE'"
+                 day-tooltip-format="'fullDate'"
+                 week-starts-on="firstDayOfWeek"
+                 day-content="setDayContent"></calendar-md>
+    </div>
+    <div class="col-md-5">
+        <table class="table table-hover" width="100%">
+            <thead>
+            <tr>
+                <th>Brakefast
+                    <span class="pull-right">Total:</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    food will repeat for each
+                    <span class="pull-right glyphicon glyphicon-remove-circle"></span>
+                    <span class="pull-right glyphicon glyphicon-edit"></span>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>
+                    <span class="pull-right">Add More</span>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+        <table class="table table-hover" width="100%">
+            <thead>
+            <tr>
+                <th>Lunch
+                    <span class="pull-right">Total:</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    food will repeat for each
+                    <span class="pull-right glyphicon glyphicon-remove-circle"></span>
+                    <span class="pull-right glyphicon glyphicon-edit"></span>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>
+                    <span class="pull-right">Add More</span>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+        <table class="table table-hover" width="100%">
+            <thead>
+            <tr>
+                <th>Dinner
+                    <span class="pull-right">Total:</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        food will repeat for each
+                        <span class="pull-right glyphicon glyphicon-remove-circle"></span>
+                        <span class="pull-right glyphicon glyphicon-edit"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>
+                    <span class="pull-right">Add More</span>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+

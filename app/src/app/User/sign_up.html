@@ -1,0 +1,77 @@
+<div ng-controller="ModalRegisterController as vm">
+  <p ng-click="vm.open()" style="color: #9acfea">Sign-Up |&nbsp;</p>
+  <script type="text/ng-template" id="sign_up.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Sign Up!</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.ok()">
+        <div class="form-group">
+          <label for="username"> Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter Username" ng-model="vm.user.username"
+                 required maxlength="18" minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password" ng-model="vm.user.password"
+                required minlength="6" maxlength="18">
+        </div>
+        <div class="form-group">
+          <label for="con-password">Confirm Password</label>
+          <input type="password" class="form-control" id="con-password" placeholder="Re-Enter password" ng-model="vm.confirmPassword"
+                 required minlength="6" maxlength="18">
+        </div>
+        <div class="form-group">
+          <label for="email"> E-mail</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter E-mail" ng-model="vm.user.email"
+              required>
+        </div>
+        <div class="form-group form-inline">
+          <label for="FirstName"> First-Name</label>
+          <input type="text" class="form-control" id="FirstName" placeholder="Enter your name" ng-model="vm.user.name"
+                 required>
+          <label for="LastName"> Last-Name</label>
+          <input type="text" class="form-control" id="LastName" placeholder="Enter your last-name" ng-model="vm.user.lastName"
+                 required>
+        </div>
+        <div class="checkbox">Gender:
+          <label>Male : <input type="radio" value="male" name="Gender" ng-model="vm.user.gender" required>
+            Female : <input type="radio" value="female" name="Gender" ng-model="vm.user.gender"></label>
+        </div>
+        <div class="checkbox">Mode:
+          <label>Member : <input type="radio" value="member" name="Role" ng-model="vm.role" required>
+                Patient : <input type="radio" value="patient" name="Role" ng-model="vm.role"></label>
+        </div>
+
+        <div class="form-group">
+          <label for="dob"> Date Of Birth</label>
+          <input type="date" class="form-control" id="dob" placeholder="Enter date of birth" ng-model="vm.user.dob"
+          required>
+        </div>
+        <div class="form-group">
+          <label for="weight"> Weight</label>
+          <input type="number" class="form-control" id="weight" placeholder="Enter Weight in Kg." ng-model="vm.user.weight"
+          required>
+        </div>
+        <div class="form-group">
+          <label for="height"> Height</label>
+          <input type="number" class="form-control" id="height" placeholder="Enter Height in cm." ng-model="vm.user.height"
+          required>
+        </div>
+        <div class="form-group">
+          <label for="duration"> Duration</label>
+          <input type="number" class="form-control" id="duration" placeholder="Enter duration" ng-model="vm.user.duration"
+          required>
+        </div>
+        <div class="form-group" style="width: 100%">
+            <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Sign-up</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+  </script>
+
+</div>
+

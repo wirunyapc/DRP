@@ -1,0 +1,30 @@
+# Server
+server:
+    port: 8080
+# H2 Web Console (H2ConsoleProperties)
+spring:
+  h2:
+    console:
+      enabled: true # Enable the console.
+      path: /h2-console # Path at which the console will be available.
+  jpa:
+     database: H2
+     show_sql: true
+     open-in-view: false
+     hibernate:
+       ddl-auto: create-drop
+       naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+     properties:
+       hibernate.cache.use_second_level_cache: true
+       hibernate.cache.use_query_cache: false
+  datasource:
+   url: jdbc:h2:mem:drpweb
+   name:
+   username: sa
+   password:
+
+# Logging
+#logging:
+#  level:
+#    org.springframework.web: DEBUG
+#    org.hibernate: DEBUG

@@ -1,0 +1,17 @@
+# Server
+server:
+    port: 80
+# H2 Web Console (H2ConsoleProperties)
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/drpweb?autoReconnect=true&useSSL=false
+    username: root
+    password: bow0839434347
+  jpa:
+    show_sql: true
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: false
+    hibernate:
+      ddl-auto: none
