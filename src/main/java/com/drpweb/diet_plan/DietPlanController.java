@@ -2,16 +2,16 @@ package com.drpweb.diet_plan;
 
 import choco.kernel.model.variables.integer.IntegerVariable;
 import choco.kernel.solver.Solver;
+import com.drpweb.food.Food;
 import com.drpweb.food.FoodService;
-import engine.DietSolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import services.FoodControl;
+import pfslibrary.DailyDiet;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -22,30 +22,26 @@ import java.util.List;
 public class DietPlanController {
     @Autowired
     FoodService foodService;
-    beans.Food food;
-    List<IntegerVariable[][]> varList = new ArrayList<>();
-    int amount = 0;
-    int period = 0;
 
-    @RequestMapping(value = "/diet_plan/plan",method = RequestMethod.GET)
-    public Solver getPlan(){
-        FoodControl foodCtrl = new FoodControl();
-        food = foodCtrl.getAllFood();
 
+
+    @RequestMapping(value = "/plan",method = RequestMethod.GET)
+    public Solver getPlan() throws SQLException {
+        Food food;
+
+        int amount = 7;
+        int period = 3;
+        DailyDiet dailyDiet = new DailyDiet();;
         Solver s;
+        food = foodService.getFood();
 
-        DietSolve ds = new DietSolve();
-        amount = 7;
-        period = 3;
+        s = dailyDiet.solve(amount, period,
+                food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
+                food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins());
+        List<IntegerVariable[][]> varList = dailyDiet.getVars();
+       // food = ds.getFood();
 
 
-        s = ds.solve(amount, period, food);
-        varList = ds.getVars();
-        food = ds.getFood();
-
-        if(s!=null){
-            System.out.print("I'm foods!");
-        }
 
         return s;
     }

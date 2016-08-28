@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
+/*    @Autowired
+    private CalInfoService calInfoService;*/
 
     public UserServiceImpl() {
     }
@@ -48,6 +50,13 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(userRole);
         user.setRoles(roles);
+        /*CalInfo calInfo = new CalInfo();
+        calInfo.setBudget(calInfoService.calBudget(user));
+        calInfo.setActivity(0.0);
+        calInfo.setDiet(0.0);
+        calInfo.setNet(0.0);
+        calInfo.setUnder(0.0);
+        user.setCalInfo(calInfo);*/
         return userDao.create(user);
     }
 

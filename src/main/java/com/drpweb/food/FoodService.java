@@ -1,5 +1,6 @@
 package com.drpweb.food;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -12,5 +13,5 @@ public interface FoodService {
     Food findOne(Long id);
     List<Food> findAll ();
     Food findByName(String name);
-    beans.Food getFood();
+    Food getFood() throws SQLException;
 }

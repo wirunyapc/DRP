@@ -1,17 +1,20 @@
 package com.drpweb.food;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.ArrayList;
 
 /**
  * Created by ADMIN on 8/20/2016.
  */
 @Entity
-public class Food {
+public class Food{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Long foodPatientTypeId;
+    private int foodId;
+    private int foodPatientTypeId;
     private String foodPatientTypeName;
     private String foodName;
     private int kal;
@@ -38,25 +41,15 @@ public class Food {
 
 
 
+
+
     public Food() {
     }
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getFoodPatientTypeId() {
-        return foodPatientTypeId;
-    }
 
-    public void setFoodPatientTypeId(Long foodPatientTypeId) {
-        this.foodPatientTypeId = foodPatientTypeId;
-    }
 
     public String getFoodPatientTypeName() {
         return foodPatientTypeName;
@@ -216,5 +209,21 @@ public class Food {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public int getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(int foodId) {
+        this.foodId = foodId;
+    }
+
+    public int getFoodPatientTypeId() {
+        return foodPatientTypeId;
+    }
+
+    public void setFoodPatientTypeId(int foodPatientTypeId) {
+        this.foodPatientTypeId = foodPatientTypeId;
     }
 }

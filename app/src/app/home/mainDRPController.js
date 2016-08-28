@@ -8,7 +8,6 @@
     .module('app')
     .controller('mainDRPController', mainDRPController);
 
-
   /** @ngInject */
   function mainDRPController($filter) {
     var vm = this;

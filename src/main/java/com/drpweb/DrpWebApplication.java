@@ -18,7 +18,6 @@ public class DrpWebApplication implements CommandLineRunner {
 	UserRepository userRepository;
 	@Autowired
 	RoleRepository roleRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(DrpWebApplication.class, args);
 	}

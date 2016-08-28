@@ -26,9 +26,12 @@ public class User {
     private int duration;
     private String password;
     private Date dob;
+//    private double bmi;
     @ManyToMany(fetch= FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
+  /*  @OneToOne(fetch= FetchType.EAGER)
+    private CalInfo calInfo = new CalInfo();*/
 
     public String getLastName() {
         return lastName;
@@ -138,4 +141,20 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+/*    public CalInfo getCalInfo() {
+        return calInfo;
+    }
+
+    public void setCalInfo(CalInfo calInfo) {
+        this.calInfo = calInfo;
+    }*/
+
+/*    public double getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(double bmi) {
+        this.bmi = bmi;
+    }*/
 }
