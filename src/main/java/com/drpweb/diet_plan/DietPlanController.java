@@ -5,10 +5,7 @@ import choco.kernel.solver.Solver;
 import com.drpweb.food.Food;
 import com.drpweb.food.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pfslibrary.DailyDiet;
 
 import java.sql.SQLException;
@@ -31,7 +28,7 @@ public class DietPlanController {
 
         int amount = 7;
         int period = 3;
-        DailyDiet dailyDiet = new DailyDiet();;
+        DailyDiet dailyDiet = new DailyDiet();
         Solver s;
         food = foodService.getFood();
 
@@ -44,6 +41,15 @@ public class DietPlanController {
 
 
         return s;
+    }
+
+    @RequestMapping(value = "/bmi",method = RequestMethod.GET)
+    public String getBmi(@RequestParam("weight")double weight, @RequestParam("height")double height) throws SQLException {
+        DailyDiet dd = new DailyDiet();
+        String result = dd.calBMI(weight, height);
+        System.out.print("result :"+result);
+
+        return result;
     }
 
 

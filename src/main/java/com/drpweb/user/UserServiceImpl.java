@@ -16,9 +16,6 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
-
-
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -28,11 +25,6 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {
     }
-
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
 
     @Override
     public List<User> findAll() {
@@ -60,4 +52,19 @@ public class UserServiceImpl implements UserService {
         return userDao.create(user);
     }
 
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) { //used in test class
+        this.userDao = userDao;
+    }
+
+    public RoleDao getRoleDao() {
+        return roleDao;
+    }
+
+    public void setRoleDao(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }//used in test class
 }

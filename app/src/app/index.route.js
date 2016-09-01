@@ -17,6 +17,11 @@
       controller: 'MyAccountController',
       controllerAs: 'vm'
       })
+      .when('/manage',{
+        templateUrl: 'app/manage/mainManage.html',
+        controller: 'ModalLoginController',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });

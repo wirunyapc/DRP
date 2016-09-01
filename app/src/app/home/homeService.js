@@ -10,10 +10,18 @@
 
   /** @ngInject */
   function homeService($resource){
-    return $resource('/plan',
-      {get:{method:'GET'}
+
+    return $resource('/bmi/?weight=:weight&height=:height',
+      {get:{
+        method:'GET',
+        params:{
+          weight:'@weight',
+          height:'@height'
+        }
+      }
       });
-  }
+    }
+
 
 
 })();

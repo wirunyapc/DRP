@@ -12,10 +12,6 @@ import static org.mockito.Mockito.*;
  * Created by Asus on 10/8/2559.
  */
 public class UserAuthenticationControllerTest {
-    @Test
-    public void getUser(){
-
-    }
 
     @Test
     public void authenticate() {

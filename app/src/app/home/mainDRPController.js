@@ -6,7 +6,10 @@
 
   angular
     .module('app')
-    .controller('mainDRPController', mainDRPController);
+    .controller('mainDRPController', mainDRPController)
+    .controller('bmiController', bmiController);
+
+
 
   /** @ngInject */
   function mainDRPController($filter) {
@@ -33,6 +36,29 @@
 
 
   }
+ function bmiController(homeService,$rootScope) {
+
+ /*   $log.debug('weight',user.weight);
+    $log.debug('height',user.height);*/
+
+   //$log.debug('token',authToken);
+
+    /*  var value = this;
+      if(user) {
+        console.log("I'm user");
+        homeService.get({weight: $rootScope.user.weight, height: $rootScope.user.height},
+          function (data) {
+            value = data;
+
+
+          });
+      }*/
+
+
+  }
+
+
+
 
 
 })();

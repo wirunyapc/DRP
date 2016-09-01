@@ -1,23 +1,23 @@
 <div class="row">
-    <table class="brpbar">
+    <table class="brpbar"  ng-controller="bmiController as bc">
         <tr>
             <th style="background-color: #C0C0C0">
-                BMI : {{vm.detail.bmi}}
+                BMI :
             </th>
             <th style="background-color: #A4C8F0">
-                Budget : {{vm.detail.budget}}
+                Budget : <!--{{vm.detail.budget}}-->
             </th>
             <th style="background-color: #FFDDDD">
-                Diet : {{vm.detail.diet}}
+                Diet :
             </th>
             <th style="background-color: #F4EFAF">
-                Activity : {{vm.detail.activity}}
+                Activity :
             </th>
             <th style="background-color: #D0B3E1">
-                Net : {{vm.detail.net}}
+                Net :
             </th>
             <th style="background-color: #B9E3AE">
-                Under : {{vm.detail.under}}
+                Under :
             </th>
         </tr>
     </table>
@@ -50,7 +50,7 @@
             <tbody>
             <tr>
                 <td>
-                    food will repeat for each
+                  food will repeat for each
                     <span class="pull-right glyphicon glyphicon-remove-circle"></span>
                     <span class="pull-right glyphicon glyphicon-edit"></span>
                 </td>

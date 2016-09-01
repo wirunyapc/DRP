@@ -25,8 +25,7 @@ public class User {
     private String gender;
     private int duration;
     private String password;
-    private Date dob;
-//    private double bmi;
+    private Date dob;//    private double bmi;
     @ManyToMany(fetch= FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 

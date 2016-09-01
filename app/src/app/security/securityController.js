@@ -92,7 +92,11 @@
             }
             securityService.get(function (user) {
               $rootScope.user = user;
-              $location.path('/')
+              if(data.username=="admin") {
+                $location.path('/manage')
+              }else{
+                $location.path('/')
+              }
             });
             //delete $rootScope.error;
           },
