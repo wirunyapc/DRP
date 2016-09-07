@@ -23,8 +23,9 @@
 
       modalInstance.result.then(function (data) {
         userService.save(data);
-        $location.path('/');
         $rootScope.signUpSuccess = true;
+        $location.path('/');
+
       }, function () {
         $log.info('Modal dismissed at: ' + new Date());
       });
@@ -80,6 +81,7 @@
     vm.loadingstatus = false;
     queryUserService.get({name: $rootScope.user.username}, function (data) {
       vm.user = data;
+
     },function () {
       vm.loadingstatus = true;
       vm.loadingMessage ="Cannot load user detail";

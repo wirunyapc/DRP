@@ -82,17 +82,21 @@
 
       modalInstance.result.then(function (data) {
 
-        vm.rememberMe = data.rememberMe;
+       // vm.rememberMe = data.rememberMe;
         securityService.authenticate(serializeData({username:data.username,password:data.password}),
           function (authenticationResult) {
             var authToken = authenticationResult.token;
             $rootScope.authToken = authToken;
-            if (vm.rememberMe) {
+            console.log('auth',authToken)
+            /*if (vm.rememberMe) {
               $cookies.put('authToken', authToken, {expires:moment().add(5,'days').toString()});
-            }
+            }*/
             securityService.get(function (user) {
+
+
               $rootScope.user = user;
-              if(data.username=="admin") {
+              console.log('user from secure', $rootScope.user)
+                if(data.username=="admin") {
                 $location.path('/manage')
               }else{
                 $location.path('/')
@@ -102,7 +106,7 @@
           },
           function(){
             vm.lofinFail = true;
-              vm.loginMessage =" user name or password is not correct";
+              vm.loginMessage =" Username or password is not correct";
             vm.open();
           });
       }, function () {

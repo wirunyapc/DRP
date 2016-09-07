@@ -36,26 +36,30 @@
 
 
   }
- function bmiController(homeService,$rootScope) {
-
- /*   $log.debug('weight',user.weight);
-    $log.debug('height',user.height);*/
-
-   //$log.debug('token',authToken);
-
-    /*  var value = this;
-      if(user) {
-        console.log("I'm user");
-        homeService.get({weight: $rootScope.user.weight, height: $rootScope.user.height},
-          function (data) {
-            value = data;
+ function bmiController($cookies,$rootScope,securityService) {
 
 
+   /*  var value = this;
+    if(user) {
+    console.log("I'm user");
+    homeService.get({weight: $rootScope.user.weight, height: $rootScope.user.height},
+    function (data) {
+    value = data;
+
+
+    });
+    }*/
+
+   var authToken = $cookies.get('authToken');
+   if(authToken){
+     $rootScope.authToken = authToken;
+     securityService.get(function (user) {
+       $rootScope.user = user;
+       console.log($rootScope.user)
           });
-      }*/
+   }
 
-
-  }
+ }
 
 
 

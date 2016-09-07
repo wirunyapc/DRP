@@ -1,9 +1,6 @@
 package com.drpweb.food;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 
 /**
@@ -14,28 +11,40 @@ public class Food{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int foodId;
-    private int foodPatientTypeId;
+    private int fpTypeId;
+    @Transient
     private String foodPatientTypeName;
     private String foodName;
-    private int kal;
+    private int foodKcal;
     private int fat;
-    private int carboh;
+    private int carbohydate;
     private int protein;
     private int categoriesId;
+    @Transient
     private String categoriesName;
     private int amount;
     private String unit;
 
+    @Transient
     private int[]arr_id;
+    @Transient
     private int[]arr_kal;
+    @Transient
     private int[]arr_fat;
+    @Transient
     private int[]arr_carboh;
+    @Transient
     private int[]arr_protein;
 
+    @Transient
     private ArrayList<int[]> kals;
+    @Transient
     private ArrayList<int[]> fats;
+    @Transient
     private ArrayList<int[]> carbohs;
+    @Transient
     private ArrayList<int[]> proteins;
+    @Transient
     private ArrayList<String> names;
 
 
@@ -68,11 +77,11 @@ public class Food{
     }
 
     public int getKal() {
-        return kal;
+        return foodKcal;
     }
 
     public void setKal(int kal) {
-        this.kal = kal;
+        this.foodKcal = kal;
     }
 
     public int getFat() {
@@ -84,11 +93,11 @@ public class Food{
     }
 
     public int getCarboh() {
-        return carboh;
+        return carbohydate;
     }
 
     public void setCarboh(int carboh) {
-        this.carboh = carboh;
+        this.carbohydate = carboh;
     }
 
     public int getProtein() {
@@ -220,10 +229,10 @@ public class Food{
     }
 
     public int getFoodPatientTypeId() {
-        return foodPatientTypeId;
+        return fpTypeId;
     }
 
     public void setFoodPatientTypeId(int foodPatientTypeId) {
-        this.foodPatientTypeId = foodPatientTypeId;
+        this.fpTypeId = foodPatientTypeId;
     }
 }
