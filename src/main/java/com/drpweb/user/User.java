@@ -1,5 +1,6 @@
 package com.drpweb.user;
 
+import com.drpweb.disease.Disease;
 import com.drpweb.role.Role;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
     private String username;
     private String name;
@@ -26,11 +28,21 @@ public class User {
     private int duration;
     private String password;
     private Date dob;//    private double bmi;
+
     @ManyToMany(fetch= FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
-  /*  @OneToOne(fetch= FetchType.EAGER)
-    private CalInfo calInfo = new CalInfo();*/
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="disease_id")
+    private Disease disease;
+
+
+//
+//    @ManyToMany(fetch= FetchType.LAZY)
+//    private Set<Disease> diseases = new HashSet<>();
+
+
+
 
     public String getLastName() {
         return lastName;
@@ -85,13 +97,6 @@ public class User {
         this.roles = roles;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -140,6 +145,28 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public void setDisease(Disease disease) {
+        this.disease = disease;
+    }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+
 
 /*    public CalInfo getCalInfo() {
         return calInfo;

@@ -1,7 +1,5 @@
 package com.drpweb.food;
 
-import com.drpweb.role.Role;
-import com.drpweb.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +28,7 @@ public class FoodDaoImpl implements FoodDao{
     }
 
     @Override
-    public Food findOne(Long id) {
+    public Food findOne(int id) {
         return foodRepository.findOne(id);
     }
 

@@ -26,12 +26,12 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(int id) {
         foodDao.delete(foodDao.findOne(id));
     }
 
     @Override
-    public Food findOne(Long id) {
+    public Food findOne(int id) {
         return foodDao.findOne(id);
     }
 

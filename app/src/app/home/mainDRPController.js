@@ -6,13 +6,13 @@
 
   angular
     .module('app')
-    .controller('mainDRPController', mainDRPController)
+    .controller('mainDRPController', ['$scope', '$http' , mainDRPController])
     .controller('bmiController', bmiController);
 
 
 
   /** @ngInject */
-  function mainDRPController($filter) {
+  function mainDRPController($scope, $http,$filter) {
     var vm = this;
     vm.selectedDate = null;
     vm.firstDayOfWeek = 0;
@@ -34,6 +34,14 @@
       return "<p>date</p>";
     };
 
+    $scope.fetchPlan = function(){
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/plan'
+      }).then(function(response) {
+        console.log(response.data);
+      });
+    };
 
   }
  function bmiController($cookies,$rootScope,securityService) {
@@ -60,9 +68,4 @@
    }
 
  }
-
-
-
-
-
 })();

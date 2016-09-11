@@ -2,14 +2,18 @@ package com.drpweb.food;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by ADMIN on 8/20/2016.
  */
 @Entity
+@Table(name = "food")
 public class Food{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "food_id")
     private int foodId;
     private int fpTypeId;
     @Transient
@@ -24,6 +28,9 @@ public class Food{
     private String categoriesName;
     private int amount;
     private String unit;
+
+//    @OneToMany(mappedBy="food", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<DailyMeal> dailyMeals;
 
     @Transient
     private int[]arr_id;
@@ -47,18 +54,8 @@ public class Food{
     @Transient
     private ArrayList<String> names;
 
-
-
-
-
-
     public Food() {
     }
-
-
-
-
-
 
     public String getFoodPatientTypeName() {
         return foodPatientTypeName;
@@ -234,5 +231,16 @@ public class Food{
 
     public void setFoodPatientTypeId(int foodPatientTypeId) {
         this.fpTypeId = foodPatientTypeId;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "food")
+    private Set<DailyMeal> dailyMeals = new HashSet<DailyMeal>(0);
+
+    public Set<DailyMeal> getDailyMeals() {
+        return dailyMeals;
+    }
+
+    public void setDailyMeals(Set<DailyMeal> dailyMeals) {
+        this.dailyMeals = dailyMeals;
     }
 }

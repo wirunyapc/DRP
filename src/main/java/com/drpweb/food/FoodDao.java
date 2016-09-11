@@ -1,7 +1,5 @@
 package com.drpweb.food;
 
-import com.drpweb.role.Role;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ public interface FoodDao {
     Food create(Food food);
     Food update (Food food);
     void delete(Food food);
-    Food findOne(Long id);
+    Food findOne(int id);
     List<Food> findAll ();
     Food findByFoodName(String FoodName);
 }

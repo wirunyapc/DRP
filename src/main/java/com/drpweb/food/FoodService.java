@@ -9,8 +9,8 @@ import java.util.List;
 public interface FoodService {
     Food create(Food food);
     Food update (Food food);
-    void delete(Long id);
-    Food findOne(Long id);
+    void delete(int id);
+    Food findOne(int id);
     List<Food> findAll ();
     Food findByName(String name);
     Food getFood() throws SQLException;

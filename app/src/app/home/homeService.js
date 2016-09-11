@@ -10,7 +10,6 @@
 
   /** @ngInject */
   function homeService($resource){
-
     return $resource('/bmi/?weight=:weight&height=:height',
       {get:{
         method:'GET',
@@ -21,7 +20,4 @@
       }
       });
     }
-
-
-
 })();
