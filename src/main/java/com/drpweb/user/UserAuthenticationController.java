@@ -1,5 +1,6 @@
 package com.drpweb.user;
 
+import com.drpweb.diet_plan.DietPlanController;
 import com.drpweb.transfer.TokenTransfer;
 import com.drpweb.transfer.UserTransfer;
 import com.drpweb.util.TokenUtils;
@@ -26,8 +27,16 @@ public class UserAuthenticationController {
     @Autowired
     UserDetailsService userDetailsService;
 
+
+
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    DietPlanController dietPlanController;
+
+    @Autowired
+    UserService userService;
 
     public UserAuthenticationController() {
     }
@@ -49,8 +58,10 @@ public class UserAuthenticationController {
                 SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         UserDetails usersDetails = (UserDetails) principal;
+        userService.setCurrentUser(usersDetails.getUsername());
         return new UserTransfer(usersDetails.getUsername(),this.createRoleMap(usersDetails));
     }
+
     private Map<String, Boolean> createRoleMap(UserDetails userDetails)
     {
         Map<String, Boolean> roles = new HashMap<String, Boolean>();
@@ -79,7 +90,10 @@ public class UserAuthenticationController {
 		 */
         UserDetails userDetails =
                 this.userDetailsService.loadUserByUsername(username);
-        return new
-                TokenTransfer(TokenUtils.createToken(userDetails));
+        TokenTransfer t = new TokenTransfer(TokenUtils.createToken(userDetails));
+
+        return t;
     }
+
+
 }

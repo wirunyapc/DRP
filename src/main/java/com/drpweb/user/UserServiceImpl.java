@@ -1,5 +1,6 @@
 package com.drpweb.user;
 
+import com.drpweb.diet_plan.DietPlanDao;
 import com.drpweb.role.Role;
 import com.drpweb.role.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,10 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
-/*    @Autowired
-    private CalInfoService calInfoService;*/
+    @Autowired
+    DietPlanDao dietPlanDao;
+
+    public User currentUser;
 
     public UserServiceImpl() {
     }
@@ -42,15 +45,23 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(userRole);
         user.setRoles(roles);
-        /*CalInfo calInfo = new CalInfo();
-        calInfo.setBudget(calInfoService.calBudget(user));
-        calInfo.setActivity(0.0);
-        calInfo.setDiet(0.0);
-        calInfo.setNet(0.0);
-        calInfo.setUnder(0.0);
-        user.setCalInfo(calInfo);*/
+
+
+
         return userDao.create(user);
     }
+
+    @Override
+    public void setCurrentUser(String username) {
+        this.currentUser = findByUserName(username);
+        System.out.print("current user : "+this.currentUser.getUsername());
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
 
     public UserDao getUserDao() {
         return userDao;

@@ -55,7 +55,7 @@
   //       })
   //   }
   // }
-    function ModalLoginController( $uibModal, $log,$rootScope,$location,$cookies,securityService) {
+    function ModalLoginController( $uibModal, $log,$rootScope,$location,homeService,securityService) {
 
     var vm = this;
     vm.animationsEnabled = true;

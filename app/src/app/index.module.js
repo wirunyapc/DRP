@@ -14,7 +14,9 @@
         'ui.bootstrap',
         'toastr',
         'ngResource+apiPrefix',
-          'materialCalendar'
+          'materialCalendar',
+        'ui.calendar',
+        'angularMoment'
       ]);
 
 })();

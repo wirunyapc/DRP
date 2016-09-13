@@ -170,12 +170,11 @@ public class DailyDiet {
     public String toJson(){
         String result = "[";
         System.out.println("====================================================");
-//        plan = new ArrayList<>();
+
         Solver s = this.solver;
         for(int i = 0; i < this.totalNum; ++i) {
             String meal = "[";
-//            plan.set(i, new ArrayList<>());
-//            ArrayList<String[]> day = new ArrayList<>();
+
             IntDomainVar[] idVars = s.getVar(this.varIds[i]);
             IntDomainVar[] kcalVars = s.getVar(this.varKals[i]);
             IntDomainVar[] fatVars = s.getVar(this.varFats[i]);
@@ -184,7 +183,7 @@ public class DailyDiet {
             int count = idVars.length;
             for(int l = 0;l < count; l++){
                 String data = "[";
-//                String[] data = new String[5];
+
                 data += "\"" + idVars[l].toString() + "\",";
                 data += "\"" + kcalVars[l].toString() + "\",";
                 data += "\"" + fatVars[l].toString() + "\",";
@@ -363,6 +362,17 @@ public class DailyDiet {
         double bmi = weight / (height / 100.0D * (height / 100.0D));
         DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
         bmi = (new Double(df.format(bmi))).doubleValue();
-        return bmi < 18.5D?bmi + "(Underweight)":(18.5D <= bmi && bmi <= 24.9D?bmi + " (Normal weight)":(25.0D <= bmi && bmi <= 29.9D?bmi + " (Overweight)":(bmi >= 30.0D?bmi + " (Obese)":"Value not found")));
+        return bmi < 18.5D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Underweight"+ "\"" + "]"
+                :(18.5D <= bmi && bmi <= 24.9D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Normal weight"+ "\"" + "]"
+
+                :(25.0D <= bmi && bmi <= 29.9D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Overweight"+ "\"" + "]"
+
+                :(bmi >= 30.0D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Obese"+ "\"" + "]"
+
+                :"Value not found")));
     }
 }

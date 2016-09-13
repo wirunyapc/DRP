@@ -1,8 +1,8 @@
 <div class="row">
-    <table class="brpbar">
+    <table class="brpbar"  >
         <tr>
-            <th style="background-color: #C0C0C0" ng-controller="bmiController">
-                BMI :
+            <th style="background-color: #C0C0C0">
+                BMI : {{vm.bmi}}
             </th>
             <th style="background-color: #A4C8F0">
                 Budget : <!--{{vm.detail.budget}}-->
@@ -24,7 +24,7 @@
 </div>
 <div class="row" style="margin-top: 30px">
     <div class="col-md-5 col-md-offset-1">
-    <calendar-md flex layout layout-fill
+   <!-- <calendar-md flex layout layout-fill
                  calendar-direction="direction"
                  on-prev-month="prevMonth"
                  on-next-month="nextMonth"
@@ -36,7 +36,27 @@
                  day-label-tooltip-format="'EEEE'"
                  day-tooltip-format="'fullDate'"
                  week-starts-on="firstDayOfWeek"
-                 day-content="setDayContent"></calendar-md>
+                 day-content="setDayContent"></calendar-md> -->
+      <div ng-controller="MainCtrl">
+        <!-- <div style="font-size: 32px; color: #fff; ">
+          <span style="background-color: blue;" ng-click="selectCalTab(1)">Tab 1</span>
+          <span style="background-color: green;" ng-click="selectCalTab(2)">Tab 2</span>
+        </div> -->
+        <br>
+        <div style="background-color: #999999" ng-if="calendarTab == 1">
+          <div ui-calendar="uiConfig.calendar" ng-model="calendarDate" calendar="myCalendar1"></div>
+        </div>
+        <div style="background-color: #989898" ng-if="calendarTab == 2">
+          Nothing to see in this tab
+        </div>
+        <br>
+        You just Selected: {{selectedDate}}
+        <br>
+        <br>
+        The Event Source Object looks like:<br>
+        <br>
+        <!--{{calendarDate}}-->
+      </div>
     </div>
     <div class="col-md-5">
         <table class="table table-hover" width="100%">
@@ -118,4 +138,5 @@
     <div class="col-md-1"></div>
   <button ng-click="fetchPlan()" >Check Plan</button>
 </div>
+
 

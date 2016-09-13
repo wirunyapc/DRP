@@ -2,8 +2,6 @@ package com.drpweb.food;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by ADMIN on 8/20/2016.
@@ -233,7 +231,7 @@ public class Food{
         this.fpTypeId = foodPatientTypeId;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "food")
+  /*  @OneToMany(fetch = FetchType.LAZY, mappedBy = "food")
     private Set<DailyMeal> dailyMeals = new HashSet<DailyMeal>(0);
 
     public Set<DailyMeal> getDailyMeals() {
@@ -242,5 +240,5 @@ public class Food{
 
     public void setDailyMeals(Set<DailyMeal> dailyMeals) {
         this.dailyMeals = dailyMeals;
-    }
+    }*/
 }

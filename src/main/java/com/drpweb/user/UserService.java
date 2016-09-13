@@ -10,4 +10,8 @@ public interface UserService{
     List<User> findAll();
     User findByUserName(String username);
     User create(User user);
+
+    void setCurrentUser(String username);
+
+    User getCurrentUser();
 }
