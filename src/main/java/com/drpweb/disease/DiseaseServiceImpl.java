@@ -17,6 +17,10 @@ public class DiseaseServiceImpl implements DiseaseService {
         return diseaseDao.findOne(id);
     }
 
+    @Override
+    public Disease findByDiseaseName(String diseaseName) {
+        return diseaseDao.findByDiseaseName(diseaseName);
+    }
 
 
 }

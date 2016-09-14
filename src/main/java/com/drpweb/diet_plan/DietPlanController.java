@@ -1,7 +1,5 @@
 package com.drpweb.diet_plan;
 
-import choco.kernel.model.variables.integer.IntegerVariable;
-import choco.kernel.solver.Solver;
 import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.disease.Disease;
@@ -9,14 +7,11 @@ import com.drpweb.disease.DiseaseService;
 import com.drpweb.food.Food;
 import com.drpweb.food.FoodService;
 import com.drpweb.user.User;
+import com.drpweb.user.UserDao;
 import com.drpweb.user.UserService;
 import com.drpweb.util.DailyDiet;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -37,6 +32,11 @@ public class DietPlanController {
     DietPlanDao dietPlanDao;
     @Autowired
     DailyMealDao dailyMealDao;
+    @Autowired
+    UserDao userDao;
+    @Autowired
+    DietPlanService dietPlanService;
+
 
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -80,50 +80,66 @@ public class DietPlanController {
             result += meal;
 
         result += "]";
+
         return result;
 
+
     }
 
 
 
-    public Solver getPatient() throws SQLException {
+//    public Solver getPatient() throws SQLException {
+//
+//        Food food;
+//        Disease disease;
+//        int amount = 7;
+//        int period = 3;
+//
+//
+//        disease = diseaseService.getDiseaseById(4);
+//        DailyDiet dailyDiet = new DailyDiet();
+//        Solver s;
+//        food = foodService.getFood();
+//
+//
+//
+//
+//        s = dailyDiet.solvePatient(amount, period,
+//                food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
+//                food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(),  disease,1232);
+//        List<IntegerVariable[][]> varList = dailyDiet.getVars();
+//
+//        String result = dailyDiet.toJson();
+//        savePlan(result,user);
+//        System.out.println("Resultttttttttttttttttttttt");
+//        System.out.println(result);
+//
+//
+//
+//        return s;
+//    }
 
-        Food food;
-        Disease disease;
-        int amount = 7;
-        int period = 3;
+    @RequestMapping(value = "/disease",method = RequestMethod.PUT)
+    public void updateDisease(@RequestParam("disease")String diseaseName) throws SQLException {
+        Disease disease = diseaseService.findByDiseaseName(diseaseName);
 
+        User user = userService.findByUserName(userService.getCurrentUser().getUsername());
+        user.setDisease(disease);
+        userDao.update(user);
 
-        disease = diseaseService.getDiseaseById(4);
-        DailyDiet dailyDiet = new DailyDiet();
-        Solver s;
-        food = foodService.getFood();
-
-
-
-
-        s = dailyDiet.solvePatient(amount, period,
-                food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(),  disease,1232);
-        List<IntegerVariable[][]> varList = dailyDiet.getVars();
-        // food = ds.getFood();
-
-        ObjectMapper mapper = new ObjectMapper();
-        List plan = dailyDiet.plan;
-//        final String stringify = mapper.writeValueAsString(dailyDiet.plan.toString());
-        return s;
+        userService.setCurrentUser(user.getUsername());
+        dietPlanService.createPatientPlan(user.getUsername());
     }
-
-
-
 
     @RequestMapping(value = "/bmi",method = RequestMethod.GET)
     public String getBmi() throws SQLException {
-    //    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getCurrentUser();
+       // String user = String.class.cast(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+
+       User user = userService.getCurrentUser();
         DailyDiet dd = new DailyDiet();
         String bmiValue = dd.calBMI(user.getWeight(), user.getHeight());
         return bmiValue;
+
     }
 //"["+ "\"" +bmiValue+ "\"" + "]";
 }

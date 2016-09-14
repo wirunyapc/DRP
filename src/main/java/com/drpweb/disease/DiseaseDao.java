@@ -11,5 +11,6 @@ public interface DiseaseDao {
     void delete(Disease food);
     Disease findOne(int id);
     List<Disease> findAll ();
+    Disease findByDiseaseName(String diseaseName);
 
 }

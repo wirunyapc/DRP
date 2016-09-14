@@ -23,6 +23,7 @@
     </table>
 </div>
 <div class="row" style="margin-top: 30px">
+  <div ng-controller="MainCtrl" ng-init="init()">
     <div class="col-md-5 col-md-offset-1">
    <!-- <calendar-md flex layout layout-fill
                  calendar-direction="direction"
@@ -37,106 +38,109 @@
                  day-tooltip-format="'fullDate'"
                  week-starts-on="firstDayOfWeek"
                  day-content="setDayContent"></calendar-md> -->
-      <div ng-controller="MainCtrl">
+
         <!-- <div style="font-size: 32px; color: #fff; ">
           <span style="background-color: blue;" ng-click="selectCalTab(1)">Tab 1</span>
           <span style="background-color: green;" ng-click="selectCalTab(2)">Tab 2</span>
         </div> -->
+
         <br>
         <div style="background-color: #999999" ng-if="calendarTab == 1">
-          <div ui-calendar="uiConfig.calendar" ng-model="calendarDate" calendar="myCalendar1"></div>
+          <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="calendarDate" calendar="myCalendar1"></div>
         </div>
         <div style="background-color: #989898" ng-if="calendarTab == 2">
           Nothing to see in this tab
         </div>
         <br>
-        You just Selected: {{selectedDate}}
-        <br>
-        <br>
-        The Event Source Object looks like:<br>
-        <br>
-        <!--{{calendarDate}}-->
+
+
+
+
+        <div hidden> {{calendarDate}} </div>
       </div>
-    </div>
     <div class="col-md-5">
-        <table class="table table-hover" width="100%">
-            <thead>
-            <tr>
-                <th>Brakefast
-                    <span class="pull-right">Total:</span>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                  food will repeat for each
-                    <span class="pull-right glyphicon glyphicon-remove-circle"></span>
-                    <span class="pull-right glyphicon glyphicon-edit"></span>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>
-                    <span class="pull-right">Add More</span>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
-        <table class="table table-hover" width="100%">
-            <thead>
-            <tr>
-                <th>Lunch
-                    <span class="pull-right">Total:</span>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    food will repeat for each
-                    <span class="pull-right glyphicon glyphicon-remove-circle"></span>
-                    <span class="pull-right glyphicon glyphicon-edit"></span>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>
-                    <span class="pull-right">Add More</span>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
-        <table class="table table-hover" width="100%">
-            <thead>
-            <tr>
-                <th>Dinner
-                    <span class="pull-right">Total:</span>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        food will repeat for each
-                        <span class="pull-right glyphicon glyphicon-remove-circle"></span>
-                        <span class="pull-right glyphicon glyphicon-edit"></span>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>
-                    <span class="pull-right">Add More</span>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+      <div>
+        <h1>Meals for  {{selectedDate}}</h1>
+      </div>
+      <table class="table table-hover" width="100%">
+        <thead>
+        <tr>
+          <th>Brakefast
+            <span class="pull-right">Total:</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            {{bfast}}
+            <span class="pull-right glyphicon glyphicon-remove-circle"></span>
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>
+            <span class="pull-right">Add More</span>
+          </th>
+        </tr>
+        </tfoot>
+      </table>
+      <table class="table table-hover" width="100%">
+        <thead>
+        <tr>
+          <th>Lunch
+            <span class="pull-right">Total:</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            {{lunch}}
+            <span class="pull-right glyphicon glyphicon-remove-circle"></span>
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>
+            <span class="pull-right">Add More</span>
+          </th>
+        </tr>
+        </tfoot>
+      </table>
+      <table class="table table-hover" width="100%">
+        <thead>
+        <tr>
+          <th>Dinner
+            <span class="pull-right">Total:</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            {{dinner}}
+            <span class="pull-right glyphicon glyphicon-remove-circle"></span>
+            <span class="pull-right glyphicon glyphicon-edit"></span>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>
+            <span class="pull-right">Add More</span>
+          </th>
+        </tr>
+        </tfoot>
+      </table>
     </div>
     <div class="col-md-1"></div>
-  <button ng-click="fetchPlan()" >Check Plan</button>
+  </div>
+  <button ng-click="fetchPlan()" hidden>Check Plan</button>
 </div>
 
 

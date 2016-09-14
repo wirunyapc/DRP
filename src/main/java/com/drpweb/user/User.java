@@ -28,6 +28,7 @@ public class User {
     private int duration;
     private String password;
     private Date dob;//    private double bmi;
+   // private Long diseaseId;
 
     @ManyToMany(fetch= FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
@@ -163,6 +164,8 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
 
 

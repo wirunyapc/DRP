@@ -37,4 +37,9 @@ public class DiseaseDaoImpl implements DiseaseDao {
     public List<Disease> findAll() {
         return diseaseRepository.findAll();
     }
+
+    @Override
+    public Disease findByDiseaseName(String diseaseName) {
+        return diseaseRepository.findByDiseaseName(diseaseName);
+    }
 }

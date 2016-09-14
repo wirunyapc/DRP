@@ -5,5 +5,6 @@ package com.drpweb.disease;
  */
 public interface DiseaseService {
      Disease getDiseaseById(int id);
+     Disease findByDiseaseName(String diseaseName);
 
 }

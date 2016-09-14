@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private RoleDao roleDao;
     @Autowired
     DietPlanDao dietPlanDao;
+    @Autowired
+    UserService userService;
 
     public User currentUser;
 

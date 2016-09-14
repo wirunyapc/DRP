@@ -10,7 +10,8 @@ import java.sql.SQLException;
 public interface DietPlanService {
     DietPlan findByUserId(Long id);
     void createPlan(String name) throws SQLException;
+    void createPatientPlan(String name) throws SQLException;
     void savePlan(String result,User user);
     int getBmr(User user) throws SQLException;
-
+    void updateUserDisease(Long diseaseId);
 }

@@ -15,6 +15,9 @@
   function mainDRPController($filter,$http, $log,$scope,$rootScope) {
     var vm = this;
     vm.selectedDate = null;
+    vm.bfast = null;
+    vm.lunch = null;
+    vm.dinner = null;
     vm.firstDayOfWeek = 0;
     vm.bmi = null;
     $scope.plan = null;
@@ -56,6 +59,12 @@
       });
     };
 
+    $scope.selectDisease = function(){
+      $http({
+        method:'PUT',
+        url: 'http://localhost:8080/disease/?disease=:diseaseName'
+      })
+    };
 
   }
   function bmiController(homeService, $log) {
@@ -74,20 +83,40 @@
 
 
   }
-  function calendarController ($scope, $filter, moment, uiCalendarConfig){
-    var dietPlan = $scope.plan;
+  function calendarController ($http,$scope, $filter, moment, uiCalendarConfig, $timeout){
+   // var dietPlan = [[["2016-09-10 00:00:00.0","1","ทอดมันปลา",],["2016-09-10 00:00:00.0","2","ผัดแตงกวาไก่",],["2016-09-10 00:00:00.0","3","กุ้งผัดหน่อไม้ฝรั่ง",],["2016-09-11 00:00:00.0","1","ข้าวต้มกุ้ง",],["2016-09-11 00:00:00.0","2","ปลาทับทิมนึ่งซีอิ้ว",],["2016-09-11 00:00:00.0","3","ปลากะพงลวกจิ้ม",],["2016-09-12 00:00:00.0","1","แกงเหลืองปักษ์ใต้",],["2016-09-12 00:00:00.0","2","ข้าวผัดมันกุ้ง",],["2016-09-12 00:00:00.0","3","ขนมจีบ",],["2016-09-13 00:00:00.0","1","ทอดมันปลา",],["2016-09-13 00:00:00.0","2","ผัดแตงกวาไก่",],["2016-09-13 00:00:00.0","3","กุ้งผัดหน่อไม้ฝรั่ง",],["2016-09-14 00:00:00.0","1","ข้าวต้มกุ้ง",],["2016-09-14 00:00:00.0","2","ปลาทับทิมนึ่งซีอิ้ว",],["2016-09-14 00:00:00.0","3","ปลากะพงลวกจิ้ม",],["2016-09-15 00:00:00.0","1","แกงเหลืองปักษ์ใต้",],["2016-09-15 00:00:00.0","2","ข้าวผัดมันกุ้ง",],["2016-09-15 00:00:00.0","3","ขนมจีบ",],["2016-09-16 00:00:00.0","1","ปลานึ่งสมุนไพร",],["2016-09-16 00:00:00.0","2","มะละกอผัดหมู",],["2016-09-16 00:00:00.0","3","น้ำพริกหนุ่ม",]]];
+    $scope.$on('$viewContentLoaded', function(){
+      console.log("Test");
+    });
 
+    $scope.breakfast = "test bfast";
 
+    //$scope.init = function () {
+    //  $timeout(function() {$scope.calendarRefresh();}, 2000);
+    //};
+    $scope.calendarRefresh = function(){
+      $('#calendar').fullCalendar('render');
+      $('.fc-today-button').click();
+    };
     $scope.requestPlan = function(){
       /*Diet Plan*/
       $http({
         method: 'GET',
         url: 'http://localhost:8080/getFoodPlan'
       }).then(function(response) {
-        console.log(response.data);
-        $rootScope.plan = response.data;
-        $scope.plan = response.data;
-        $scope.convertEvents($scope.plan);
+        console.log('PLANNNNNNN',response.data);
+        $scope.dietPlan = response.data;
+        //$rootScope.plan = response.data;
+       // $scope.plan = response.data;
+       //$scope.calendarDate[0].events[0].splice(0, $scope.calendarDate[0].events[0].length)
+        $scope.calendarDate = [
+          {
+            events: $scope.convertEvents(response.data)
+          }
+        ];
+        $('#calendar').fullCalendar('today');
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource',$scope.convertEvents(response.data));
       });
     }
     $scope.requestPlan();
@@ -95,24 +124,16 @@
     $scope.mealModel = [];
 
     $scope.convertEvents = function(plans){
+      if(!plans)
+        return;
+
       var _mealModel = [];
       var mealEvents = [];
       for(var i = 0 ; i < plans[0].length ; i++){
-        var mealDate = new Date(startDate.getTime());
-        mealDate.setDate(startDate.getDate() + i);
 
-        var dd = mealDate.getDate();
-        var mm = mealDate.getMonth() + 1;
-        var y = mealDate.getFullYear();
-
-        var someFormattedDate = mm + '/' + dd + '/' + y;
-
-        //console.log('convert events ' + someFormattedDate);
         console.log('i' + i);
         console.log('Two dimension',plans[0][i]);
-        //console.log('dailyMeal',plans[0][0][i]);
 
-        //////
         var dailyMeals = plans[0][i];
         var mealDatePlan = new Date(plans[0][i][0]);
 
@@ -148,7 +169,7 @@
 
     $scope.calendarDate = [
       {
-        events: $scope.convertEvents(dietPlan)
+        events: $scope.convertEvents($scope.dietPlan)
       }
     ];
 
@@ -162,10 +183,14 @@
       dateObj.setMilliseconds(0);
 
       var dailyMeal = $scope.mealModel[dateObj.getTime()];
+      $scope.bfast = dailyMeal[0].food;
+      $scope.lunch = dailyMeal[1].food;
+      $scope.dinner = dailyMeal[2].food;
+
       console.log('setCalDate: dailyMeal',dailyMeal);
       console.log('selectDate',moment(date).valueOf());
       $scope.calendarDate[0].events[0].start = selectedDate;				    // update Calendar event dateFrom
-      $scope.selectedDate = $filter('date')(selectedDate, 'yyyy-MM-dd');;		// update $scope.dateFrom
+      $scope.selectedDate = $filter('date')(selectedDate, 'yyyy-MM-dd');		// update $scope.dateFrom
       console.log('$scope.uiConfig', $scope.uiConfig);
       console.log('uiCalendarConfig', uiCalendarConfig);
       console.log('clickedDate',date);
@@ -183,7 +208,7 @@
           right : 'today prev,next'
         },
         dayClick : $scope.setCalDate,
-        background: '#f26522',
+        //background: '#f26522',
       },
     };
 
@@ -198,10 +223,7 @@
     };
 
 
+
+
   }
-
-
-
-
-
 })();
