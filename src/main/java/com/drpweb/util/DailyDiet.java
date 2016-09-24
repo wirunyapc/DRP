@@ -33,7 +33,7 @@ public class DailyDiet {
 
     public Solver solve(int num, int prd, int[] arr_id, int[] arr_kal, int[] arr_fat, int[] arr_carboh,
                         int[] arr_protein, ArrayList<int[]> kals, ArrayList<int[]> fats,
-                        ArrayList<int[]> carbohs, ArrayList<int[]> proteins, int bmr) {
+                        ArrayList<int[]> carbohs, ArrayList<int[]> proteins, Disease disease,int bmr) {
         CPModel m = new CPModel();
         CPSolver s = new CPSolver();
         this.varIds = new IntegerVariable[num][3];
@@ -41,6 +41,7 @@ public class DailyDiet {
         this.varFats = new IntegerVariable[num][3];
         this.varPros = new IntegerVariable[num][3];
         this.varCarboes = new IntegerVariable[num][3];
+
 
         int intVars;
         int idx;
@@ -64,11 +65,24 @@ public class DailyDiet {
         }
 
         for(intVars = 0; intVars < num; ++intVars) {
-            m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varKals[intVars]), bmr), Choco.geq(Choco.sum(this.varKals[intVars]), 1200)}));
-            m.addConstraint(Choco.leq(Choco.sum(this.varFats[intVars]), 33));
-            m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varPros[intVars]), 60), Choco.geq(Choco.sum(this.varPros[intVars]), 45)}));
-            m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varCarboes[intVars]), 165), Choco.geq(Choco.sum(this.varCarboes[intVars]), 150)}));
+            if(disease == null) {
+                System.out.println("Build member");
+                m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varKals[intVars]), bmr), Choco.geq(Choco.sum(this.varKals[intVars]), 1200)}));
+                m.addConstraint(Choco.leq(Choco.sum(this.varFats[intVars]), 33));
+                m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varPros[intVars]), 60), Choco.geq(Choco.sum(this.varPros[intVars]), 45)}));
+                m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varCarboes[intVars]), 165), Choco.geq(Choco.sum(this.varCarboes[intVars]), 150)}));
+            }else{
+                System.out.println("Build patient");
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varKals[intVars]), (int) (disease.getKcal()+500)), Choco.geq(Choco.sum(this.varKals[intVars]), (int) (disease.getKcal()-500))));
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varFats[intVars]), (int) (disease.getFat()+10)), Choco.geq(Choco.sum(this.varFats[intVars]), (int) (disease.getFat()-10))));
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varPros[intVars]), (int) (disease.getProt()+20)), Choco.geq(Choco.sum(this.varPros[intVars]), (int) (disease.getProt()-20))));
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varCarboes[intVars]), (int) (disease.getCarboh()+30)), Choco.geq(Choco.sum(this.varCarboes[intVars]), (int) (disease.getCarboh()-30))));
+
+            }
         }
+
+
+
 
         ArrayList var21 = new ArrayList();
         idx = 0;
@@ -96,24 +110,6 @@ public class DailyDiet {
         System.out.println("====================================================");
 //        plan = new ArrayList<>();
         for(i = 0; i < num; ++i) {
-//            plan.set(i, new ArrayList<>());
-//            ArrayList<String[]> day = new ArrayList<>();
-//            IntDomainVar[] idVars = s.getVar(this.varIds[i]);
-//            IntDomainVar[] kcalVars = s.getVar(this.varKals[i]);
-//            IntDomainVar[] fatVars = s.getVar(this.varFats[i]);
-//            IntDomainVar[] proVars = s.getVar(this.varPros[i]);
-//            IntDomainVar[] carboVars = s.getVar(this.varCarboes[i]);
-//            int count = idVars.length;
-//            for(int l = 0;l < count; l++){
-//                String[] data = new String[5];
-//                data[0] = idVars[l].toString();
-//                data[1] = kcalVars[l].toString();
-//                data[2] = fatVars[l].toString();
-//                data[3] = proVars[l].toString();
-//                data[4] = carboVars[l].toString();
-//                day.set(l,data);
-//            }
-//            plan.add(day);
 
             IntDomainVar[] var22 = s.getVar(this.varIds[i]);
             int var18 = var22.length;

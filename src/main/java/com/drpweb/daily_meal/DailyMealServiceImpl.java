@@ -24,6 +24,14 @@ public class DailyMealServiceImpl implements DailyMealService{
         return dailyMealDao.findByDate(date);
     }
 
+    @Override
+    public void delete(Long dietPlanId) {
+    List<DailyMeal> dailyMeals = dailyMealDao.findByDietPlanId(dietPlanId);
+        for (DailyMeal d: dailyMeals) {
+            dailyMealDao.delete(d);        }
+    }
+
+
 //    @Override
 //    public List<DailyMeal> getByPlan(DietPlan dietPlan) {
 //        Set<DailyMeal> dailymeals = dietPlan.getDailyMeals();

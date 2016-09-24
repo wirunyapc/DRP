@@ -11,7 +11,7 @@ public class Disease {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "disease_id")
-    private int id;
+    private Long id;
     private String diseaseName;
     private int cals;
     private int fat;
@@ -26,7 +26,7 @@ public class Disease {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

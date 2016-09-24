@@ -9,7 +9,7 @@ public interface DiseaseDao {
     Disease create(Disease disease);
     Disease update (Disease disease);
     void delete(Disease food);
-    Disease findOne(int id);
+    Disease findOne(Long id);
     List<Disease> findAll ();
     Disease findByDiseaseName(String diseaseName);
 

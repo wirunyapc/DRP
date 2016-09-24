@@ -11,4 +11,5 @@ import java.util.List;
 public interface DailyMealRepository  extends JpaRepository<DailyMeal,Long> {
         List<DailyMeal> findByDietPlanId(Long id);
         List<DailyMeal> findByDate(Date date);
+
 }

@@ -1,6 +1,5 @@
 package com.drpweb.user;
 
-import com.drpweb.disease.Disease;
 import com.drpweb.role.Role;
 
 import javax.persistence.*;
@@ -28,14 +27,14 @@ public class User {
     private int duration;
     private String password;
     private Date dob;//    private double bmi;
-   // private Long diseaseId;
+    private Long diseaseId;
 
     @ManyToMany(fetch= FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="disease_id")
-    private Disease disease;
+//    @OneToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="disease_id")
+//    private Disease disease;
 
 
 //
@@ -147,13 +146,7 @@ public class User {
         this.roles = roles;
     }
 
-    public Disease getDisease() {
-        return disease;
-    }
 
-    public void setDisease(Disease disease) {
-        this.disease = disease;
-    }
 
 
 
@@ -163,6 +156,17 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+
+
+    public Long getDiseaseId() {
+        return diseaseId;
+    }
+
+    public void setDiseaseId(Long diseaseId) {
+        this.diseaseId = diseaseId;
     }
 
 

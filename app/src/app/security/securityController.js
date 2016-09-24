@@ -87,7 +87,7 @@
           function (authenticationResult) {
             var authToken = authenticationResult.token;
             $rootScope.authToken = authToken;
-            console.log('auth',authToken)
+            console.log('auth',$rootScope.authToken)
             /*if (vm.rememberMe) {
               $cookies.put('authToken', authToken, {expires:moment().add(5,'days').toString()});
             }*/
@@ -96,10 +96,18 @@
 
               $rootScope.user = user;
               console.log('user from secure', $rootScope.user)
-                if(data.username=="admin") {
+              $rootScope.currentuser = $rootScope.user.username;
+              console.log('username from secure', $rootScope.currentuser)
+
+
+              if($rootScope.user.roles['patient']==true) {
+                $location.path('/homePatient')
+              }
+              if($rootScope.user.roles['member']==true){
+                $location.path('/home')
+              }
+              if($rootScope.user.roles['admin']==true){
                 $location.path('/manage')
-              }else{
-                $location.path('/')
               }
             });
             //delete $rootScope.error;
@@ -127,6 +135,8 @@
       var vm = this;
       vm.lofinFaild = lofinFail;
       vm.loginMessage = loginMessage;
+      vm.username = 'krissn';
+      vm.password = '222222';
       vm.ok = function () {
 
         $uibModalInstance.close({username:vm.username,password:vm.password,rememberMe:vm.rememberMe});

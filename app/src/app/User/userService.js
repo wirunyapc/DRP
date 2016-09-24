@@ -19,7 +19,10 @@
   /** @ngInject */
   function queryUserService($resource){
     return $resource('/getUser/?name=:name',
-      {get:{method:'GET',params:{name:''}}
+      {get:{
+        method:'GET',
+        params:{name:''}
+      }
       });
   }
 

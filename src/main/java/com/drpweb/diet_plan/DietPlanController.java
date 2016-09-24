@@ -3,6 +3,7 @@ package com.drpweb.diet_plan;
 import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.disease.Disease;
+import com.drpweb.disease.DiseaseDao;
 import com.drpweb.disease.DiseaseService;
 import com.drpweb.food.Food;
 import com.drpweb.food.FoodService;
@@ -27,6 +28,8 @@ public class DietPlanController {
     @Autowired
     DiseaseService diseaseService;
     @Autowired
+    DiseaseDao diseaseDao;
+    @Autowired
     UserService userService;
     @Autowired
     DietPlanDao dietPlanDao;
@@ -41,9 +44,8 @@ public class DietPlanController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/getFoodPlan",method = RequestMethod.GET)
-    public String getFoodPlan() throws SQLException {
-        User user = userService.getCurrentUser();
-        int duration = user.getDuration();
+    public String getFoodPlan(@RequestParam("name")String username) throws SQLException {
+        User user = userService.findByUserName(username);
         System.out.println("user for food plan : "+user.getUsername());
         DietPlan dietPlan = dietPlanDao.findByUserId(user.getId());
         List<DailyMeal> dailyMeals = dailyMealDao.findByDietPlanId(dietPlan.getDietPlanId());
@@ -118,28 +120,49 @@ public class DietPlanController {
 //
 //        return s;
 //    }
+@RequestMapping(value = "/getDisease",method = RequestMethod.GET)
+public List<Disease> getDisease() throws SQLException {
 
-    @RequestMapping(value = "/disease",method = RequestMethod.PUT)
-    public void updateDisease(@RequestParam("disease")String diseaseName) throws SQLException {
+    List<Disease> diseases = diseaseDao.findAll();
+
+
+
+    String str = "{";
+    for (Disease disease: diseases) {
+
+                str+= "\""+disease.getDiseaseName()+"\",";
+
+    }
+    str+="}";
+
+    System.out.print("str "+str);
+    return  diseases;
+}
+
+    @RequestMapping(value = "/setDisease",method = RequestMethod.GET)
+    public String setDisease(@RequestParam("disease")String diseaseName,@RequestParam("name")String username) throws SQLException {
         Disease disease = diseaseService.findByDiseaseName(diseaseName);
-
-        User user = userService.findByUserName(userService.getCurrentUser().getUsername());
-        user.setDisease(disease);
+        System.out.println("user disease" +disease.getDiseaseName());
+        User user = userService.findByUserName(username);
+        user.setDiseaseId(disease.getId());
         userDao.update(user);
-
-        userService.setCurrentUser(user.getUsername());
-        dietPlanService.createPatientPlan(user.getUsername());
+        System.out.println("disease updated!" + user.getId());
+        //userService.setCurrentUser(user.getUsername());
+        String result = dietPlanService.createPatientPlan(user.getUsername());
+        return result;
     }
 
-    @RequestMapping(value = "/bmi",method = RequestMethod.GET)
-    public String getBmi() throws SQLException {
-       // String user = String.class.cast(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
-       User user = userService.getCurrentUser();
+    @RequestMapping(value = "/bmi",method = RequestMethod.GET)
+    public String getBmi(@RequestParam("name")String username) throws SQLException {
+        // String user = String.class.cast(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+
+        User user = userService.findByUserName(username);
         DailyDiet dd = new DailyDiet();
         String bmiValue = dd.calBMI(user.getWeight(), user.getHeight());
         return bmiValue;
 
     }
+
 //"["+ "\"" +bmiValue+ "\"" + "]";
 }

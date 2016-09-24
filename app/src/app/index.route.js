@@ -8,8 +8,17 @@
   function routeConfig($routeProvider) {
     $routeProvider
       .when('/', {
+        templateUrl: 'app/components/welcome/welcome.html'
+
+      })
+      .when('/home', {
         templateUrl: 'app/home/home.html',
         controller: 'mainDRPController',
+        controllerAs: 'vm'
+      })
+      .when('/homePatient', {
+        templateUrl: 'app/home/homePatient.html',
+        controller: 'patientHomeController',
         controllerAs: 'vm'
       })
       .when('/myaccount',{

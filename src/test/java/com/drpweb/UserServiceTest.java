@@ -41,7 +41,7 @@ public class UserServiceTest {
         Set<Role> roles = new HashSet<Role>();
         roles.add(role);
         User user = mock(User.class);
-        when(user.getName()).thenReturn("username");
+        when(user.getName()).thenReturn("userName");
         when(user.getEmail()).thenReturn("userEmail");
         when(user.getId()).thenReturn(1L);
         when(user.getPassword()).thenReturn("userPassword");
@@ -58,7 +58,7 @@ public class UserServiceTest {
         assertThat(userService.create(user),is(user));
         assertThat(userService.create(user).getId(),is(1L));
         assertThat(userService.create(user).getEmail(),is("userEmail"));
-        assertThat(userService.create(user).getName(),is("username"));
+        assertThat(userService.create(user).getName(),is("userName"));
         assertThat(userService.create(user).getPassword(),is("userPassword"));
 
     }

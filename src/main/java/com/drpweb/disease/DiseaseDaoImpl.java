@@ -29,7 +29,7 @@ public class DiseaseDaoImpl implements DiseaseDao {
     }
 
     @Override
-    public Disease findOne(int id) {
+    public Disease findOne(Long id) {
         return diseaseRepository.findOne(id);
     }
 

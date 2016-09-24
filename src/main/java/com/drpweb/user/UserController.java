@@ -3,6 +3,7 @@ package com.drpweb.user;
 import com.drpweb.diet_plan.DietPlan;
 import com.drpweb.diet_plan.DietPlanDao;
 import com.drpweb.diet_plan.DietPlanService;
+import com.drpweb.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Asus on 7/8/2559.
@@ -32,6 +35,7 @@ public class UserController {
 
     @RequestMapping(value = "/user",method = RequestMethod.POST)
     public User create(@RequestBody User user){
+
         User u = userService.create(user);
         DietPlan dietPlan = new DietPlan();
 
@@ -47,7 +51,17 @@ public class UserController {
         dietPlanDao.create(dietPlan);
 
         try {
-            dietPlanService.createPlan(user.getUsername());
+            Set<Role> roles = u.getRoles();
+            for (Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
+                Role role = it.next();
+                if (role.getRoleName().equals("member")){
+                    dietPlanService.createPlan(user.getUsername());
+
+                }
+
+
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

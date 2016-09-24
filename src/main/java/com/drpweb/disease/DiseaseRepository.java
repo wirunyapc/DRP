@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by ADMIN on 8/27/2016.
  */
-public interface DiseaseRepository extends JpaRepository<Disease,Integer> {
+public interface DiseaseRepository extends JpaRepository<Disease,Long> {
     Disease findByDiseaseName(String diseaseName);
 }

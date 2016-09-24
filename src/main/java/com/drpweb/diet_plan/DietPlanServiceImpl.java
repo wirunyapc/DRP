@@ -4,6 +4,8 @@ import choco.kernel.model.variables.integer.IntegerVariable;
 import choco.kernel.solver.Solver;
 import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
+import com.drpweb.disease.Disease;
+import com.drpweb.disease.DiseaseService;
 import com.drpweb.food.Food;
 import com.drpweb.food.FoodService;
 import com.drpweb.role.Role;
@@ -36,6 +38,9 @@ public class DietPlanServiceImpl implements DietPlanService{
     @Autowired
     DailyMealDao dailyMealDao;
 
+    @Autowired
+    DiseaseService diseaseService;
+
     @Override
     public DietPlan findByUserId(Long id) {
         return dietPlanDao.findByUserId(id);
@@ -59,7 +64,7 @@ public class DietPlanServiceImpl implements DietPlanService{
             if (role.getRoleName().equals("member")){
                 s = dailyDiet.solve(amount, period,
                         food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(), bmr);
+                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(),null, bmr);
             }
 
 
@@ -74,7 +79,7 @@ public class DietPlanServiceImpl implements DietPlanService{
     }
 
     @Override
-    public void createPatientPlan(String name) throws SQLException {
+    public String createPatientPlan(String name) throws SQLException {
         User user = userService.findByUserName(name);
         Food food;
         int amount = user.getDuration();
@@ -85,25 +90,28 @@ public class DietPlanServiceImpl implements DietPlanService{
         DailyDiet dailyDiet = new DailyDiet();
         Solver s;
         food = foodService.getFood();
+        Disease userDisease = diseaseService.getDiseaseById(user.getDiseaseId());
+        System.out.println("disease for plan :"+userDisease.getDiseaseName());
 
         Set<Role> roles = user.getRoles();
         for (Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
             Role role = it.next();
+            if (role.getRoleName().equals("patient")) {
 
-                s = dailyDiet.solvePatient(amount, period,
-                        food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(), user.getDisease(),bmr);
-
-
-
+                s = dailyDiet.solve(amount, period,
+                        food.getArr_id(), food.getArr_kal(), food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
+                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(), userDisease, bmr);
+            }
         }
+
+
 
 
         String result = dailyDiet.toJson();
         savePlan(result,user);
         System.out.println("Resultttttttttttttttttttttt");
         System.out.println(result);
-
+        return result;
     }
     @Override
     public void savePlan(String result,User user){

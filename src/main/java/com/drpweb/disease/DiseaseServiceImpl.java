@@ -12,7 +12,7 @@ public class DiseaseServiceImpl implements DiseaseService {
     DiseaseDao diseaseDao;
 
     @Override
-    public Disease getDiseaseById(int id) {
+    public Disease getDiseaseById(Long id) {
 
         return diseaseDao.findOne(id);
     }

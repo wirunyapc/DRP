@@ -6,12 +6,13 @@
 
   angular
     .module('app')
-    .controller('mainDRPController', mainDRPController)
-    .controller('MainCtrl',calendarController);
+    .controller('patientHomeController',patientHomeController)
+
+    .controller('PatientCalendarController',PatientCalendarController);
 
 
   /** @ngInject */
-  function mainDRPController($filter,$http, $log,$scope,$rootScope) {
+  function patientHomeController($filter,$http, $log,$scope,$rootScope) {
     var vm = this;
     vm.selectedDate = null;
     vm.bfast = null;
@@ -40,20 +41,6 @@
               $log.debug('bmi ',result);
             });
 
-    /* Disease request*/
-    //$http.get('http://localhost:8080/getDiseases', {})
-    //  .then(function (result) {
-    //    $scope.diseases = result;
-    //    $log.debug(result.data[0]);
-    //    //var disease = [];
-    //    //for(var i=0; i<result.length;i++)
-    //    //{
-    //    //
-    //    //  disease.add = result.data[i];
-    //    //}
-    //    //
-    //   // $log.debug('bmi ',result);
-    //  });
 
 
     vm.setDirection = function(direction) {
@@ -74,29 +61,50 @@
       return "<p>date</p>";
     };
 
-    $scope.fetchPlan = function(){
-      $http({
-        method: 'GET',
-        url: 'http://localhost:8080/getFoodPlan'
-
-      }).then(function(response) {
-        console.log(response.data);
-        $rootScope.plan = response.data;
-      });
-    };
-    //
-    //$scope.setDisease = function(){
-    //  $http({
-    //    method:'PUT',
-    //    url: 'http://localhost:8080/setDisease/?disease=:diseaseName'
-    //  })
-    //};
 
   }
 
   /** @ngInject */
-  function calendarController ($http,$scope, $filter, moment, uiCalendarConfig, $timeout){
+  function PatientCalendarController ($http,$scope, $filter, moment, uiCalendarConfig,$log){
    // var dietPlan = [[["2016-09-10 00:00:00.0","1","ทอดมันปลา",],["2016-09-10 00:00:00.0","2","ผัดแตงกวาไก่",],["2016-09-10 00:00:00.0","3","กุ้งผัดหน่อไม้ฝรั่ง",],["2016-09-11 00:00:00.0","1","ข้าวต้มกุ้ง",],["2016-09-11 00:00:00.0","2","ปลาทับทิมนึ่งซีอิ้ว",],["2016-09-11 00:00:00.0","3","ปลากะพงลวกจิ้ม",],["2016-09-12 00:00:00.0","1","แกงเหลืองปักษ์ใต้",],["2016-09-12 00:00:00.0","2","ข้าวผัดมันกุ้ง",],["2016-09-12 00:00:00.0","3","ขนมจีบ",],["2016-09-13 00:00:00.0","1","ทอดมันปลา",],["2016-09-13 00:00:00.0","2","ผัดแตงกวาไก่",],["2016-09-13 00:00:00.0","3","กุ้งผัดหน่อไม้ฝรั่ง",],["2016-09-14 00:00:00.0","1","ข้าวต้มกุ้ง",],["2016-09-14 00:00:00.0","2","ปลาทับทิมนึ่งซีอิ้ว",],["2016-09-14 00:00:00.0","3","ปลากะพงลวกจิ้ม",],["2016-09-15 00:00:00.0","1","แกงเหลืองปักษ์ใต้",],["2016-09-15 00:00:00.0","2","ข้าวผัดมันกุ้ง",],["2016-09-15 00:00:00.0","3","ขนมจีบ",],["2016-09-16 00:00:00.0","1","ปลานึ่งสมุนไพร",],["2016-09-16 00:00:00.0","2","มะละกอผัดหมู",],["2016-09-16 00:00:00.0","3","น้ำพริกหนุ่ม",]]];
+    var vm = this;
+    /*DROPDOWN*/
+
+    $scope.diseases = [];
+    $log.debug('dropdown');
+    $http
+      .get('http://localhost:8080/getDisease')
+      .then(function (result) {
+        $scope.diseases = result.data;
+        $log.debug('disease ',result.data);
+      });
+
+
+
+    $scope.setDisease = function(){
+
+      $log.debug(vm.selectedDisease);
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/setDisease',
+        params: {
+          disease: vm.selectedDisease,
+          name: $scope.currentuser
+        }
+      }).then(function (result) {
+          //$scope.diseasesName = result.data;
+          $log.debug('set Disease');
+          //console.log('set disease success', result);
+          $scope.requestPlan();
+      }, function errorCallback(response) {
+        $log.debug('Error set Disease',response);
+      });
+
+    };
+
+    /*END DROPDOWN*/
+
+
     $scope.$on('$viewContentLoaded', function(){
       console.log("Test");
     });
@@ -111,6 +119,7 @@
       $('.fc-today-button').click();
     };
     $scope.requestPlan = function(){
+      $log.debug('requestPlan');
       /*Diet Plan*/
       $http({
         method: 'GET',
@@ -239,7 +248,6 @@
 
 
   }
-
 
 
 
