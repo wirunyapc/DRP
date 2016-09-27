@@ -92,58 +92,5 @@ public class FoodServiceImpl implements FoodService {
         }
         return food;
     }
-    /*@Override
-    public Food getFood() throws SQLException{
-        DailyDiet dailyDiet = new DailyDiet();
-        ResultSet rs;
-        Statement stmt;
-        PreparedStatement prepareStmt;
-        String query;
-        Food food;
 
-            rs = dailyDiet.getAllFood();
-        int size = dailyDiet.getResultSize();
-        food = new Food();
-        int[]arr_id = new int[size];
-        int[]arr_kal = new int[size];
-        int[]arr_fat = new int[size];
-        int[]arr_carboh = new int[size];
-        int[]arr_protein = new int[size];
-
-        ArrayList<int[]> kals = new ArrayList();
-        ArrayList<int[]> fats = new ArrayList();
-        ArrayList<int[]> carbohs = new ArrayList();
-        ArrayList<int[]> proteins = new ArrayList();
-        ArrayList<String> names = new ArrayList();
-
-        int idx = 0;
-        while(rs.next()){
-            arr_id[idx] = rs.getInt("food_id");
-            arr_kal[idx] = rs.getInt("food_kcal");
-            arr_fat[idx] = rs.getInt("fat");
-            arr_carboh[idx] = rs.getInt("carbohydate");
-            arr_protein[idx] = rs.getInt("protein");
-
-            kals.add(new int[]{arr_id[idx], arr_kal[idx]});
-            fats.add(new int[]{arr_id[idx], arr_fat[idx]});
-            carbohs.add(new int[]{arr_id[idx], arr_carboh[idx]});
-            proteins.add(new int[]{arr_id[idx], arr_protein[idx]});
-            names.add(rs.getString("ff"));
-
-            idx++;
-        }
-
-        food.setArr_id(arr_id);
-        food.setArr_kal(arr_kal);
-        food.setArr_fat(arr_fat);
-        food.setArr_carboh(arr_carboh);
-        food.setArr_protein(arr_protein);
-        food.setKals(kals);
-        food.setFats(fats);
-        food.setCarbohs(carbohs);
-        food.setProteins(proteins);
-        food.setNames(names);
-
-        return food;
-    }*/
 }

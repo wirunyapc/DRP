@@ -1,71 +1,88 @@
 <div class="row">
-    <table class="brpbar"  >
-        <tr>
-            <th style="background-color: #C0C0C0">
-                BMI : {{vm.bmi}}
-            </th>
-            <th style="background-color: #A4C8F0">
-                Budget : <!--{{vm.detail.budget}}-->
-            </th>
-            <th style="background-color: #FFDDDD">
-                Diet :
-            </th>
-            <th style="background-color: #F4EFAF">
-                Activity :
-            </th>
-            <th style="background-color: #D0B3E1">
-                Net :
-            </th>
-            <th style="background-color: #B9E3AE">
-                Under :
-            </th>
-        </tr>
-    </table>
+  <table class="brpbar"  >
+    <tr>
+      <th style="background-color: #C0C0C0">
+        BMI : {{vm.bmi}}
+      </th>
+      <th style="background-color: #A4C8F0">
+        Budget : <!--{{vm.detail.budget}}-->
+      </th>
+      <th style="background-color: #FFDDDD">
+        Diet :
+      </th>
+      <th style="background-color: #F4EFAF">
+        Activity :
+      </th>
+      <th style="background-color: #D0B3E1">
+        Net :
+      </th>
+      <th style="background-color: #B9E3AE">
+        Under :
+      </th>
+    </tr>
+  </table>
 </div>
 
-<!--<div>-->
-  <!--<dropdown placeholder="Disease..." list="colours" selected="colour" property="name"></dropdown>-->
-<!--</div>-->
 
-<div class="row" style="margin-top: 30px">
-  <div ng-controller="MainCtrl" ng-init="init()">
+<!--<dropdown placeholder="Disease..." list="diseases" selected="disease" property="name"></dropdown>-->
+<div ng-controller="MainCtrl as vm" ng-init="init()">
+<div ng-show="vm.currentR == 'patient'">
+  <p>Select a disease:</p>
+  <form role="form" ng-submit="setDisease()">
+    <div class="form-group">
+      <select ng-model="vm.selectedDisease" class="pull-left">
+        <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" value="submit">Create Plan</button>
+    </div>
+  </form>
+  <h1>You selected: {{vm.selectedDisease}}</h1>
+</div>
+
+
+
+  <div class="row" style="margin-top: 30px">
+
     <div class="col-md-5 col-md-offset-1">
-   <!-- <calendar-md flex layout layout-fill
-                 calendar-direction="direction"
-                 on-prev-month="prevMonth"
-                 on-next-month="nextMonth"
-                 on-day-click="dayClick"
-                 title-format="'MMMM y'"
-                 ng-model='selectedDate'
-                 day-format="'d'"
-                 day-label-format="'EEE'"
-                 day-label-tooltip-format="'EEEE'"
-                 day-tooltip-format="'fullDate'"
-                 week-starts-on="firstDayOfWeek"
-                 day-content="setDayContent"></calendar-md> -->
+      <!-- <calendar-md flex layout layout-fill
+                    calendar-direction="direction"
+                    on-prev-month="prevMonth"
+                    on-next-month="nextMonth"
+                    on-day-click="dayClick"
+                    title-format="'MMMM y'"
+                    ng-model='selectedDate'
+                    day-format="'d'"
+                    day-label-format="'EEE'"
+                    day-label-tooltip-format="'EEEE'"
+                    day-tooltip-format="'fullDate'"
+                    week-starts-on="firstDayOfWeek"
+                    day-content="setDayContent"></calendar-md> -->
 
-        <!-- <div style="font-size: 32px; color: #fff; ">
-          <span style="background-color: blue;" ng-click="selectCalTab(1)">Tab 1</span>
-          <span style="background-color: green;" ng-click="selectCalTab(2)">Tab 2</span>
-        </div> -->
+      <!-- <div style="font-size: 32px; color: #fff; ">
+        <span style="background-color: blue;" ng-click="selectCalTab(1)">Tab 1</span>
+        <span style="background-color: green;" ng-click="selectCalTab(2)">Tab 2</span>
+      </div> -->
 
-        <br>
-        <div style="background-color: #999999" ng-if="calendarTab == 1">
-          <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="calendarDate" calendar="myCalendar1"></div>
-        </div>
-        <div style="background-color: #989898" ng-if="calendarTab == 2">
-          Nothing to see in this tab
-        </div>
-        <br>
-
-
-
-
-        <div hidden> {{calendarDate}} </div>
+      <br>
+      <div style="background-color: #999999" ng-if="calendarTab == 1">
+        <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="calendarDate" calendar="myCalendar1"></div>
       </div>
+      <div style="background-color: #989898" ng-if="calendarTab == 2">
+        Nothing to see in this tab
+      </div>
+      <br>
+
+
+
+
+      <div hidden> {{calendarDate}} </div>
+    </div>
     <div class="col-md-5">
       <div>
-        <h1>Meals for  {{selectedDate}}</h1>
+        <h1>Patient  {{selectedDate}}</h1>
       </div>
       <table class="table table-hover" width="100%">
         <thead>
@@ -145,7 +162,7 @@
     </div>
     <div class="col-md-1"></div>
   </div>
- <!-- <button ng-click="fetchPlan()" hidden>Check Plan</button>-->
+  <!-- <button ng-click="fetchPlan()" hidden>Check Plan</button>-->
 </div>
 
 

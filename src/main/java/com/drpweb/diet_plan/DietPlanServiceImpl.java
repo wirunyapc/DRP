@@ -64,7 +64,7 @@ public class DietPlanServiceImpl implements DietPlanService{
             if (role.getRoleName().equals("member")){
                 s = dailyDiet.solve(amount, period,
                         food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(),null, bmr);
+                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(),0,0,0,0, bmr,"member");
             }
 
 
@@ -100,7 +100,7 @@ public class DietPlanServiceImpl implements DietPlanService{
 
                 s = dailyDiet.solve(amount, period,
                         food.getArr_id(), food.getArr_kal(), food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(), userDisease, bmr);
+                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(), (int)userDisease.getKcal(),(int)userDisease.getFat(),(int)userDisease.getProt(),(int)userDisease.getCarboh(), bmr,"patient");
             }
         }
 

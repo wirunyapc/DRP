@@ -6,6 +6,7 @@ import com.drpweb.disease.Disease;
 import com.drpweb.disease.DiseaseDao;
 import com.drpweb.disease.DiseaseService;
 import com.drpweb.food.Food;
+import com.drpweb.food.FoodDao;
 import com.drpweb.food.FoodService;
 import com.drpweb.user.User;
 import com.drpweb.user.UserDao;
@@ -39,6 +40,8 @@ public class DietPlanController {
     UserDao userDao;
     @Autowired
     DietPlanService dietPlanService;
+    @Autowired
+    FoodDao foodDao;
 
 
 
@@ -139,6 +142,13 @@ public List<Disease> getDisease() throws SQLException {
     return  diseases;
 }
 
+    @RequestMapping(value = "/getFoods",method = RequestMethod.GET)
+    public List<Food> getFoods() throws SQLException {
+
+        List<Food> foods = foodDao.findAll();
+        return  foods;
+    }
+
     @RequestMapping(value = "/setDisease",method = RequestMethod.GET)
     public String setDisease(@RequestParam("disease")String diseaseName,@RequestParam("name")String username) throws SQLException {
         Disease disease = diseaseService.findByDiseaseName(diseaseName);
@@ -150,6 +160,8 @@ public List<Disease> getDisease() throws SQLException {
         //userService.setCurrentUser(user.getUsername());
         String result = dietPlanService.createPatientPlan(user.getUsername());
         return result;
+
+
     }
 
 

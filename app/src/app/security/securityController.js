@@ -100,14 +100,19 @@
               console.log('username from secure', $rootScope.currentuser)
 
 
-              if($rootScope.user.roles['patient']==true) {
-                $location.path('/homePatient')
-              }
-              if($rootScope.user.roles['member']==true){
-                $location.path('/home')
-              }
               if($rootScope.user.roles['admin']==true){
                 $location.path('/manage')
+              }else if($rootScope.user.roles['member']==true){
+                $rootScope.currentrole = 'member';
+                $log.debug($rootScope.currentrole);
+                $location.path('/home')
+
+
+              }else {
+                $rootScope.currentrole = 'patient';
+                $log.debug($rootScope.currentrole);
+                $location.path('/home')
+
               }
             });
             //delete $rootScope.error;

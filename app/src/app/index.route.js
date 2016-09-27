@@ -16,12 +16,7 @@
         controller: 'mainDRPController',
         controllerAs: 'vm'
       })
-      .when('/homePatient', {
-        templateUrl: 'app/home/homePatient.html',
-        controller: 'patientHomeController',
-        controllerAs: 'vm'
-      })
-      .when('/myaccount',{
+          .when('/myaccount',{
       templateUrl: 'app/User/myAccount.html',
       controller: 'MyAccountController',
       controllerAs: 'vm'
