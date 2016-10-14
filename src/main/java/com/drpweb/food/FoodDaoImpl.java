@@ -12,20 +12,20 @@ import java.util.List;
 public class FoodDaoImpl implements FoodDao{
     @Autowired
     FoodRepository foodRepository;
-    @Override
-    public Food create(Food food) {
-        return foodRepository.save(food);
-    }
-
-    @Override
-    public Food update(Food food) {
-        return foodRepository.save(food);
-    }
-
-    @Override
-    public void delete(Food food) {
-        foodRepository.delete(food);
-    }
+//    @Override
+//    public Food create(Food food) {
+//        return foodRepository.save(food);
+//    }
+//
+//    @Override
+//    public Food update(Food food) {
+//        return foodRepository.save(food);
+//    }
+//
+//    @Override
+//    public void delete(Food food) {
+//        foodRepository.delete(food);
+//    }
 
     @Override
     public Food findOne(int id) {

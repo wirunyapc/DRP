@@ -3,7 +3,6 @@ package com.drpweb.daily_meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,23 +28,19 @@ public class DailyMealDaoImpl implements DailyMealDao{
         dailyMealRepository.delete(dailyMeal);
     }
 
-    @Override
-    public DailyMeal findOne(Long id) {
-        return dailyMealRepository.findOne(id);
-    }
-
-    @Override
-    public List<DailyMeal> findAll() {
-        return dailyMealRepository.findAll();
-    }
+//    @Override
+//    public DailyMeal findOne(Long id) {
+//        return dailyMealRepository.findOne(id);
+//    }
+//
+//    @Override
+//    public List<DailyMeal> findAll() {
+//        return dailyMealRepository.findAll();
+//    }
 
     @Override
     public List<DailyMeal> findByDietPlanId(Long id) {
         return dailyMealRepository.findByDietPlanId(id);
     }
 
-    @Override
-    public List<DailyMeal> findByDate(Date date) {
-        return dailyMealRepository.findByDate(date);
-    }
 }

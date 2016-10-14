@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,14 +23,17 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
+    UserDao userDao;
+    @Autowired
     DietPlanDao dietPlanDao;
     @Autowired
     DietPlanService dietPlanService;
 
-    @RequestMapping(value = "/user/all",method = RequestMethod.GET)
-    public List<User> list(){
-        return userService.findAll();
-    }
+//    @RequestMapping(value = "/user/all",method = RequestMethod.GET)
+//    public List<User> list(){
+//        return userDao.findAll();
+//    }
+
 
     @RequestMapping(value = "/user",method = RequestMethod.POST)
     public User create(@RequestBody User user){

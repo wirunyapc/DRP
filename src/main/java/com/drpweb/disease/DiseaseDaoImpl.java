@@ -13,20 +13,20 @@ public class DiseaseDaoImpl implements DiseaseDao {
     @Autowired
     DiseaseRepository diseaseRepository;
 
-    @Override
-    public Disease create(Disease disease) {
-        return diseaseRepository.save(disease);
-    }
-
-    @Override
-    public Disease update(Disease disease) {
-        return diseaseRepository.save(disease);
-    }
-
-    @Override
-    public void delete(Disease disease) {
-        diseaseRepository.delete(disease);
-    }
+//    @Override
+//    public Disease create(Disease disease) {
+//        return diseaseRepository.save(disease);
+//    }
+//
+//    @Override
+//    public Disease update(Disease disease) {
+//        return diseaseRepository.save(disease);
+//    }
+//
+//    @Override
+//    public void delete(Disease disease) {
+//        diseaseRepository.delete(disease);
+//    }
 
     @Override
     public Disease findOne(Long id) {

@@ -18,28 +18,6 @@ public class DietPlan {
     @Column(name = "user_id")
     private Long userId;
 
-//    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
-//    @PrimaryKeyJoinColumn
-//    private User user;
-
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dietPlan")
-//    private Set<DailyMeal> dailyMeals = new HashSet<DailyMeal>(0);
-//
-//    public Set<DailyMeal> getDailyMeals() {
-//        return dailyMeals;
-//    }
-//
-//    public void setDailyMeals(Set<DailyMeal> dailyMeals) {
-//        this.dailyMeals = dailyMeals;
-//    }
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public Long getDietPlanId() {
         return dietPlanId;

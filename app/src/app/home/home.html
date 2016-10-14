@@ -1,23 +1,25 @@
-<div class="row">
-  <table class="brpbar"  >
+<div class="row" style="
+    width: 1334px;
+">
+  <table class="brpbar">
     <tr>
-      <th style="background-color: #C0C0C0">
+      <th style="background-color: #C0C0C0;width: 200px;">
         BMI : {{vm.bmi}}
       </th>
       <th style="background-color: #A4C8F0">
-        Budget : <!--{{vm.detail.budget}}-->
+        Budget : {{vm.budget}}
       </th>
       <th style="background-color: #FFDDDD">
-        Diet :
+        Diet : {{totalDietCal}}
       </th>
       <th style="background-color: #F4EFAF">
-        Activity :
+        Activity : {{vm.activity}}
       </th>
       <th style="background-color: #D0B3E1">
-        Net :
+        Net : {{totalDietCal-0}}
       </th>
       <th style="background-color: #B9E3AE">
-        Under :
+        Under : {{vm.budget-totalDietCal}}
       </th>
     </tr>
   </table>
@@ -26,25 +28,27 @@
 
 <!--<dropdown placeholder="Disease..." list="diseases" selected="disease" property="name"></dropdown>-->
 <div ng-controller="MainCtrl as vm" ng-init="init()">
+
 <div ng-show="vm.currentR == 'patient'">
-  <p>Select a disease:</p>
+
   <form role="form" ng-submit="setDisease()">
     <div class="form-group">
-      <select ng-model="vm.selectedDisease" class="pull-left">
+      <select ng-model="vm.selectedDisease" class="pull-left" style="margin-left: 115px;height: 34px;">
+        <option value="" disabled selected>{{currentDisease}}</option>
         <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
       </select>
     </div>
 
     <div class="form-group">
-      <button class="btn btn-primary" type="submit" value="submit">Create Plan</button>
+      <button class="btn btn-primary" type="submit" value="submit" style="margin-left: 20px;">Generate Plan</button>
     </div>
   </form>
-  <h1>You selected: {{vm.selectedDisease}}</h1>
+  <!--<h1>You selected: {{vm.selectedDisease}}</h1>-->
 </div>
 
 
 
-  <div class="row" style="margin-top: 30px">
+  <div class="row" style="margin-top: 15px;width: 1334px;">
 
     <div class="col-md-5 col-md-offset-1">
       <!-- <calendar-md flex layout layout-fill
@@ -78,12 +82,13 @@
 
 
 
-      <div hidden> {{calendarDate}} </div>
+      <!--<div hidden> {{calendarDate}} </div>-->
     </div>
     <div class="col-md-5">
-      <div>
-        <h1>Patient  {{selectedDate}}</h1>
-      </div>
+<!--      <div>
+        <h1>Meal for  {{selectedDate}}</h1>
+      </div>-->
+
       <table class="table table-hover" width="100%">
         <thead>
         <tr>
@@ -95,9 +100,14 @@
         <tbody>
         <tr>
           <td>
-            {{bfast}}
+              <select ng-model="vm.selectedFoodBfast" class="pull-left" ng-change="setFood(vm.selectedFoodBfast,1)">
+                <option value="" disabled selected>{{bfast}}</option>
+                <option ng-repeat="f in foods" value="{{f.foodName}}"> {{f.foodName}}</option>
+              </select>
+
             <span class="pull-right glyphicon glyphicon-remove-circle"></span>
             <span class="pull-right glyphicon glyphicon-edit"></span>
+
           </td>
         </tr>
         </tbody>
@@ -109,6 +119,7 @@
         </tr>
         </tfoot>
       </table>
+
       <table class="table table-hover" width="100%">
         <thead>
         <tr>
@@ -120,7 +131,11 @@
         <tbody>
         <tr>
           <td>
-            {{lunch}}
+            <select ng-model="vm.selectedFoodLunch" class="pull-left" ng-change="setFood(vm.selectedFoodLunch,2)">
+              <option value="" disabled selected>{{lunch}}</option>
+              <option ng-repeat="f in foods" value="{{f.foodName}}"> {{f.foodName}}</option>
+            </select>
+
             <span class="pull-right glyphicon glyphicon-remove-circle"></span>
             <span class="pull-right glyphicon glyphicon-edit"></span>
           </td>
@@ -134,6 +149,7 @@
         </tr>
         </tfoot>
       </table>
+
       <table class="table table-hover" width="100%">
         <thead>
         <tr>
@@ -145,7 +161,11 @@
         <tbody>
         <tr>
           <td>
-            {{dinner}}
+            <select ng-model="vm.selectedFoodDinner" class="pull-left" ng-change="setFood(vm.selectedFoodDinner,3)">
+              <option value="" disabled selected>{{dinner}}</option>
+              <option ng-repeat="f in foods" value="{{f.foodName}}"> {{f.foodName}}</option>
+            </select>
+
             <span class="pull-right glyphicon glyphicon-remove-circle"></span>
             <span class="pull-right glyphicon glyphicon-edit"></span>
           </td>

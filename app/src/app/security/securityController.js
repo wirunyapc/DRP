@@ -99,7 +99,6 @@
               $rootScope.currentuser = $rootScope.user.username;
               console.log('username from secure', $rootScope.currentuser)
 
-
               if($rootScope.user.roles['admin']==true){
                 $location.path('/manage')
               }else if($rootScope.user.roles['member']==true){

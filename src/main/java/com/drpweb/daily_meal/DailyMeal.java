@@ -42,45 +42,6 @@ public class DailyMeal {
         this.mealId = meal;
     }
 
-//    public Long getFoodId() {
-//        return foodId;
-//    }
-//
-//    public void setFoodId(Long foodId) {
-//        this.foodId = foodId;
-//    }
-//
-//    public Long getDietPlanId() {
-//        return dietPlanId;
-//    }
-//
-//    public void setDietPlanId(Long dietPlanId) {
-//        this.dietPlanId = dietPlanId;
-//    }
-
-  /*  @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "food_id", nullable = false, insertable = false, updatable = false)
-    private Food food;
-
-    public Food getFood() {
-        return food;
-    }
-
-    public void setFood(Food food) {
-        this.food = food;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
-    private DietPlan dietPlan;
-
-    public DietPlan getDietPlan() {
-        return dietPlan;
-    }
-
-    public void setDietPlan(DietPlan dietPlan) {
-        this.dietPlan = dietPlan;
-    }*/
 
     public Long getDietPlanId() {
         return dietPlanId;

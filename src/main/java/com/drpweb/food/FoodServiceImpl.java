@@ -14,39 +14,11 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     FoodDao foodDao;
 
-
-    @Override
-    public Food create(Food food) {
-        return foodDao.create(food);
-    }
-
-    @Override
-    public Food update(Food food) {
-        return foodDao.update(food);
-    }
-
-    @Override
-    public void delete(int id) {
-        foodDao.delete(foodDao.findOne(id));
-    }
-
-    @Override
-    public Food findOne(int id) {
-        return foodDao.findOne(id);
-    }
-
-    @Override
-    public List<Food> findAll() { return foodDao.findAll(); }
-
-    @Override
-    public Food findByName(String name) {
-        return foodDao.findByFoodName(name);
-    }
-
     @Override
     public Food getFood(){
         Food food = new Food();
         List<Food> foods = foodDao.findAll();
+        System.out.println("Food listttt" + foods);
         if(foods!=null) {
             int size = foods.size();
             int[] arr_id = new int[size];
@@ -89,8 +61,11 @@ public class FoodServiceImpl implements FoodService {
             food.setCarbohs(carbohs);
             food.setProteins(proteins);
             food.setNames(names);
+
+            System.out.println("Food setNamesssssss "+ food.getNames());
         }
         return food;
     }
+
 
 }

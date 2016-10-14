@@ -1,3 +1,4 @@
+<!--
 <div class="alert alert-danger alert-dismissible col-md-offset-4 col-md-4" role="alert" ng-show="vm.loadingstatus">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
@@ -5,8 +6,13 @@
 </div>
 <div class="row">
 <div class="panel panel-default col-md-offset-4 col-md-4">
-  <div class="panel-heading">Account</div>
-  <table class="table table-hover">
+
+  <div class="panel-heading">
+    My Account
+    <span class="pull-right glyphicon glyphicon-pencil"></span>
+  </div>
+
+  <table class="table table-hover" ng-controller="MyAccountController as vm">
     <tr>
       <th>Username</th><td>{{vm.user.username}}</td>
     </tr>
@@ -37,3 +43,106 @@
   </table>
 </div>
 </div>
+-->
+
+<div class="container">
+  <h1 style="color: white; padding-left: 200px;">Edit Profile</h1>
+  <hr>
+  <div class="row">
+    <!-- edit form column -->
+    <div class="col-md-9 personal-info" style="margin-left: 80px;">
+
+      <form class="form-horizontal" role="form" ng-submit="vm.edit()" ng-controller="MyAccountController as vm">
+        <div class="form-group">
+          <label class="col-lg-3 control-label">First name:</label>
+          <div class="col-lg-8">
+            <input class="form-control" disabled = "disabled" type="text" ng-model="vm.user.name" value="{{vm.user.name}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Last name:</label>
+          <div class="col-lg-8">
+            <input class="form-control" disabled = "disabled" type="text" ng-model="vm.user.lastName" value="{{vm.user.lastName}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Email:</label>
+          <div class="col-lg-8">
+            <input disabled = "disabled" class="form-control" type="text" value="{{vm.user.email}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Gender:</label>
+          <div class="col-lg-8">
+            <input disabled = "disabled" class="form-control" type="text" value="{{vm.user.gender}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Birthday:</label>
+          <div class="col-lg-8">
+            <input disabled = "disabled" class="form-control" type="text" value="{{vm.user.dob}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Mode:</label>
+          <div class="col-lg-8">
+            <input class="form-control" disabled = "disabled" type="text" value="{{vm.user.roles[0].roleName}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Weight:</label>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" value="{{vm.user.weight}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Height:</label>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" value="{{vm.user.height}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Duration:</label>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" value="{{vm.user.duration}}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">Username:</label>
+          <div class="col-md-8">
+            <input class="form-control" type="text" value="{{vm.user.username}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Password:</label>
+          <div class="col-md-8">
+            <input class="form-control" type="password" value="{{vm.user.password}}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Confirm password:</label>
+          <div class="col-md-8">
+            <input class="form-control" type="password" value="{{vm.user.password}}">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <button type="submit" class="btn btn-primary" value="submit">Save Changes</button>
+            <span></span>
+            <input type="button" class="btn btn-default" value="Cancel" ng-click="vm.cancel()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <img src="images/runkeeper.png">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<hr>

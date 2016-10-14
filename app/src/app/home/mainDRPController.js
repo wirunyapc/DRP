@@ -19,8 +19,15 @@
     vm.lunch = null;
     vm.dinner = null;
     vm.firstDayOfWeek = 0;
-    vm.bmi = null;
     $scope.plan = null;
+
+    /*CalInfo*/
+    vm.bmi = null;
+    vm.budget = null;
+    vm.net = 0;
+   //
+    vm.under = 0;
+    vm.activity = 0;
 
     $scope.currentuser = $rootScope.currentuser;
     console.log('current user from DRP',$scope.currentuser);
@@ -37,10 +44,29 @@
     })
       .then(function (result) {
         $log.debug(result.data[0]);
-        vm.bmi = result.data[0]+"/"+result.data[1];
+        vm.bmi = result.data[0]+"("+result.data[1]+")";
         $log.debug('bmi ',result);
       });
 
+    /* BMR request*/
+     $http({
+     method: 'GET',
+     url: 'http://localhost:8080/getBmr',
+     params: {name: $scope.currentuser}
+     })
+     .then(function (result) {
+       $log.debug('bmr ',result.data[0]);
+     vm.budget = result.data[0];
+
+     });
+
+    /*NET*/
+  //  vm.net = vm.diet - vm.activity;
+
+    /*Activity*/
+
+    /*Under*/
+  //  vm.under = vm.budget - vm.net;
 
 
     vm.setDirection = function(direction) {
@@ -65,46 +91,94 @@
   }
 
   /** @ngInject */
-  function calendarController ($http,$scope, $filter, moment, uiCalendarConfig,$log,$rootScope){
-    // var dietPlan = [[["2016-09-10 00:00:00.0","1","ทอดมันปลา",],["2016-09-10 00:00:00.0","2","ผัดแตงกวาไก่",],["2016-09-10 00:00:00.0","3","กุ้งผัดหน่อไม้ฝรั่ง",],["2016-09-11 00:00:00.0","1","ข้าวต้มกุ้ง",],["2016-09-11 00:00:00.0","2","ปลาทับทิมนึ่งซีอิ้ว",],["2016-09-11 00:00:00.0","3","ปลากะพงลวกจิ้ม",],["2016-09-12 00:00:00.0","1","แกงเหลืองปักษ์ใต้",],["2016-09-12 00:00:00.0","2","ข้าวผัดมันกุ้ง",],["2016-09-12 00:00:00.0","3","ขนมจีบ",],["2016-09-13 00:00:00.0","1","ทอดมันปลา",],["2016-09-13 00:00:00.0","2","ผัดแตงกวาไก่",],["2016-09-13 00:00:00.0","3","กุ้งผัดหน่อไม้ฝรั่ง",],["2016-09-14 00:00:00.0","1","ข้าวต้มกุ้ง",],["2016-09-14 00:00:00.0","2","ปลาทับทิมนึ่งซีอิ้ว",],["2016-09-14 00:00:00.0","3","ปลากะพงลวกจิ้ม",],["2016-09-15 00:00:00.0","1","แกงเหลืองปักษ์ใต้",],["2016-09-15 00:00:00.0","2","ข้าวผัดมันกุ้ง",],["2016-09-15 00:00:00.0","3","ขนมจีบ",],["2016-09-16 00:00:00.0","1","ปลานึ่งสมุนไพร",],["2016-09-16 00:00:00.0","2","มะละกอผัดหมู",],["2016-09-16 00:00:00.0","3","น้ำพริกหนุ่ม",]]];
+  function calendarController($http,$scope, $filter, moment, uiCalendarConfig,$log,$rootScope){
     var vm = this;
-    /*DROPDOWN*/
     vm.currentR=$rootScope.currentrole;
+    vm.selectedFoodBfast = null;
+    vm.selectedFoodLunch = null;
+    vm.selectedFoodDinner = null;
 
-    $scope.diseases = [];
-    $log.debug('dropdown');
+    /*DROPDOWN Food*/
+    $scope.foods = [];
+
     $http
-      .get('http://localhost:8080/getDisease')
+      .get('http://localhost:8080/getFoods')
       .then(function (result) {
-        $scope.diseases = result.data;
-        $log.debug('disease ',result.data);
+        $scope.foods = result.data;
+        $log.debug('food ',result.data);
       });
 
-
-
-    $scope.setDisease = function(){
-
-      $log.debug(vm.selectedDisease);
+    $scope.setFood=function(food,meal){
+      $log.debug(meal,food);
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/setDisease',
+        url: 'http://localhost:8080/setFood',
         params: {
-          disease: vm.selectedDisease,
-          name: $scope.currentuser
+          food: food,
+          name: $scope.currentuser,
+          meal: meal,
+          date: $scope.selectedDate
         }
-      }).then(function (result) {
-        //$scope.diseasesName = result.data;
-        $log.debug('set Disease');
-        //console.log('set disease success', result);
+      }).then(function(result) {
+
+        $log.debug('set Food'+result.data);
         $scope.requestPlan();
+
+
       }, function errorCallback(response) {
-        $log.debug('Error set Disease',response);
+        $log.debug('Error set Food',response);
       });
+    }
 
-    };
 
-    /*END DROPDOWN*/
+    /*end*/
 
+
+    /*DROPDOWN Disease*/
+
+    $scope.diseases = [];
+if(vm.currentR=='patient') {
+  $http
+    .get('http://localhost:8080/getDiseases')
+    .then(function (result) {
+      $scope.diseases = result.data;
+      $log.debug('disease ', result.data);
+    });
+
+  $scope.setDisease = function () {
+
+    $log.debug(vm.selectedDisease);
+    $http({
+      method: 'GET',
+      url: 'http://localhost:8080/setDisease',
+      params: {
+        disease: vm.selectedDisease,
+        name: $scope.currentuser
+      }
+    }).then(function (result) {
+      //$scope.diseasesName = result.data;
+      $log.debug('set Disease');
+      //console.log('set disease success', result);
+      $scope.requestPlan();
+    }, function errorCallback(response) {
+      $log.debug('Error set Disease', response);
+    });
+
+  };
+
+  $http({
+    method: 'GET',
+    url: 'http://localhost:8080/getCurrentDisease',
+    params: {
+      name: $scope.currentuser
+    }
+  }).then(function (result) {
+    $scope.currentDisease = result.data[0];
+  }, function errorCallback(response) {
+    $log.debug('Error get current Disease', response);
+  });
+  /*END DROPDOWN*/
+}
 
     $scope.$on('$viewContentLoaded', function(){
       console.log("Test");
@@ -116,8 +190,10 @@
     //  $timeout(function() {$scope.calendarRefresh();}, 2000);
     //};
     $scope.calendarRefresh = function(){
-      $('#calendar').fullCalendar('render');
-      $('.fc-today-button').click();
+      //$('#calendar').fullCalendar('render');
+      //$('.fc-today-button').click();
+      uiCalendarConfig.calendars['myCalendar1'].fullCalendar('render');
+
     };
     $scope.requestPlan = function(){
       $log.debug('requestPlan');
@@ -127,6 +203,9 @@
         url: 'http://localhost:8080/getFoodPlan',
         params: {name: $scope.currentuser}
       }).then(function(response) {
+        if(response==null){
+          //Show please select disease
+        }
         console.log('PLANNNNNNN',response.data);
         $scope.dietPlan = response.data;
         //$rootScope.plan = response.data;
@@ -137,6 +216,9 @@
             events: $scope.convertEvents(response.data)
           }
         ];
+
+        $scope.setCalDate($scope.calendarDate[0].events[0].start);
+
         $('#calendar').fullCalendar('today');
         $('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar('addEventSource',$scope.convertEvents(response.data));
@@ -197,7 +279,6 @@
     ];
 
     $scope.setCalDate = function(date, jsEvent, view) {
-      //console.log('selectDate',date);
       var selectedDate = moment(date).format('YYYY-MM-DD');				    // set dateFrom based on user click on calendar
       var dateObj = new Date(selectedDate);
       dateObj.setHours(0);
@@ -210,6 +291,28 @@
       $scope.lunch = dailyMeal[1].food;
       $scope.dinner = dailyMeal[2].food;
 
+
+      /* Request for diet cal info*/
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/getTotalDietCal',
+        params: {
+          bfast: dailyMeal[0].food,
+          lunch: dailyMeal[1].food,
+          dinner: dailyMeal[2].food
+        }
+      }).then(function (result) {
+        $rootScope.totalDietCal = result.data;
+        $log.debug('Total diet cal',$rootScope.totalDietCal);
+
+      }, function errorCallback(response) {
+        $log.debug('Error set Disease', response);
+      });
+      /*END*/
+
+      vm.selectedFoodBfast = "";
+      vm.selectedFoodLunch = "";
+      vm.selectedFoodDinner = "";
       console.log('setCalDate: dailyMeal',dailyMeal);
       console.log('selectDate',moment(date).valueOf());
       $scope.calendarDate[0].events[0].start = selectedDate;				    // update Calendar event dateFrom

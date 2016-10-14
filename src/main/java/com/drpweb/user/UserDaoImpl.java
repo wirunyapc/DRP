@@ -3,8 +3,6 @@ package com.drpweb.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Created by Asus on 7/8/2559.
  */
@@ -12,14 +10,11 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
     @Autowired UserRepository userRepository;
 
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+//    @Override
+//    public List<User> findAll() {
+//        return userRepository.findAll();
+//    }
 
 
     @Override
@@ -32,10 +27,10 @@ public class UserDaoImpl implements UserDao {
         return userRepository.save(user);
     }
 
-    @Override
-    public void delete(User user) {
-        userRepository.delete(user);
-    }
+//    @Override
+//    public void delete(User user) {
+//        userRepository.delete(user);
+//    }
 
     @Override
     public User findByUsername(String username) {

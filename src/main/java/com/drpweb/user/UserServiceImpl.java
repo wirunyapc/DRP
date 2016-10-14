@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,14 +25,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserService userService;
 
-    public User currentUser;
 
     public UserServiceImpl() {
-    }
-
-    @Override
-    public List<User> findAll() {
-        return userDao.findAll();
     }
 
     @Override
@@ -53,29 +46,13 @@ public class UserServiceImpl implements UserService {
         return userDao.create(user);
     }
 
-    @Override
-    public void setCurrentUser(String username) {
-        this.currentUser = findByUserName(username);
-        System.out.print("current user : "+this.currentUser.getUsername());
-    }
 
-    @Override
-    public User getCurrentUser() {
-        return this.currentUser;
-    }
-
-
-    public UserDao getUserDao() {
-        return userDao;
-    }
 
     public void setUserDao(UserDao userDao) { //used in test class
         this.userDao = userDao;
-    }
+    }//used in test class
 
-    public RoleDao getRoleDao() {
-        return roleDao;
-    }
+
 
     public void setRoleDao(RoleDao roleDao) {
         this.roleDao = roleDao;

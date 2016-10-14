@@ -6,9 +6,13 @@
   angular.module('app').controller('ModalRegisterController',ModalRegisterController)
     .controller('ModalRegisterInstanceController',ModalRegisterInstanceController)
     .controller('MyAccountController',MyAccountController);
+
   /**ngInject*/
-  function ModalRegisterController(userService,$uibModal,$log,$location,$rootScope) {
+  function ModalRegisterController(userService,$uibModal,$log,$location,$rootScope,$scope) {
     var vm = this;
+    $scope.switchBool = function (value) {
+      $scope[value] = !$scope[value];
+    };
     $rootScope.signUpSuccess = false;
     vm.animationsEnabled = true;
     vm.open = function (size) {
@@ -76,18 +80,35 @@
       $location.path('/')
     };
   }
-  function MyAccountController(queryUserService,$rootScope) {
+  function MyAccountController($rootScope,$http,$log,$scope,$location) {
     var vm = this;
     vm.loadingstatus = false;
-    queryUserService.get({name: $rootScope.user.username}, function (data) {
-      vm.user = data;
 
-    },function () {
-      vm.loadingstatus = true;
-      vm.loadingMessage ="Cannot load user detail";
+/*    queryUserService.get({name: $rootScope.user.username}, function (data) {
+        vm.user = data;
+
+      },function () {
+        vm.loadingstatus = true;
+        vm.loadingMessage ="Cannot load user detail";
       }
-    );
+    );*/
+
+    vm.cancel = function () {
+      $location.path('/home')
+    };
+
+    $http({
+      method: 'GET',
+      url: 'http://localhost:8080/getUser',
+      params: {name: $rootScope.currentuser}
+    }).then(function (result) {
+
+        $log.debug('user ',result);
+        vm.user = result.data;
+      });
+
     vm.edit = function () {
+
 
     }
   }

@@ -58,7 +58,6 @@ public class UserAuthenticationController {
                 SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         UserDetails usersDetails = (UserDetails) principal;
-        userService.setCurrentUser(usersDetails.getUsername());
         return new UserTransfer(usersDetails.getUsername(),this.createRoleMap(usersDetails));
     }
 
