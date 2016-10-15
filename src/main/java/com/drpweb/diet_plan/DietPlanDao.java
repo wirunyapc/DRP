@@ -5,7 +5,7 @@ package com.drpweb.diet_plan;
  */
 public interface DietPlanDao {
     DietPlan create(DietPlan dietPlan);
-//    DietPlan update (DietPlan dietPlan);
+    DietPlan update (DietPlan dietPlan);
 //    void delete(DietPlan dietPlan);
 //    DietPlan findOne(Long id);
 //    List<DietPlan> findAll ();

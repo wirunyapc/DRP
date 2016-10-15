@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -177,6 +179,16 @@ public class DietPlanController {
         userDao.update(user);
         System.out.println("disease updated!" + user.getDiseaseId());
         DietPlan dietPlan = dietPlanService.findByUserId(user.getId());
+
+        LocalDate today = LocalDate.now();
+        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setStartDate(startDate);
+
+        LocalDate end = today.plusDays(user.getDuration());
+        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setEndDate(endDate);
+        dietPlanDao.update(dietPlan);
+
         dailyMealService.delete(dietPlan.getDietPlanId());
         return dietPlanService.createPatientPlan(user.getUsername());
 

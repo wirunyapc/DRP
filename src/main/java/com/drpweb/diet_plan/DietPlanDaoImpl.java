@@ -16,10 +16,10 @@ public class DietPlanDaoImpl implements DietPlanDao{
         return dietPlanRepository.save(dietPlan);
     }
 //
-//    @Override
-//    public DietPlan update(DietPlan dietPlan) {
-//        return dietPlanRepository.save(dietPlan);
-//    }
+    @Override
+    public DietPlan update(DietPlan dietPlan) {
+        return dietPlanRepository.save(dietPlan);
+    }
 //
 //    @Override
 //    public void delete(DietPlan dietPlan) {

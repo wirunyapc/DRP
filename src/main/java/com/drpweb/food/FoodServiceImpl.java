@@ -3,9 +3,6 @@ package com.drpweb.food;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by ADMIN on 8/20/2016.
  */
@@ -16,7 +13,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food getFood(){
-        Food food = new Food();
+       /* Food food = new Food();
         List<Food> foods = foodDao.findAll();
         System.out.println("Food listttt" + foods);
         if(foods!=null) {
@@ -63,8 +60,9 @@ public class FoodServiceImpl implements FoodService {
             food.setNames(names);
 
             System.out.println("Food setNamesssssss "+ food.getNames());
-        }
-        return food;
+        }*/
+        //return food;
+        return new Food();
     }
 
 
