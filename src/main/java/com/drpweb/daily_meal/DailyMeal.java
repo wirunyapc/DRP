@@ -15,7 +15,8 @@ public class DailyMeal {
     private Long id;
     private Date date;
     private Long mealId;
-    private int foodId;
+    @Column(name = "setmenu_id")
+    private int setMenu_id;
     private Long dietPlanId;
 
     public Long getId() {
@@ -51,11 +52,12 @@ public class DailyMeal {
         this.dietPlanId = dietPlanId;
     }
 
-    public int getFoodId() {
-        return foodId;
+
+    public int getSetMenu_id() {
+        return setMenu_id;
     }
 
-    public void setFoodId(int foodId) {
-        this.foodId = foodId;
+    public void setSetMenu_id(int setMenu_id) {
+        this.setMenu_id = setMenu_id;
     }
 }

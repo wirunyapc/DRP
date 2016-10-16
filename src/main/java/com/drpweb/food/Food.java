@@ -13,18 +13,28 @@ public class Food{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "food_id")
     private int foodId;
-    private int fpTypeId;
+    /*private int fpTypeId;
     @Transient
-    private String foodPatientTypeName;
+    private String foodPatientTypeName;*/
+    @Column(name = "food_name")
     private String foodName;
+    @Column(name = "food_name_eng")
+    private String foodName_eng;
+    @Column(name = "food_kcal")
     private int foodKcal;
+    @Column(name = "fat")
     private int fat;
+    @Column(name = "carbohydrate")
     private int carbohydate;
+    @Column(name = "protein")
     private int protein;
+    @Column(name = "categories_id")
     private int categoriesId;
-    @Transient
-    private String categoriesName;
+    /*@Transient
+    private String categoriesName;*/
+    @Column(name = "amount")
     private int amount;
+    @Column(name = "unit")
     private String unit;
 
 //    @OneToMany(mappedBy="food", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
@@ -55,13 +65,13 @@ public class Food{
     public Food() {
     }
 
-    public String getFoodPatientTypeName() {
-        return foodPatientTypeName;
-    }
-
-    public void setFoodPatientTypeName(String foodPatientTypeName) {
-        this.foodPatientTypeName = foodPatientTypeName;
-    }
+//    public String getFoodPatientTypeName() {
+//        return foodPatientTypeName;
+//    }
+//
+//    public void setFoodPatientTypeName(String foodPatientTypeName) {
+//        this.foodPatientTypeName = foodPatientTypeName;
+//    }
 
     public String getFoodName() {
         return foodName;
@@ -191,13 +201,13 @@ public class Food{
         this.categoriesId = categoriesId;
     }
 
-    public String getCategoriesName() {
-        return categoriesName;
-    }
-
-    public void setCategoriesName(String categoriesName) {
-        this.categoriesName = categoriesName;
-    }
+//    public String getCategoriesName() {
+//        return categoriesName;
+//    }
+//
+//    public void setCategoriesName(String categoriesName) {
+//        this.categoriesName = categoriesName;
+//    }
 
     public int getAmount() {
         return amount;
@@ -223,13 +233,21 @@ public class Food{
         this.foodId = foodId;
     }
 
-    public int getFoodPatientTypeId() {
-        return fpTypeId;
+    public String getFoodName_eng() {
+        return foodName_eng;
     }
 
-    public void setFoodPatientTypeId(int foodPatientTypeId) {
-        this.fpTypeId = foodPatientTypeId;
+    public void setFoodName_eng(String foodName_eng) {
+        this.foodName_eng = foodName_eng;
     }
+
+//    public int getFoodPatientTypeId() {
+//        return fpTypeId;
+//    }
+//
+//    public void setFoodPatientTypeId(int foodPatientTypeId) {
+//        this.fpTypeId = foodPatientTypeId;
+//    }
 
   /*  @OneToMany(fetch = FetchType.LAZY, mappedBy = "food")
     private Set<DailyMeal> dailyMeals = new HashSet<DailyMeal>(0);

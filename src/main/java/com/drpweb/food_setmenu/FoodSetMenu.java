@@ -15,7 +15,9 @@ public class FoodSetMenu {
     @Column(name = "food_id")
     private int foodId;
     @Column(name = "setmenu_id")
-    private int setMenu_id;
+    private int setmenu;
+    @Column(name = "foodIdx")
+    private int foodIndex;
 
     public Long getFood_setMenu_id() {
         return food_setMenu_id;
@@ -33,11 +35,20 @@ public class FoodSetMenu {
         this.foodId = foodId;
     }
 
-    public int getSetMenu_id() {
-        return setMenu_id;
+
+    public int getFoodIndex() {
+        return foodIndex;
     }
 
-    public void setSetMenu_id(int setMenu_id) {
-        this.setMenu_id = setMenu_id;
+    public void setFoodIndex(int foodIndex) {
+        this.foodIndex = foodIndex;
+    }
+
+    public int getSetmenu() {
+        return setmenu;
+    }
+
+    public void setSetmenu(int setmenu) {
+        this.setmenu = setmenu;
     }
 }

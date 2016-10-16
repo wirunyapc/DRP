@@ -11,5 +11,5 @@ public interface FoodSetMenuDao {
     void delete(FoodSetMenu dietPlan);
     FoodSetMenu findOne(Long id);
     List<FoodSetMenu> findAll ();
-    FoodSetMenu findBySetMenu_id(int id);
+    List<FoodSetMenu> findBySetmenu(int id);
 }

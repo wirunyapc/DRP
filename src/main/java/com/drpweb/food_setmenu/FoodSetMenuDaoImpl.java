@@ -1,12 +1,14 @@
 package com.drpweb.food_setmenu;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by ADMIN on 10/14/2016.
  */
+@Repository
 public class FoodSetMenuDaoImpl implements FoodSetMenuDao {
     @Autowired
     FoodSetMenuRepository foodSetMenuRepository;
@@ -37,7 +39,7 @@ public class FoodSetMenuDaoImpl implements FoodSetMenuDao {
     }
 
     @Override
-    public FoodSetMenu findBySetMenu_id(int id) {
-        return foodSetMenuRepository.findBySetMenu_id(id);
+    public List<FoodSetMenu> findBySetmenu(int id) {
+        return foodSetMenuRepository.findBySetmenu(id);
     }
 }

@@ -1,12 +1,14 @@
 package com.drpweb.setmenu;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by ADMIN on 10/14/2016.
  */
+@Repository
 public class SetMenuDaoImpl implements SetMenuDao{
     @Autowired
     SetMenuRepository  setMenuRepository;

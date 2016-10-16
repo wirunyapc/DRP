@@ -5,9 +5,10 @@ import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.disease.Disease;
 import com.drpweb.disease.DiseaseDao;
-import com.drpweb.food.Food;
 import com.drpweb.food.FoodService;
 import com.drpweb.role.Role;
+import com.drpweb.setmenu.SetMenu;
+import com.drpweb.setmenu.SetMenuService;
 import com.drpweb.user.User;
 import com.drpweb.user.UserService;
 import com.drpweb.util.DailyDiet;
@@ -41,7 +42,8 @@ public class DietPlanServiceImpl implements DietPlanService{
 
     @Autowired
     DailyMealDao dailyMealDao;
-
+   @Autowired
+    SetMenuService setMenuService;
 
     @Autowired
     DiseaseDao diseaseDao;
@@ -53,8 +55,8 @@ public class DietPlanServiceImpl implements DietPlanService{
     }
     @Override
     public void createPlan(String name) throws SQLException {
-        User user = userService.findByUserName(name);
-        Food food;
+      User user = userService.findByUserName(name);
+        SetMenu setMenu;
         int amount = user.getDuration();
         System.out.println("duration"+amount);
         int period = 3;
@@ -63,15 +65,16 @@ public class DietPlanServiceImpl implements DietPlanService{
         DailyDiet dailyDiet = new DailyDiet();
         Solver s;
 
-        food = foodService.getFood();
+        setMenu = setMenuService.getSetMenu();
+        System.out.println("setMenu" + setMenu);
 
         Set<Role> roles = user.getRoles();
         for(Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
             Role role = it.next();
             if (role.getRoleName().equals("member")){
                 s = dailyDiet.solve(amount, period,
-                        food.getArr_id(), food.getArr_kal(),food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(),0,0,0,0, bmr,"member");
+                        setMenu.getArr_setMenu_id(), setMenu.getArr_total_cal(),setMenu.getArr_total_fat(), setMenu.getArr_total_carboh(), setMenu.getArr_total_protein(),
+                        setMenu.getTotal_cals(), setMenu.getTotal_fats(), setMenu.getTotal_carbohs(), setMenu.getTotal_proteins(),0,0,0,0, bmr,"member");
             }
 
 
@@ -87,7 +90,7 @@ public class DietPlanServiceImpl implements DietPlanService{
     public String createPatientPlan(String name) throws SQLException {
         User user = userService.findByUserName(name);
         System.out.println("User for plan" + user.getUsername());
-        Food food;
+        SetMenu setMenu;
         int amount = user.getDuration();
         System.out.println("duration"+amount);
         int period = 3;
@@ -95,7 +98,7 @@ public class DietPlanServiceImpl implements DietPlanService{
         System.out.print("bmr in create plan : "+bmr);
         DailyDiet dailyDiet = new DailyDiet();
         Solver s;
-        food = foodService.getFood();
+        setMenu = setMenuService.getSetMenu();
         Disease userDisease = diseaseDao.findOne(user.getDiseaseId());
         System.out.println("disease for plan :"+userDisease.getDiseaseName());
 
@@ -105,8 +108,8 @@ public class DietPlanServiceImpl implements DietPlanService{
             if (role.getRoleName().equals("patient")) {
 
                 s = dailyDiet.solve(amount, period,
-                        food.getArr_id(), food.getArr_kal(), food.getArr_fat(), food.getArr_carboh(), food.getArr_protein(),
-                        food.getKals(), food.getFats(), food.getCarbohs(), food.getProteins(), (int)userDisease.getKcal(),(int)userDisease.getFat(),(int)userDisease.getProt(),(int)userDisease.getCarboh(), bmr,"patient");
+                        setMenu.getArr_setMenu_id(), setMenu.getArr_total_cal(), setMenu.getArr_total_fat(), setMenu.getArr_total_carboh(), setMenu.getArr_total_protein(),
+                        setMenu.getTotal_cals(), setMenu.getTotal_fats(), setMenu.getTotal_carbohs(), setMenu.getTotal_proteins(), (int)userDisease.getKcal(),(int)userDisease.getFat(),(int)userDisease.getProt(),(int)userDisease.getCarboh(), bmr,"patient");
             }
         }
 
@@ -144,8 +147,8 @@ public class DietPlanServiceImpl implements DietPlanService{
         String[] splitById = result.split("id");
         ArrayList<int[]> dailyMeals = new ArrayList<int[]>();
 
-        int[] foodIds = new int[3];
-        int foodNum = 0;
+        int[] setMenuIds = new int[3];
+        int setMenuNum = 0;
 
         for (int i = 0; i < splitById.length; i++) {
             int indexOfColon = 0;
@@ -159,26 +162,26 @@ public class DietPlanServiceImpl implements DietPlanService{
 
             if (indexOfColon != -1 && indexOfComma != -1) {
                 foodId = meal.substring(indexOfColon + 1, indexOfComma - 1);
-                foodIds[foodNum] = Integer.parseInt(foodId);
+                setMenuIds[setMenuNum] = Integer.parseInt(foodId);
 
 
                 System.out.println(meal);
-                System.out.println("foodNum");
-                System.out.println(foodIds[foodNum] + " : " + foodNum);
+                System.out.println("setNum");
+                System.out.println(setMenuIds[setMenuNum] + " : " + setMenuNum);
 
 
-                if (foodNum == 2) {
+                if (setMenuNum == 2) {
 
                     System.out.println("add plan");
-                    dailyMeals.add(foodIds);
+                    dailyMeals.add(setMenuIds);
 
-                    foodIds = new int[3];
-                    foodNum = 0;
+                    setMenuIds = new int[3];
+                    setMenuNum = 0;
 
                 } else {
 
-                    foodNum = foodNum + 1;
-                    System.out.println("Increase foodNum : " + foodNum);
+                    setMenuNum = setMenuNum + 1;
+                    System.out.println("Increase setNum : " + setMenuNum);
                 }
 
 
@@ -207,7 +210,7 @@ public class DietPlanServiceImpl implements DietPlanService{
 
                 dailyMeal.setDietPlanId(dietPlan.getDietPlanId());
                 System.out.println("Long id = " + (long) daily[i]);
-                dailyMeal.setFoodId(daily[i]);
+                dailyMeal.setSetMenu_id(daily[i]);
                 dailyMeal.setMealId((long) i + 1);
 
                 dailyMealDao.create(dailyMeal);
