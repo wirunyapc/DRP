@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * Created by ADMIN on 8/20/2016.
  */
 @Entity
-@Table(name = "food")
+@Table(name = "foodforset")
 public class Food{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "food_id")
     private int foodId;
-    private int fpTypeId;
+    //private int fpTypeId;
     @Transient
     private String foodPatientTypeName;
     private String foodName;
@@ -223,13 +223,13 @@ public class Food{
         this.foodId = foodId;
     }
 
-    public int getFoodPatientTypeId() {
-        return fpTypeId;
-    }
-
-    public void setFoodPatientTypeId(int foodPatientTypeId) {
-        this.fpTypeId = foodPatientTypeId;
-    }
+//    public int getFoodPatientTypeId() {
+//        return fpTypeId;
+//    }
+//
+//    public void setFoodPatientTypeId(int foodPatientTypeId) {
+//        this.fpTypeId = foodPatientTypeId;
+//    }
 
   /*  @OneToMany(fetch = FetchType.LAZY, mappedBy = "food")
     private Set<DailyMeal> dailyMeals = new HashSet<DailyMeal>(0);
