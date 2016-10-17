@@ -45,7 +45,7 @@ public class UserController {
         Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
         dietPlan.setStartDate(startDate);
 
-        LocalDate end = today.plusDays(user.getDuration());
+        LocalDate end = today.plusDays(user.getDuration()-1);
         Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
         dietPlan.setEndDate(endDate);
 

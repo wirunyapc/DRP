@@ -12,4 +12,5 @@ public interface FoodSetMenuDao {
     FoodSetMenu findOne(Long id);
     List<FoodSetMenu> findAll ();
     List<FoodSetMenu> findBySetmenu(int id);
+    List<FoodSetMenu> findByFood(int id);
 }

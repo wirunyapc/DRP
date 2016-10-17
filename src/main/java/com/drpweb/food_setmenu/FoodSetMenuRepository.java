@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface FoodSetMenuRepository extends JpaRepository<FoodSetMenu,Long> {
     List<FoodSetMenu> findBySetmenu(int setMenu_id);
+    List<FoodSetMenu> findByFood(int food_id);
 }

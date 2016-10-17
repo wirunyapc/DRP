@@ -20,6 +20,7 @@
     vm.dinner = null;
     vm.firstDayOfWeek = 0;
     $scope.plan = null;
+    $scope.showme = false;
 
     /*CalInfo*/
     vm.bmi = null;
@@ -108,8 +109,8 @@
         $log.debug('food ',result.data);
       });
 
-    $scope.setFood=function(food,meal){
-      $log.debug(meal,food);
+    $scope.setFood=function(food,meal,index){
+      $log.debug(meal,food,index);
       $http({
         method: 'GET',
         url: 'http://localhost:8080/setFood',
@@ -117,7 +118,8 @@
           food: food,
           name: $scope.currentuser,
           meal: meal,
-          date: $scope.selectedDate
+          date: $scope.selectedDate,
+          idx: index
         }
       }).then(function(result) {
 
@@ -234,33 +236,39 @@ if(vm.currentR=='patient') {
 
       var _mealModel = [];
       var mealEvents = [];
-      for(var i = 0 ; i < plans[0].length ; i++){
+      for(var i = 0 ; i < plans.length ; i++){
 
         console.log('i' + i);
-        console.log('Two dimension',plans[0][i]);
+        console.log('Two dimension',plans[i]);
 
-        var dailyMeals = plans[0][i];
-        var mealDatePlan = new Date(plans[0][i][0]);
+        var dailyMeals = plans[i];
 
-        console.log('date', mealDatePlan);
+
+
         if(dailyMeals){
-          if(_mealModel[mealDatePlan.getTime()]){
 
-            _mealModel[mealDatePlan.getTime()].push({'mealId':dailyMeals[1],'food':dailyMeals[2]});
+          for(var i = 0; i < dailyMeals.length;i++){
+            var mealDatePlan = new Date(dailyMeals[i][0]);
+            console.log('date', mealDatePlan);
+            if(_mealModel[mealDatePlan.getTime()]){
 
-            var mealEvent = {
-              title: dailyMeals[1],
-              start: mealDatePlan,
-              allDay: true,
-              rendering: 'background',
-              backgroundColor: '#f26522',
-            };
+              _mealModel[mealDatePlan.getTime()].push({'mealId':dailyMeals[i][1],'food':dailyMeals[i][3]});
 
-            mealEvents.push(mealEvent);
+              var mealEvent = {
+                title: dailyMeals[i][1],
+                start: mealDatePlan,
+                allDay: true,
+                rendering: 'background',
+                backgroundColor: '#f26522',
+              };
 
-          }else{
-            _mealModel[mealDatePlan.getTime()] = [{'mealId':dailyMeals[1],'food':dailyMeals[2]}];
+              mealEvents.push(mealEvent);
+
+            }else{
+              _mealModel[mealDatePlan.getTime()] = [{'mealId':dailyMeals[i][1],'food':dailyMeals[i][3]}];
+            }
           }
+
         }
 
 
@@ -287,28 +295,12 @@ if(vm.currentR=='patient') {
       dateObj.setMilliseconds(0);
 
       var dailyMeal = $scope.mealModel[dateObj.getTime()];
-      $scope.bfast = dailyMeal[0].food;
-      $scope.lunch = dailyMeal[1].food;
-      $scope.dinner = dailyMeal[2].food;
+      $rootScope.bfast = dailyMeal[0].food;
+      $rootScope.lunch = dailyMeal[1].food;
+      $rootScope.dinner = dailyMeal[2].food;
 
+      $scope.getBmrValue();
 
-      /* Request for diet cal info*/
-      $http({
-        method: 'GET',
-        url: 'http://localhost:8080/getTotalDietCal',
-        params: {
-          bfast: dailyMeal[0].food,
-          lunch: dailyMeal[1].food,
-          dinner: dailyMeal[2].food
-        }
-      }).then(function (result) {
-        $rootScope.totalDietCal = result.data;
-        $log.debug('Total diet cal',$rootScope.totalDietCal);
-
-      }, function errorCallback(response) {
-        $log.debug('Error set Disease', response);
-      });
-      /*END*/
 
       vm.selectedFoodBfast = "";
       vm.selectedFoodLunch = "";

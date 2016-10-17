@@ -42,4 +42,9 @@ public class FoodSetMenuDaoImpl implements FoodSetMenuDao {
     public List<FoodSetMenu> findBySetmenu(int id) {
         return foodSetMenuRepository.findBySetmenu(id);
     }
+
+    @Override
+    public List<FoodSetMenu> findByFood(int id) {
+        return foodSetMenuRepository.findByFood(id);
+    }
 }

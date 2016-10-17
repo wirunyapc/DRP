@@ -13,10 +13,10 @@ public class FoodSetMenu {
     @Column(name = "id")
     private Long food_setMenu_id;
     @Column(name = "food_id")
-    private int foodId;
+    private int food;
     @Column(name = "setmenu_id")
     private int setmenu;
-    @Column(name = "foodIdx")
+    @Column(name = "foodidx")
     private int foodIndex;
 
     public Long getFood_setMenu_id() {
@@ -28,11 +28,11 @@ public class FoodSetMenu {
     }
 
     public int getFoodId() {
-        return foodId;
+        return food;
     }
 
     public void setFoodId(int foodId) {
-        this.foodId = foodId;
+        this.food = foodId;
     }
 
 

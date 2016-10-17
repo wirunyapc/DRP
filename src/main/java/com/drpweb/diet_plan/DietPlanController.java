@@ -86,51 +86,56 @@ public class DietPlanController {
 
 
             System.out.println("====================================================");
-        String result = "[";
+        //String result = "[";
 
-            String meal = "[";
+            String day = "[";
 
             int foodCount = 1;
             int count = 1;
-            Food food;
+            int daycount=1;
+
             for (DailyMeal daily : dailyMeals) {
-                String data = "[";
 
-                SetMenu setMenu = setMenuDao.findOne(daily.getSetMenu_id());
+                    String meal = "[";
 
-                List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(setMenu.getSetMenu_id());
+                    SetMenu setMenu = setMenuDao.findOne(daily.getSetMenu_id());
 
-                for (FoodSetMenu f: foodSetMenus) {
-                    data = "[";
-                    data += "\"" + daily.getDate().toString() + "\",";
-                    data += "\"" + daily.getMealId().toString() + "\",";
-                    data += "\"" + foodDao.findOne(f.getFoodId()) + "\"";
-                    if (foodCount == foodSetMenus.size()) {
-                        data += "]";
-                    } else {
-                        data += "],";
-                        foodCount++;
+                    List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(setMenu.getSetMenu_id());
+                    for (FoodSetMenu f : foodSetMenus) {
+                        String fooddata = "[";
+                        System.out.println("foodidx count" + f.getFoodIndex());
+                        fooddata += "\"" + daily.getDate().toString() + "\",";
+                        fooddata += "\"" + daily.getMealId().toString() + "\",";
+                        fooddata += "\"" + f.getFoodIndex() + "\",";
+                        fooddata += "\"" + foodDao.findOne(f.getFoodId()).getFoodName_eng() + "\"";
+                        if (foodCount == foodSetMenus.size()) {
+                            fooddata += "]";
+                            foodCount = 1;
+                        } else {
+                            fooddata += "],";
+                            foodCount++;
+                        }
+
+                        meal += fooddata;
                     }
-                }
 
 
-                if (count == dailyMeals.size()) {
-                    data += "]";
-                } else {
-                    data += "],";
-                    count++;
-                }
+                    if (count == dailyMeals.size()) {
+                        meal += "]";
+                    } else {
+                        meal += "],";
+                        count++;
+                    }
 
-                meal += data;
-            }
+                    day += meal;
+           }
+            day += "]";
+//            result += day;
+//
+//            result += "]";
 
-            meal += "]";
 
-            result += meal;
-
-            result += "]";
-
-            return result;
+            return day;
 
 
     }
@@ -164,7 +169,7 @@ public class DietPlanController {
     }
 
     @RequestMapping(value = "/setFood",method = RequestMethod.GET)
-    public Boolean setFood(@RequestParam("food")String foodName,@RequestParam("name")String username,@RequestParam("idx")int foodIndex,@RequestParam("meal")Long meal,@RequestParam("date")String date) throws SQLException {
+    public Boolean setFood(@RequestParam("food")String foodName,@RequestParam("name")String username,@RequestParam("meal")Long meal,@RequestParam("date")String date,@RequestParam("idx")int foodIndex) throws SQLException {
         Date myDate = dietPlanService.parseDate(date);
         System.out.println("Date"+myDate);
         DietPlan dietPlan = dietPlanDao.findByUserId(userService.findByUserName(username).getId());

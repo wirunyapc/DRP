@@ -82,7 +82,7 @@ public class DietPlanServiceImpl implements DietPlanService{
 
         String result = dailyDiet.toJson();
         savePlan(result,user);
-        System.out.println("Resultttttttttttttttttttttt");
+        System.out.println("Resultttttttttttttttttttttt"+result);
 
     }
 
@@ -98,8 +98,10 @@ public class DietPlanServiceImpl implements DietPlanService{
         System.out.print("bmr in create plan : "+bmr);
         DailyDiet dailyDiet = new DailyDiet();
         Solver s;
-        setMenu = setMenuService.getSetMenu();
+
         Disease userDisease = diseaseDao.findOne(user.getDiseaseId());
+        setMenu = setMenuService.getSetMenuByDisease(userDisease.getDiseaseName());
+        System.out.println("Set to Eat" + setMenu);
         System.out.println("disease for plan :"+userDisease.getDiseaseName());
 
         Set<Role> roles = user.getRoles();
