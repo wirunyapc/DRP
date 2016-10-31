@@ -22,6 +22,7 @@
     $scope.plan = null;
     $scope.showme = false;
 
+
     /*CalInfo*/
     vm.bmi = null;
     vm.budget = null;
@@ -98,19 +99,37 @@
     vm.selectedFoodBfast = null;
     vm.selectedFoodLunch = null;
     vm.selectedFoodDinner = null;
+    vm.selectedDisease = null;
+   // $rootScope.notEnoughFood=false;
+    $rootScope.selectDisease=false;
 
     /*DROPDOWN Food*/
     $scope.foods = [];
-
-    $http
-      .get('http://localhost:8080/getFoods')
-      .then(function (result) {
-        $scope.foods = result.data;
-        $log.debug('food ',result.data);
-      });
+    if(vm.currentR=="member") {
+      $http
+        .get('http://localhost:8080/getFoods')
+        .then(function (result) {
+          $scope.foods = result.data;
+          $log.debug('food ', result.data);
+        });
+    }
+    if(vm.currentR=="patient"){
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/getFoodsByDisease',
+        params: {
+          name: $scope.currentuser
+        }
+      })
+        .then(function (result) {
+          $scope.foods = result.data;
+          $log.debug('food ', result.data);
+        });
+    }
 
     $scope.setFood=function(food,meal,index){
       $log.debug(meal,food,index);
+      $scope.getTotalDietCal();
       $http({
         method: 'GET',
         url: 'http://localhost:8080/setFood',
@@ -148,24 +167,27 @@ if(vm.currentR=='patient') {
     });
 
   $scope.setDisease = function () {
-
     $log.debug(vm.selectedDisease);
-    $http({
-      method: 'GET',
-      url: 'http://localhost:8080/setDisease',
-      params: {
-        disease: vm.selectedDisease,
-        name: $scope.currentuser
-      }
-    }).then(function (result) {
-      //$scope.diseasesName = result.data;
-      $log.debug('set Disease');
-      //console.log('set disease success', result);
-      $scope.requestPlan();
-    }, function errorCallback(response) {
-      $log.debug('Error set Disease', response);
-    });
-
+    //if(vm.selectedDisease==null){
+    //  $log.debug('disease is null');
+    //  $rootScope.selectDisease = true;
+    //}else {
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/setDisease',
+        params: {
+          disease: vm.selectedDisease,
+          name: $scope.currentuser
+        }
+      }).then(function (result) {
+        //$scope.diseasesName = result.data;
+        $log.debug('set Disease');
+        //console.log('set disease success', result);
+        $scope.requestPlan();
+      }, function errorCallback(response) {
+        $log.debug('Error set Disease', response);
+        $rootScope.selectDisease = true;
+      });
   };
 
   $http({
@@ -197,6 +219,21 @@ if(vm.currentR=='patient') {
       uiCalendarConfig.calendars['myCalendar1'].fullCalendar('render');
 
     };
+    $scope.getTotalDietCal = function(){
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/getTotalDietCal',
+        params: {
+          date: $scope.selectedDate,
+          name: $scope.currentuser
+        }
+      })
+        .then(function (result) {
+          $rootScope.totalDietCal=result.data;
+
+        });
+
+    };
     $scope.requestPlan = function(){
       $log.debug('requestPlan');
       /*Diet Plan*/
@@ -205,8 +242,12 @@ if(vm.currentR=='patient') {
         url: 'http://localhost:8080/getFoodPlan',
         params: {name: $scope.currentuser}
       }).then(function(response) {
-        if(response==null){
-          //Show please select disease
+        $log.debug('response from request plan',response.data[0]);
+        //if(response.data[0]=="error"){
+        //  $rootScope.notEnoughFood = true;
+        //}
+        if(response.data[0]=="null"){
+          $rootScope.selectDisease = true;
         }
         console.log('PLANNNNNNN',response.data);
         $scope.dietPlan = response.data;
@@ -224,6 +265,8 @@ if(vm.currentR=='patient') {
         $('#calendar').fullCalendar('today');
         $('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar('addEventSource',$scope.convertEvents(response.data));
+      }, function errorCallback(response) {
+       //Not enought food to solve
       });
     }
     $scope.requestPlan();
@@ -247,15 +290,19 @@ if(vm.currentR=='patient') {
 
         if(dailyMeals){
 
-          for(var i = 0; i < dailyMeals.length;i++){
-            var mealDatePlan = new Date(dailyMeals[i][0]);
+          for(var j = 0; j < dailyMeals.length;j++){
+            var mealDatePlan = new Date(dailyMeals[j][0]);
             console.log('date', mealDatePlan);
             if(_mealModel[mealDatePlan.getTime()]){
 
-              _mealModel[mealDatePlan.getTime()].push({'mealId':dailyMeals[i][1],'food':dailyMeals[i][3]});
+              _mealModel[mealDatePlan.getTime()].push({'mealId':dailyMeals[j][1],'food':dailyMeals[j][3],'index': dailyMeals[j][2]});
 
+
+
+            }else{
+              _mealModel[mealDatePlan.getTime()] = [{'mealId':dailyMeals[j][1],'food':dailyMeals[j][3],'index': dailyMeals[j][2]}];
               var mealEvent = {
-                title: dailyMeals[i][1],
+                title: dailyMeals[j][1],
                 start: mealDatePlan,
                 allDay: true,
                 rendering: 'background',
@@ -263,9 +310,6 @@ if(vm.currentR=='patient') {
               };
 
               mealEvents.push(mealEvent);
-
-            }else{
-              _mealModel[mealDatePlan.getTime()] = [{'mealId':dailyMeals[i][1],'food':dailyMeals[i][3]}];
             }
           }
 
@@ -294,21 +338,65 @@ if(vm.currentR=='patient') {
       dateObj.setSeconds(0);
       dateObj.setMilliseconds(0);
 
-      var dailyMeal = $scope.mealModel[dateObj.getTime()];
-      $rootScope.bfast = dailyMeal[0].food;
-      $rootScope.lunch = dailyMeal[1].food;
-      $rootScope.dinner = dailyMeal[2].food;
+      var dailyMeals = $scope.mealModel[dateObj.getTime()];
+      var bfastMeals = dailyMeals.filter(function(food){
+        return food.mealId == 1;
+      }).sort(function(a,b){
+        return a.index - b.index;
+      });
 
-      $scope.getBmrValue();
+      if(bfastMeals.length > 0){
+        $rootScope.bfast1 = bfastMeals[0].food;
+        $rootScope.bfast2 = bfastMeals[1].food;
+        $rootScope.bfast3 = bfastMeals[2].food;
+      }
+
+      var lunchMeals = dailyMeals.filter(function(food){
+        return food.mealId == 2;
+      }).sort(function(a,b){
+        return a.index - b.index;
+      });
 
 
-      vm.selectedFoodBfast = "";
-      vm.selectedFoodLunch = "";
-      vm.selectedFoodDinner = "";
-      console.log('setCalDate: dailyMeal',dailyMeal);
+      if(lunchMeals.length > 0){
+        $rootScope.lunch1 = lunchMeals[0].food;
+        $rootScope.lunch2 = lunchMeals[1].food;
+        $rootScope.lunch3 = lunchMeals[2].food;
+      }
+
+      var dinnerMeals = dailyMeals.filter(function(food){
+        return food.mealId == 3;
+      }).sort(function(a,b){
+        return a.index - b.index;
+      });
+
+
+      if(lunchMeals.length > 0){
+        $rootScope.dinner1 = dinnerMeals[0].food;
+        $rootScope.dinner2 = dinnerMeals[1].food;
+        $rootScope.dinner3 = dinnerMeals[2].food;
+      }
+
+
+
+      //$scope.getBmrValue();
+
+
+      vm.selectedFoodBfast1 = "";
+      vm.selectedFoodBfast2 = "";
+      vm.selectedFoodBfast3 = "";
+      vm.selectedFoodLunch1 = "";
+      vm.selectedFoodLunch2 = "";
+      vm.selectedFoodLunch3 = "";
+      vm.selectedFoodDinner1 = "";
+      vm.selectedFoodDinner2 = "";
+      vm.selectedFoodDinner3 = "";
+
+      console.log('setCalDate: dailyMeal',dailyMeals);
       console.log('selectDate',moment(date).valueOf());
       $scope.calendarDate[0].events[0].start = selectedDate;				    // update Calendar event dateFrom
       $scope.selectedDate = $filter('date')(selectedDate, 'yyyy-MM-dd');		// update $scope.dateFrom
+      $scope.getTotalDietCal();
       console.log('$scope.uiConfig', $scope.uiConfig);
       console.log('uiCalendarConfig', uiCalendarConfig);
       console.log('clickedDate',date);

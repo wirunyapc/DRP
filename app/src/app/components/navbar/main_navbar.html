@@ -1,4 +1,4 @@
-<div ng-controller="mainDRPController as vm">
+<div ng-controller="MainCtrl as vm">
   <nav class="navbar navbar-inverse" xmlns="http://www.w3.org/1999/html">
   <div class="container-fluid" style="background-color: #2d1c07">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -29,11 +29,27 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="alert alert-success alert-dismissable col-md-offset-4 col-md-4" role="alert" ng-show="signUpSuccess">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span></button>
+<div class="alert alert-success alert-dismissable col-md-offset-4 col-md-4" role="alert" ng-show="signUpSuccess"
+     style=" position: absolute; top: 0px;">
+  <a class="close" data-dismiss="alert" aria-label="Close" ng-click="signUpSuccess=false">
+    <span aria-hidden="true">&times;</span></a>
   <strong>Success!</strong> Success sign up new account
 </div>
+
+  <div class="alert alert-warning alert-dismissable col-md-offset-4 col-md-4" role="alert" ng-show="selectDisease"
+  style="position: absolute; top: 0px;">
+    <a class="close" data-dismiss="alert" aria-label="Close" ng-click="selectDisease=false">
+      <span aria-hidden="true">&times;</span></a>
+    <strong>Warning!</strong> Please select the disease
+  </div>
+
+  <!--<div class="alert alert-danger alert-dismissable col-md-offset-4 col-md-4" role="alert" ng-show="notEnoughFood"-->
+       <!--style=" position: absolute; top: 0px; ">-->
+    <!--<a class="close" data-dismiss="alert" aria-label="Close" ng-click="notEnoughFood=false">-->
+      <!--<span aria-hidden="true">&times;</span></a>-->
+    <!--<strong>Sorry!</strong> Not enough food to solve-->
+  <!--</div>-->
+
 
 </div>
 

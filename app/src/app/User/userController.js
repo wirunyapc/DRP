@@ -57,6 +57,7 @@
       $log.debug('error', vm.user.height);
       $log.debug('error', vm.user.duration);
 
+
       if (vm.user.username != "" && vm.user.password != "" && vm.user.email != "") {
         $uibModalInstance.close({
           username: vm.user.username,

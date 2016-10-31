@@ -37,4 +37,9 @@ public class SetMenuDaoImpl implements SetMenuDao{
     public List<SetMenu> findAll() {
         return setMenuRepository.findAll();
     }
+
+    @Override
+    public List<SetMenu> findBySetmenuNotIn(List<Integer> setCantEat) {
+        return setMenuRepository.findBySetmenuNotIn(setCantEat);
+    }
 }

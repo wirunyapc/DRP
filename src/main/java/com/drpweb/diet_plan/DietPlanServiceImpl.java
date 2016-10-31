@@ -5,7 +5,6 @@ import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.disease.Disease;
 import com.drpweb.disease.DiseaseDao;
-import com.drpweb.food.FoodService;
 import com.drpweb.role.Role;
 import com.drpweb.setmenu.SetMenu;
 import com.drpweb.setmenu.SetMenuService;
@@ -21,10 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by ADMIN on 9/12/2016.
@@ -33,18 +29,12 @@ import java.util.Set;
 public class DietPlanServiceImpl implements DietPlanService{
     @Autowired
     DietPlanDao dietPlanDao;
-
     @Autowired
     UserService userService;
-
-    @Autowired
-    FoodService foodService;
-
     @Autowired
     DailyMealDao dailyMealDao;
    @Autowired
     SetMenuService setMenuService;
-
     @Autowired
     DiseaseDao diseaseDao;
 
@@ -65,7 +55,8 @@ public class DietPlanServiceImpl implements DietPlanService{
         DailyDiet dailyDiet = new DailyDiet();
         Solver s;
 
-        setMenu = setMenuService.getSetMenu();
+        List<SetMenu> setMenus = setMenuService.getSetMenu();
+        setMenu = setMenuService.toSetMenu(setMenus);
         System.out.println("setMenu" + setMenu);
 
         Set<Role> roles = user.getRoles();
@@ -100,7 +91,8 @@ public class DietPlanServiceImpl implements DietPlanService{
         Solver s;
 
         Disease userDisease = diseaseDao.findOne(user.getDiseaseId());
-        setMenu = setMenuService.getSetMenuByDisease(userDisease.getDiseaseName());
+        List<SetMenu> setMenus = setMenuService.getSetMenuByDisease(userDisease.getId());
+        setMenu = setMenuService.toSetMenu(setMenus);
         System.out.println("Set to Eat" + setMenu);
         System.out.println("disease for plan :"+userDisease.getDiseaseName());
 

@@ -7,7 +7,7 @@ import java.util.List;
  * Created by ADMIN on 10/14/2016.
  */
 public interface SetMenuService {
-    SetMenu getSetMenu() throws SQLException;
-    SetMenu getSetMenuByDisease(String diseaseName) throws SQLException;
+    List<SetMenu> getSetMenu() throws SQLException;
+    List<SetMenu> getSetMenuByDisease(Long diseaseId) throws SQLException;
     SetMenu toSetMenu(List<SetMenu> setMenu);
 }

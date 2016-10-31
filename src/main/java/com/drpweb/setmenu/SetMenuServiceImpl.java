@@ -30,80 +30,50 @@ public class SetMenuServiceImpl implements SetMenuService {
     DietPlanDao dietPlanDao;
 
     @Override
-    public SetMenu getSetMenu() throws SQLException {
+    public List<SetMenu> getSetMenu() throws SQLException {
 
         SetMenu setMenu = new SetMenu();
         List<SetMenu> setMenus = setMenuDao.findAll();
         System.out.println("SetMenulistttt" + setMenus);
 
-        return toSetMenu(setMenus);
+        return setMenus;
     }
 
     @Override
-    public SetMenu getSetMenuByDisease(String diseaseName) throws SQLException {
+    public  List<SetMenu> getSetMenuByDisease(Long diseaseId) throws SQLException {
        // SetMenu setMenu = new SetMenu();
 
-        List<FoodSetDisease> foodSetDiseases = foodSetDiseaseDao.findByDisease(diseaseDao.findByDiseaseName(diseaseName).getId());
-        for (FoodSetDisease f: foodSetDiseases) {
-            System.out.println("Food cant eat for "+diseaseName+"is :"+f.getFood());
-        }
+        List<FoodSetDisease> foodSetDiseases = foodSetDiseaseDao.findByDisease(diseaseId);
 
-        List<SetMenu> setMenus = setMenuDao.findAll();
+
+
         List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findAll();
-        List<FoodSetMenu> foodSetMenuCantEat = new ArrayList<>();
+        List<Integer> setMenuCantEatId = new ArrayList<>();
         List<SetMenu> setCantEat = new ArrayList<>();
         List<SetMenu> setToEat = new ArrayList<>();
 
-//        for (FoodSetDisease fd: foodSetDiseases) {
-//            foodSetMenuCantEat.addAll(foodSetMenus.stream().filter(f -> fd.getFood() == f.getFoodId()).collect(Collectors.toList()));
-//        }
-
-        for (FoodSetDisease fd: foodSetDiseases) {
-            for (FoodSetMenu f: foodSetMenus) {
-                if(fd.getFood()==f.getFoodId()){
-
-                            foodSetMenuCantEat.add(f);
-
-                }
+        if(!foodSetDiseases.isEmpty()) {
+            for (FoodSetDisease f : foodSetDiseases) {
+                setMenuCantEatId.add(f.getSetmenu());
             }
-        }
 
-        for (FoodSetMenu f:foodSetMenuCantEat) {
-            for (SetMenu s: setMenus) {
-                if(f.getSetmenu()==s.getSetMenu_id()){
-
-                            setCantEat.add(s);
-
-                }
-
-            }
+            setToEat = setMenuDao.findBySetmenuNotIn(setMenuCantEatId);
+        }else{
+            setToEat = setMenuDao.findAll();
         }
 
 
-
-        /*for (SetMenu s: setCantEat) {
-            for (SetMenu set : setMenus) {
-                if(s.getSetMenu_id()!=set.getSetMenu_id()){
-                    for (SetMenu setmenu:setToEat) {
-                        if(setmenu.getSetMenu_id()!=set.getSetMenu_id()){
-                            setToEat.add(set);
-                        }
-                    }
-
-                }
-            }
-        }*/
-        for (FoodSetMenu f: foodSetMenuCantEat) {
-            System.out.println("Food set menu cant eat for "+diseaseName+"is :"+f.getSetmenu());
+        for (Integer i: setMenuCantEatId) {
+            System.out.println("Set cant eat for "+diseaseId+"is :"+i);
         }
-        for (SetMenu s: setCantEat) {
-            System.out.println("Set menu cant eat for "+diseaseName+"is :"+s.getSetMenu_id());
+        for (SetMenu s: setToEat) {
+            System.out.println("Set menu to eat for "+diseaseId+"is :"+s.getSetmenu());
         }
 
 
 
 
-    return toSetMenu(setToEat);
+    return setToEat;
 
     }
 
@@ -126,7 +96,7 @@ public class SetMenuServiceImpl implements SetMenuService {
 
             int idx = 0;
             for (SetMenu s : setMenus) {
-                arr_setMenu_id[idx] = s.getSetMenu_id();
+                arr_setMenu_id[idx] = s.getSetmenu();
                 arr_total_cal[idx] = s.getTotal_cal();
                 arr_total_fat[idx] = s.getTotal_fat();
                 arr_total_carboh[idx] = s.getTotal_carboh();

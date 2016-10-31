@@ -18,8 +18,8 @@ public class FoodSetDisease {
     @Column(name = "disease_id")
     private Long disease;
 
-    @Column(name = "food_id")
-    private int food;
+    @Column(name = "setmenu_id")
+    private int setmenu;
 
     public Long getDisease() {
         return disease;
@@ -35,13 +35,6 @@ public class FoodSetDisease {
         this.disease = disease;
     }
 
-    public int getFood() {
-        return food;
-    }
-
-    public void setFood(int food) {
-        this.food = food;
-    }
 
     public Long getFoodDiseaseId() {
         return foodDiseaseId;
@@ -49,5 +42,13 @@ public class FoodSetDisease {
 
     public void setFoodDiseaseId(Long foodDiseaseId) {
         this.foodDiseaseId = foodDiseaseId;
+    }
+
+    public int getSetmenu() {
+        return setmenu;
+    }
+
+    public void setSetmenu(int setmenu) {
+        this.setmenu = setmenu;
     }
 }

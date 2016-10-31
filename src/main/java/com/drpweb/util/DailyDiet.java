@@ -69,11 +69,11 @@ public class DailyDiet {
                 m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varPros[intVars]), 60), Choco.geq(Choco.sum(this.varPros[intVars]), 45)}));
                 m.addConstraint(Choco.and(new Constraint[]{Choco.leq(Choco.sum(this.varCarboes[intVars]), 165), Choco.geq(Choco.sum(this.varCarboes[intVars]), 150)}));
             }else{
-                System.out.println("Build patient");
-                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varKals[intVars]), bmr+500), Choco.geq(Choco.sum(this.varKals[intVars]), bmr-500)));
+                System.out.println("Build patient"+bmr);
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varKals[intVars]), bmr), Choco.geq(Choco.sum(this.varKals[intVars]), 1200)));
                 m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varFats[intVars]), di_fat+10),  Choco.geq(Choco.sum(this.varKals[intVars]), di_fat-10)));
-                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varPros[intVars]), di_prot+5), Choco.geq(Choco.sum(this.varPros[intVars]), di_prot-20)));
-                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varCarboes[intVars]), di_carboh+5), Choco.geq(Choco.sum(this.varCarboes[intVars]), di_carboh-30)));
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varPros[intVars]), di_prot+20), Choco.geq(Choco.sum(this.varPros[intVars]), di_prot-20)));
+                m.addConstraint(Choco.and(Choco.leq(Choco.sum(this.varCarboes[intVars]), di_carboh+30), Choco.geq(Choco.sum(this.varCarboes[intVars]), di_carboh-30)));
 
 
 

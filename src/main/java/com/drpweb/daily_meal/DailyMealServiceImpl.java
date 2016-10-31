@@ -16,6 +16,8 @@ public class DailyMealServiceImpl implements DailyMealService{
 
     @Override
     public void delete(Long dietPlanId) {
+
+
     List<DailyMeal> dailyMeals = dailyMealDao.findByDietPlanId(dietPlanId);
         for (DailyMeal d: dailyMeals) {
             dailyMealDao.delete(d);        }

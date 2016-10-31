@@ -139,8 +139,8 @@
       var vm = this;
       vm.lofinFaild = lofinFail;
       vm.loginMessage = loginMessage;
-      vm.username = 'bbbbbb';
-      vm.password = '123456';
+      vm.username = 'krissn';
+      vm.password = '222222';
       vm.ok = function () {
 
         $uibModalInstance.close({username:vm.username,password:vm.password,rememberMe:vm.rememberMe});

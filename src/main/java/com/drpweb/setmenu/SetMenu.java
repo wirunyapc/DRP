@@ -12,7 +12,7 @@ public class SetMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int setMenu_id;
+    private int setmenu;
     private int total_cal;
     private int total_fat;
     private int total_carboh;
@@ -42,13 +42,7 @@ public class SetMenu {
 public SetMenu() {
 }
 
-    public int getSetMenu_id() {
-        return setMenu_id;
-    }
 
-    public void setSetMenu_id(int setMenu_id) {
-        this.setMenu_id = setMenu_id;
-    }
 
     public int getTotal_cal() {
         return total_cal;
@@ -152,5 +146,13 @@ public SetMenu() {
 
     public void setTotal_proteins(ArrayList<int[]> total_proteins) {
         this.total_proteins = total_proteins;
+    }
+
+    public int getSetmenu() {
+        return setmenu;
+    }
+
+    public void setSetmenu(int setmenu) {
+        this.setmenu = setmenu;
     }
 }
