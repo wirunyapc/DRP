@@ -25,14 +25,15 @@
 
     /*CalInfo*/
     vm.bmi = null;
-    vm.budget = null;
+    $rootScope.budget = null;
     vm.net = 0;
+
    //
-    vm.under = 0;
+
+
     vm.activity = 0;
 
     $scope.currentuser = $rootScope.currentuser;
-    console.log('current user from DRP',$scope.currentuser);
 
 
 
@@ -58,7 +59,7 @@
      })
      .then(function (result) {
        $log.debug('bmr ',result.data[0]);
-     vm.budget = result.data[0];
+     $rootScope.budget = result.data[0];
 
      });
 
@@ -104,41 +105,82 @@
     $rootScope.selectDisease=false;
 
     /*DROPDOWN Food*/
+
     $scope.foods = [];
-    if(vm.currentR=="member") {
-      $http
-        .get('http://localhost:8080/getFoods')
-        .then(function (result) {
-          $scope.foods = result.data;
-          $log.debug('food ', result.data);
-        });
-    }
-    if(vm.currentR=="patient"){
-      $http({
-        method: 'GET',
-        url: 'http://localhost:8080/getFoodsByDisease',
-        params: {
-          name: $scope.currentuser
-        }
-      })
-        .then(function (result) {
-          $scope.foods = result.data;
-          $log.debug('food ', result.data);
-        });
+    $scope.caloriesMeal = { 'bFast': 0 , 'lunch':0, 'dinner':0};
+    $scope.requestSetFoods = function(){
+      if(vm.currentR=="member") {
+        $http
+          .get('http://localhost:8080/getFoods')
+          .then(function (result) {
+            $scope.foods = result.data;
+
+            $scope.foodSetsBreakfast = $scope.foods.filter(function(food){
+              return $scope.filterSetFoodsByCal($scope.caloriesMeal.bFast , food);
+            });
+
+            $scope.foodSetsLunch = $scope.foods.filter(function(food){
+              return $scope.filterSetFoodsByCal($scope.caloriesMeal.lunch , food);
+            });
+
+            $scope.foodSetsDinner = $scope.foods.filter(function(food){
+             return $scope.filterSetFoodsByCal($scope.caloriesMeal.dinner , food);
+            });
+
+
+            $log.debug('food ', result.data);
+          });
+      }
+      if(vm.currentR=="patient"){
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8080/getFoodsByDisease',
+          params: {
+            name: $scope.currentuser
+          }
+        })
+          .then(function (result) {
+            $scope.foods = result.data;
+            $scope.foodSetsBreakfast = $scope.foods.filter(function(food){
+              return $scope.filterSetFoodsByCal($scope.caloriesMeal.bFast , food);
+            });
+
+            $scope.foodSetsLunch = $scope.foods.filter(function(food){
+              return $scope.filterSetFoodsByCal($scope.caloriesMeal.lunch , food);
+            });
+
+            $scope.foodSetsDinner = $scope.foods.filter(function(food){
+              return $scope.filterSetFoodsByCal($scope.caloriesMeal.dinner , food);
+            });
+
+
+            $log.debug('food ', result.data);
+
+          });
+      }
     }
 
-    $scope.setFood=function(food,meal,index){
-      $log.debug(meal,food,index);
+    $scope.filterSetFoodsByCal = function(baseCal,food){
+        if(baseCal == 0){
+          return food;
+        }else {
+            var cal =  parseInt(food[1]);
+            return  cal <= baseCal;
+        }
+    }
+
+
+    $scope.setFood=function(setMenu,meal){
+      //$log.debug(setMenu,meal,index);
       $scope.getTotalDietCal();
       $http({
         method: 'GET',
         url: 'http://localhost:8080/setFood',
         params: {
-          food: food,
+          set: setMenu,
           name: $scope.currentuser,
           meal: meal,
           date: $scope.selectedDate,
-          idx: index
         }
       }).then(function(result) {
 
@@ -230,7 +272,8 @@ if(vm.currentR=='patient') {
       })
         .then(function (result) {
           $rootScope.totalDietCal=result.data;
-
+          $rootScope.underCal = $rootScope.budget-$rootScope.totalDietCal;
+          $log.debug("Under calories", $rootScope.underCal);
         });
 
     };
@@ -269,6 +312,7 @@ if(vm.currentR=='patient') {
        //Not enought food to solve
       });
     }
+    $scope.requestSetFoods();
     $scope.requestPlan();
 
     $scope.mealModel = [];
@@ -295,12 +339,12 @@ if(vm.currentR=='patient') {
             console.log('date', mealDatePlan);
             if(_mealModel[mealDatePlan.getTime()]){
 
-              _mealModel[mealDatePlan.getTime()].push({'mealId':dailyMeals[j][1],'food':dailyMeals[j][3],'index': dailyMeals[j][2]});
+              _mealModel[mealDatePlan.getTime()].push({'mealId':dailyMeals[j][1],'food':dailyMeals[j][3],'index': dailyMeals[j][2],'calories':dailyMeals[j][4]});
 
 
 
             }else{
-              _mealModel[mealDatePlan.getTime()] = [{'mealId':dailyMeals[j][1],'food':dailyMeals[j][3],'index': dailyMeals[j][2]}];
+              _mealModel[mealDatePlan.getTime()] = [{'mealId':dailyMeals[j][1],'food':dailyMeals[j][3],'index': dailyMeals[j][2],'calories':dailyMeals[j][4]}];
               var mealEvent = {
                 title: dailyMeals[j][1],
                 start: mealDatePlan,
@@ -349,7 +393,13 @@ if(vm.currentR=='patient') {
         $rootScope.bfast1 = bfastMeals[0].food;
         $rootScope.bfast2 = bfastMeals[1].food;
         $rootScope.bfast3 = bfastMeals[2].food;
+
+        var bfastCal = parseInt(bfastMeals[0].calories)
+        $scope.caloriesMeal.bFast = bfastCal;
+
       }
+
+
 
       var lunchMeals = dailyMeals.filter(function(food){
         return food.mealId == 2;
@@ -362,7 +412,13 @@ if(vm.currentR=='patient') {
         $rootScope.lunch1 = lunchMeals[0].food;
         $rootScope.lunch2 = lunchMeals[1].food;
         $rootScope.lunch3 = lunchMeals[2].food;
+
+        var lunchCal = parseInt(lunchMeals[0].calories)
+        $scope.caloriesMeal.lunch = lunchCal;
+
       }
+
+
 
       var dinnerMeals = dailyMeals.filter(function(food){
         return food.mealId == 3;
@@ -371,10 +427,14 @@ if(vm.currentR=='patient') {
       });
 
 
-      if(lunchMeals.length > 0){
+      if(dinnerMeals.length > 0){
         $rootScope.dinner1 = dinnerMeals[0].food;
         $rootScope.dinner2 = dinnerMeals[1].food;
         $rootScope.dinner3 = dinnerMeals[2].food;
+
+        var dinnerCal = parseInt(dinnerMeals[0].calories)
+        $scope.caloriesMeal.dinner = dinnerCal;
+
       }
 
 
@@ -382,15 +442,10 @@ if(vm.currentR=='patient') {
       //$scope.getBmrValue();
 
 
-      vm.selectedFoodBfast1 = "";
-      vm.selectedFoodBfast2 = "";
-      vm.selectedFoodBfast3 = "";
-      vm.selectedFoodLunch1 = "";
-      vm.selectedFoodLunch2 = "";
-      vm.selectedFoodLunch3 = "";
-      vm.selectedFoodDinner1 = "";
-      vm.selectedFoodDinner2 = "";
-      vm.selectedFoodDinner3 = "";
+      vm.selectedFoodBfast = "";
+      vm.selectedFoodLunch = "";
+      vm.selectedFoodDinner = "";
+
 
       console.log('setCalDate: dailyMeal',dailyMeals);
       console.log('selectDate',moment(date).valueOf());

@@ -36,25 +36,14 @@ public class FoodController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/getTotalDietCal",method = RequestMethod.GET)
-    public int calculateDiet(@RequestParam("date")String date,@RequestParam("name")String name) throws SQLException {
+    public int DietCal(@RequestParam("date")String date,@RequestParam("name")String name) throws SQLException {
         System.out.println("date to cal total diet "+date);
         int totalDietCal = 0;
 
         User user = userDao.findByUsername(name);
         DietPlan userDietPlan = dietPlanService.findByUserId(user.getId());
         List<DailyMeal> dailymeals = dailyMealdao.findByDietPlanId(userDietPlan.getDietPlanId());
-//        List<SetMenu> setMenus = new ArrayList<>();
-//
-//        for (DailyMeal daily : dailymeals) {
-//            if(daily.getDate().toString().equals(date+" 00:00:00.0")){
-//                System.out.print("set id "+ daily.getSetMenu_id());
-//                setMenus.add(setMenuDao.findOne(daily.getSetMenu_id()));
-//            }
-//        }
-//
-//        for (SetMenu s: setMenus) {
-//            totalDietCal+=s.getTotal_cal();
-//        }
+
 
 
         for (DailyMeal daily : dailymeals) {

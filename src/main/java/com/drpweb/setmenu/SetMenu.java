@@ -35,6 +35,7 @@ public class SetMenu {
     private ArrayList<int[]> total_fats;
     @Transient
     private ArrayList<int[]> total_carbohs;
+
     @Transient
     private ArrayList<int[]> total_proteins;
 //    @Transient
