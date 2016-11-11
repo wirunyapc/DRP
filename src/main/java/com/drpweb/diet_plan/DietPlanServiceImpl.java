@@ -43,6 +43,19 @@ public class DietPlanServiceImpl implements DietPlanService{
     public DietPlan findByUserId(Long id) {
         return dietPlanDao.findByUserId(id);
     }
+
+/*    @Override
+    public void setDietPlanDate(DietPlan dietPlan){
+        LocalDate today = LocalDate.now();
+        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setStartDate(startDate);
+
+        LocalDate end = today.plusDays(user.getDuration()-1);
+        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setEndDate(endDate);
+
+        dietPlan.setUserId(u.getId());
+    }*/
     @Override
     public void createPlan(String name) throws SQLException {
       User user = userService.findByUserName(name);

@@ -8,6 +8,7 @@
     .module('app')
     .factory('homeService',homeService);
 
+
   /** @ngInject */
   function homeService($http, $q, $log) {
     return {
@@ -28,6 +29,7 @@
       },
     };
   }
+
 
 
 

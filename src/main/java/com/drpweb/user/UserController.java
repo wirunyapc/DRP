@@ -29,10 +29,18 @@ public class UserController {
     @Autowired
     DietPlanService dietPlanService;
 
-//    @RequestMapping(value = "/user/all",method = RequestMethod.GET)
-//    public List<User> list(){
-//        return userDao.findAll();
-//    }
+    @RequestMapping(value = "/updateUser",method = RequestMethod.GET)
+    public String updateUserProfile(@RequestParam("currentUser")String current,@RequestParam("weight")double weight,@RequestParam("height")double height,@RequestParam("duration")int duration){
+        User user = userDao.findByUsername(current);
+        user.setWeight(weight);
+        user.setHeight(height);
+        user.setDuration(duration);
+        userDao.update(user);
+
+
+
+        return "["+"\""+"success"+"\""+"]";
+    }
 
 
     @RequestMapping(value = "/user",method = RequestMethod.POST)

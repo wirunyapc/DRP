@@ -139,7 +139,7 @@
       var vm = this;
       vm.lofinFaild = lofinFail;
       vm.loginMessage = loginMessage;
-      vm.username = 'bbbbbb';
+      vm.username = 'bowbow';
       vm.password = '123456';
       vm.ok = function () {
 

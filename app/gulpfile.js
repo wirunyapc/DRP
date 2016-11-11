@@ -8,6 +8,7 @@
 
 var fs = require('fs');
 var gulp = require('gulp');
+var runkeeper = require('runkeeper-js');
 
 /**
  *  This will load all js or coffee files in the gulp directory

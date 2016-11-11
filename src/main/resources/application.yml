@@ -17,3 +17,5 @@ spring:
     mvc:
         favicon:
             enabled: false
+
+

@@ -68,17 +68,29 @@ public class DietPlanController {
 
 
         if(dailyMeals.size()==0) {
-            System.out.println("Diet plan nullll");
 
                 Set<Role> roles = user.getRoles();
                 for(Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
                     Role role = it.next();
                     if (role.getRoleName().equals("member")){
+                        System.out.println("Diet plan nullll");
+                        LocalDate today = LocalDate.now();
+                        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                        dietPlan.setStartDate(startDate);
+
+                        LocalDate end = today.plusDays(user.getDuration()-1);
+                        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                        dietPlan.setEndDate(endDate);
+
+                        dietPlanDao.update(dietPlan);
+                        System.out.println("Plan set date" + dietPlan.getStartDate());
+
                        dietPlanService.createPlan(user.getUsername());
                         dailyMeals=dailyMealDao.findByDietPlanId(dietPlan.getDietPlanId());
-                       if(dailyMeals.isEmpty()){
-                           return "["+"\""+"error"+"\""+"]";
-                       }
+
+//                       if(dailyMeals.isEmpty()){
+//                           return "["+"\""+"error"+"\""+"]";
+//                       }
                     }else{
                         return "["+"\""+"null"+"\""+"]";
                     }

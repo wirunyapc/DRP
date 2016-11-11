@@ -4,7 +4,6 @@ import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.diet_plan.DietPlan;
 import com.drpweb.diet_plan.DietPlanService;
-import com.drpweb.food_setmenu.FoodSetMenu;
 import com.drpweb.food_setmenu.FoodSetMenuDao;
 import com.drpweb.setmenu.SetMenuDao;
 import com.drpweb.user.User;
@@ -49,10 +48,12 @@ public class FoodController {
         for (DailyMeal daily : dailymeals) {
             if(daily.getDate().toString().equals(date+" 00:00:00.0")){
                 System.out.println("Daily get date " + daily.getDate().toString()+"Date from front "+ date+" 00:00:00.0");
-                List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(daily.getSetMenu_id());
-                for (FoodSetMenu f: foodSetMenus) {
-                    totalDietCal+=foodDao.findOne(f.getFoodId()).getKal();
-                }
+//                List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(daily.getSetMenu_id());
+//
+//                for (FoodSetMenu f: foodSetMenus) {
+//                    totalDietCal+=foodDao.findOne(f.getFoodId()).getKal();
+//                }
+                totalDietCal+=setMenuDao.findOne(daily.getSetMenu_id()).getTotal_cal();
             }
         }
 

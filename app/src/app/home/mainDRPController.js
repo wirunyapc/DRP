@@ -28,13 +28,10 @@
     $rootScope.budget = null;
     vm.net = 0;
 
-   //
-
 
     vm.activity = 0;
 
     $scope.currentuser = $rootScope.currentuser;
-
 
 
 
@@ -55,21 +52,13 @@
      $http({
      method: 'GET',
      url: 'http://localhost:8080/getBmr',
-     params: {name: $scope.currentuser}
+     params: {name: $scope.currentuser},
      })
      .then(function (result) {
        $log.debug('bmr ',result.data[0]);
      $rootScope.budget = result.data[0];
 
      });
-
-    /*NET*/
-  //  vm.net = vm.diet - vm.activity;
-
-    /*Activity*/
-
-    /*Under*/
-  //  vm.under = vm.budget - vm.net;
 
 
     vm.setDirection = function(direction) {
@@ -103,6 +92,49 @@
     vm.selectedDisease = null;
    // $rootScope.notEnoughFood=false;
     $rootScope.selectDisease=false;
+
+    /*Activity*/
+    $scope.requestAc = function(){
+      $http({
+        method: 'GET',
+        headers: {Authorization: 'Bearer https://runkeeper.com/apps/token',
+          Accept: 'application/vnd.com.runkeeper.FitnessActivityFeed+json'},
+        uri: 'http://api.runkeeper.com/fitnessActivities'
+      })
+        .then(function (result) {
+
+        });
+    }
+
+    $scope.connectRunKeeper = function(){
+
+
+    //  var argv = require('optimist').argv,
+
+      // options = require('./config').options;
+        options = exports.options = {
+          client_id : "f18e3497b59c4329b683ed2bebe2d2cc",
+          client_secret : "bbfe866b93ec43a4bdf7763bcc2c12d5",
+          auth_url : "https://runkeeper.com/apps/authorize",
+          access_token_url : "https://runkeeper.com/apps/token",
+          redirect_uri : "http://localhost:3000/#/"
+        };
+
+      $log.debug("Getting token for code: " + argv.code);
+
+      // Set up client
+
+
+      var rkclient = new runkeeper.HealthGraph(options);
+
+      // Test getToken
+
+      rkclient.getNewToken(argv.code, function(access_token) {
+        rkclient.access_token = access_token;
+        console.log("client access_token: " + rkclient.access_token);
+      });
+
+    }
 
     /*DROPDOWN Food*/
 

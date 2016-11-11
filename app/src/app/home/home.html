@@ -17,6 +17,8 @@
       </th>
       <th style="background-color: #F4EFAF">
         Activity : {{vm.activity}}
+        <div ng-click="requestAc()" class="pull-right glyphicon glyphicon-refresh">
+        </div>
       </th>
       <th style="background-color: #D0B3E1">
         Net : {{totalDietCal-0}}
@@ -45,6 +47,8 @@
     <div class="form-group">
       <button class="btn btn-primary" type="submit" value="submit" style="margin-left: 20px;">Generate Plan</button>
     </div>
+
+
   </form>
   <!--<h1>You selected: {{vm.selectedDisease}}</h1>-->
 </div>
