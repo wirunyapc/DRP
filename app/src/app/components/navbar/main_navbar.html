@@ -15,12 +15,20 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <!--<li ng-show="user"><a href="#">MyPlan</a></li>-->
+        <li ng-show="user"><div ng-click="connectRunKeeper()" style="color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Connect RunKeeper</p></div></li>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li ng-show="user"><a href="#/myaccount">MyAccount</a></li>
-        <li ng-hide="user" ><span ng-include src="'app/user/sign_up.html'"></span></li>
-        <li ng-hide="user" style=" margin-top: 5px;"><span ng-include src="'app/security/sign_in.html'"></span></li>
+        <!--<div ng-controller="ModalRegisterController as vm">-->
+        <!--<li ng-hide="user" ng-click="vm.open()"><span>Sign up</span></li>-->
+        <!--</div>-->
+        <!--<div ng-controller="ModalLoginController as vm">-->
+        <!--<li ng-hide="user" style=" margin-top: 5px;" ng-click="vm.open()">-->
+          <!--<span>Sign in</span>-->
+          <!--&lt;!&ndash;<span ng-include src="'app/security/sign_in.html'"></span>&ndash;&gt;-->
+        <!--</li>-->
+          <!--</div>-->
         <li ng-show="user">
           <a href="/" ng-click="$root.logout()" style="color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Sign-out</p></a>
       </li>
@@ -41,6 +49,13 @@
     <a class="close" data-dismiss="alert" aria-label="Close" ng-click="selectDisease=false">
       <span aria-hidden="true">&times;</span></a>
     <strong>Warning!</strong> Please select the disease
+  </div>
+
+  <div class="alert alert-success alert-dismissable col-md-offset-4 col-md-4" role="alert" ng-show="updateUser"
+       style="position: absolute; top: 0px;">
+    <a class="close" data-dismiss="alert" aria-label="Close" ng-click="updateUser=false">
+      <span aria-hidden="true">&times;</span></a>
+    <strong>Success!</strong> Your profile has been updated
   </div>
 
   <!--<div class="alert alert-danger alert-dismissable col-md-offset-4 col-md-4" role="alert" ng-show="notEnoughFood"-->

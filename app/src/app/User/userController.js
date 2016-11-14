@@ -81,18 +81,11 @@
       $location.path('/')
     };
   }
+
   function MyAccountController($rootScope,$http,$log,$scope,$location) {
     var vm = this;
     vm.loadingstatus = false;
-
-/*    queryUserService.get({name: $rootScope.user.username}, function (data) {
-        vm.user = data;
-
-      },function () {
-        vm.loadingstatus = true;
-        vm.loadingMessage ="Cannot load user detail";
-      }
-    );*/
+    $rootScope.updateUser = false;
 
     vm.cancel = function () {
       $location.path('/home')
@@ -109,7 +102,25 @@
       });
 
     vm.edit = function () {
-
+      $log.debug('error user', $rootScope.currentuser);
+      $log.debug('error', vm.user.username);
+      $log.debug('error', vm.user.weight);
+      $log.debug('error', vm.user.height);
+      $log.debug('error', vm.user.duration);
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/updateUser',
+        params: {
+                currentUser: $rootScope.currentuser,
+                weight: vm.user.weight,
+                height: vm.user.height,
+                duration: vm.user.duration
+        }
+      }).then(function (result) {
+        if(result.data[0]=="success"){
+          $rootScope.updateUser = true;
+        }
+      });
 
     }
   }

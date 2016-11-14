@@ -11,6 +11,11 @@
         templateUrl: 'app/components/welcome/welcome.html'
 
       })
+      .when('/signUp', {
+        templateUrl: 'app/User/sign_up.html',
+        controller: 'ModalRegisterController',
+        controllerAs: 'vm'
+      })
       .when('/home', {
         templateUrl: 'app/home/home.html',
         controller: 'mainDRPController',

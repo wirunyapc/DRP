@@ -4,7 +4,6 @@ import com.drpweb.diet_plan.DietPlanDao;
 import com.drpweb.disease.DiseaseDao;
 import com.drpweb.food_set_disease.FoodSetDisease;
 import com.drpweb.food_set_disease.FoodSetDiseaseDao;
-import com.drpweb.food_setmenu.FoodSetMenu;
 import com.drpweb.food_setmenu.FoodSetMenuDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,11 +45,8 @@ public class SetMenuServiceImpl implements SetMenuService {
         List<FoodSetDisease> foodSetDiseases = foodSetDiseaseDao.findByDisease(diseaseId);
 
 
-
-        List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findAll();
         List<Integer> setMenuCantEatId = new ArrayList<>();
-        List<SetMenu> setCantEat = new ArrayList<>();
-        List<SetMenu> setToEat = new ArrayList<>();
+        List<SetMenu> setToEat;
 
         if(!foodSetDiseases.isEmpty()) {
             for (FoodSetDisease f : foodSetDiseases) {
@@ -62,16 +58,12 @@ public class SetMenuServiceImpl implements SetMenuService {
             setToEat = setMenuDao.findAll();
         }
 
-
         for (Integer i: setMenuCantEatId) {
             System.out.println("Set cant eat for "+diseaseId+"is :"+i);
         }
         for (SetMenu s: setToEat) {
             System.out.println("Set menu to eat for "+diseaseId+"is :"+s.getSetmenu());
         }
-
-
-
 
     return setToEat;
 

@@ -1,0 +1,64 @@
+<div ng-controller="ModalIngredientController as vm">
+  <button class="btn btn-info" ng-click="vm.open()" style="color: rgb(250,250,250)">Set ingredient&nbsp;&nbsp;</button>
+
+<!--  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#example-getting-started').multiselect();
+    });
+  </script>-->
+
+
+  <script type="text/ng-template" id="ingredient.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Select an ingredients</h3>
+    </div>
+    <div class="modal-body">
+
+      <table class="table">
+        <tbody>
+          <tr>
+           <td>
+             <label for="selectIngredient">Select ingredients:</label><br>
+             <select class="selectpicker" id="selectIngredient" ng-model="selectedValues" multiple>
+
+               <option ng-repeat="i in ingredients" value="{{i.ingredientName}}">{{i.ingredientName}}</option>
+             </select>
+            </td>
+            <td>
+              <button class="btn btn-default" type="button" ng-click="vm.selectIngredient()">>></button><br>
+              <button class="btn btn-default" type="button" ng-click="vm.deselectIngredient()"><<</button>
+            </td>
+            <td>
+              <label for="example-getting-started">Selected ingredients:</label><br>
+              <select class="selectpicker" id="example-getting-started" ng-model="selectedIngredient" multiple>
+
+                <option ng-repeat="j in selectedIngredients" value="{{j}}">{{j}}</option>
+              </select>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+      <br>
+       selectedValues = {{selectedValues}}<br>
+      selectedIngredient= {{selectedIngredient}}
+
+
+
+
+      <!--</form>-->
+
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="vm.setIngredient()">Save and Generate diet plan</button>
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+  </script>
+</div>
+

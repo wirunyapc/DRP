@@ -19,6 +19,28 @@ public class FoodServiceImpl implements FoodService {
        Food food = new Food();
         List<Food> foods = foodDao.findAll();
         System.out.println("Food listttt" + foods);
+
+        return listToFood(foods);
+
+    }
+
+    @Override
+    public Food getFoodByCal(int cal){
+        Food food = new Food();
+        List<Food> foods = foodDao.findAll();
+        List<Food> foodFromCal = new ArrayList<>();
+        for (Food f : foods) {
+            if(f.getKal()<= cal){
+                foodFromCal.add(f);
+            }
+        }
+        return listToFood(foodFromCal);
+
+    }
+
+    @Override
+    public Food listToFood(List<Food> foods){
+        Food food = new Food();
         if(foods!=null) {
             int size = foods.size();
             int[] arr_id = new int[size];
@@ -65,8 +87,6 @@ public class FoodServiceImpl implements FoodService {
             System.out.println("Food setNamesssssss "+ food.getNames());
         }
         return food;
-
     }
-
 
 }

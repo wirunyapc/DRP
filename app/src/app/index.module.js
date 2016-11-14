@@ -16,7 +16,8 @@
         'ngResource+apiPrefix',
           'materialCalendar',
         'ui.calendar',
-        'angularMoment'
+        'angularMoment',
+        'multipleSelect'
       ]);
 
 })();

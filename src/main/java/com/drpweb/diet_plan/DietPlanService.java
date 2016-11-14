@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public interface DietPlanService {
     DietPlan findByUserId(Long id);
+    //void setDietPlanDate(DietPlan dietPlan);
     void createPlan(String name) throws SQLException;
     String createPatientPlan(String name) throws SQLException;
     void savePlan(String result,User user);
