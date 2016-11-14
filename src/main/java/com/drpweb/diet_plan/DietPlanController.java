@@ -62,7 +62,6 @@ public class DietPlanController {
     @RequestMapping(value = "/getFoodPlan",method = RequestMethod.GET)
     public String getFoodPlan(@RequestParam("name")String username) throws SQLException {
         User user = userService.findByUserName(username);
-        System.out.println("user fobbbbbbbr food plan : "+user.getUsername());
         DietPlan dietPlan = dietPlanDao.findByUserId(user.getId());
         List<DailyMeal> dailyMeals = dailyMealDao.findByDietPlanId(dietPlan.getDietPlanId());
 

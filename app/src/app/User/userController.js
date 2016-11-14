@@ -81,6 +81,7 @@
       $location.path('/')
     };
   }
+
   function MyAccountController($rootScope,$http,$log,$scope,$location) {
     var vm = this;
     vm.loadingstatus = false;

@@ -1,5 +1,5 @@
 <div class="row"
-    style="
+     style="
      width: 1200px;
      margin-right: 0px;
      margin-left: 10px;
@@ -34,28 +34,55 @@
 <!--<dropdown placeholder="Disease..." list="diseases" selected="disease" property="name"></dropdown>-->
 <div ng-controller="MainCtrl as vm" ng-init="init()">
 
-<div ng-show="vm.currentR == 'patient'">
+  <div ng-show="vm.currentR == 'patient'">
+    <table class="table" style=" margin-bottom: 0px;">
+      <tbody>
+      <tr>
+        <td style=" width: 436px;border-top-width: 0px;padding-bottom: 0px;">
+          <form role="form" ng-submit="setDisease()">
+            <div class="form-group">
+              <select ng-model="vm.selectedDisease" class="form-control pull-left" style="margin-left: 115px;height: 34px;width: 175.818182px;">
+                <option value="" disabled selected>{{currentDisease}}</option>
+                <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
+              </select>
+            </div>
 
-  <form role="form" ng-submit="setDisease()">
-    <div class="form-group">
-      <select ng-model="vm.selectedDisease" class="pull-left" style="margin-left: 115px;height: 34px;">
-        <option value="" disabled selected>{{currentDisease}}</option>
-        <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <button class="btn btn-primary" type="submit" value="submit" style="margin-left: 20px;">Generate Plan</button>
-    </div>
+            <div class="form-group" style=" width: 450px;">
+              <button class="btn btn-primary" type="submit" value="submit" style="margin-left: 20px;">Generate Plan</button>
+            </div>
 
 
-  </form>
+          </form>
+        </td>
+        <td style="padding-top: 23px;border-top-width: 0px;">
+          <span ng-include src="'app/ingredient/ingredient.html'"></span>
+        </td>
+        <td style="border-top-width: 0px;">
+          <button class="btn btn-default" ng-click="showme=true" ng-hide="showme" style="margin-top: 20px; margin-left: 350px;">Change set menu</button>
+        </td>
+        <td style="border-top-width: 0px;">
+          <button class="btn btn-default" ng-click="showme=false" ng-show="showme" style="margin-top: 20px;margin-left: 400px;">Done</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+
+
   <!--<h1>You selected: {{vm.selectedDisease}}</h1>-->
-</div>
 
 
+  <div ng-show="vm.currentR == 'member'">
+    <span class="pull-left" ng-include src="'app/ingredient/ingredient.html'" style="margin-left: 120px;margin-top: 20px;"></span>
+    <button class="btn btn-default" ng-click="showme=true" ng-hide="showme" style="margin-top: 20px; margin-left: 400px;">Change set menu</button>
+    <button class="btn btn-default" ng-click="showme=false" ng-show="showme" style="margin-top: 20px;margin-left: 410px;">Done</button>
+  </div>
+  <!--<span ng-include src="'app/ingredient/ingredient.html'"></span>-->
 
-  <div class="row" style="margin-top: 15px;width: 1200px;height: 300px;">
+  <div class="row" style="width: 1200px;height: 300px;">
 
     <div class="col-md-5 col-md-offset-1" style="
          margin-left: 120px;
@@ -95,14 +122,16 @@
       <!--<div hidden> {{calendarDate}} </div>-->
     </div>
 
-    <button ng-click="showme=true" ng-hide="showme">Change set menu</button>
 
+    <!--<div ng-controller="ModalIngredientController as vm">-->
+    <!--<button class="btn btn-primary" ng-click="vm.open()">Dislike ingredients</button>-->
+    <!--</div>-->
 
-    <div class="col-md-5" style="overflow-y:auto;height:300px;width: 380px;margin-right: 15px;top: 10px;">
+    <div class="col-md-5" style="overflow-y:auto;height: 300px;width: 480px;margin-right: 15px;top: 10px;">
 
-<!--      <div>
-        <h1>Meal for  {{selectedDate}}</h1>
-      </div>-->
+      <!--      <div>
+              <h1>Meal for  {{selectedDate}}</h1>
+            </div>-->
       <table class="table table-hover" width="100%">
         <thead>
         <tr>
@@ -121,12 +150,12 @@
           <td>
             {{bfast1}}
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
             {{bfast2}}
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
             {{bfast3}}
@@ -154,14 +183,14 @@
             <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
             <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
-           {{lunch2}}
+            {{lunch2}}
             <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
             <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
             {{lunch3}}
@@ -172,9 +201,9 @@
         </tbody>
         <!--<tfoot>-->
         <!--<tr>-->
-          <!--<th>-->
-            <!--<span class="pull-right">Add More</span>-->
-          <!--</th>-->
+        <!--<th>-->
+        <!--<span class="pull-right">Add More</span>-->
+        <!--</th>-->
         <!--</tr>-->
         <!--</tfoot>-->
       </table>
@@ -194,18 +223,18 @@
         <tbody>
         <tr>
           <td>
-           {{dinner1}}
+            {{dinner1}}
             <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
             <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
             {{dinner2}}
             <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
             <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
-          </tr>
+        </tr>
         <tr>
           <td>
             {{dinner3}}
@@ -216,9 +245,9 @@
         </tbody>
         <!--<tfoot>-->
         <!--<tr>-->
-          <!--<th>-->
-            <!--<span class="pull-right">Add More</span>-->
-          <!--</th>-->
+        <!--<th>-->
+        <!--<span class="pull-right">Add More</span>-->
+        <!--</th>-->
         <!--</tr>-->
         <!--</tfoot>-->
       </table>
@@ -226,10 +255,7 @@
     </div>
 
   </div>
-  <button ng-click="showme=false" ng-show="showme" style="
-    margin-top: 10px;
-    margin-left: 20px;
-">Done</button>
+
   <!-- <button ng-click="fetchPlan()" hidden>Check Plan</button>-->
 </div>
 

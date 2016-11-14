@@ -24,10 +24,12 @@
     "angular-bootstrap-calendar": "^0.22.0",
     "material-calendar": "^0.2.14",
     "angular-ui-calendar": "^1.0.2",
-    "angular-moment": "^0.10.3"
+    "angular-moment": "^0.10.3",
+    "angularMultipleSelect": "angular-multiple-select#^1.1.2"
   },
   "devDependencies": {
-    "angular-mocks": "~1.5.3"
+    "angular-mocks": "~1.5.3",
+    "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"
   },
   "resolutions": {
     "jquery": "~2.1.4",
