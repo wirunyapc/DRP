@@ -6,6 +6,7 @@
     .run(runBlock)
     .run(runSecurity);
 
+
   /** @ngInject */
   function runSecurity($rootScope,$location,$cookies,securityService, $route) {
     var originalPath = $location.path('/');

@@ -41,14 +41,16 @@
         <td style=" width: 436px;border-top-width: 0px;padding-bottom: 0px;">
           <form role="form" ng-submit="setDisease()">
             <div class="form-group">
-              <select ng-model="vm.selectedDisease" class="form-control pull-left" style="margin-left: 115px;height: 34px;width: 175.818182px;">
+              <select ng-model="vm.selectedDisease" class="form-control pull-left"
+                      style="margin-left: 115px;height: 34px;width: 175.818182px;">
                 <option value="" disabled selected>{{currentDisease}}</option>
                 <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
               </select>
             </div>
 
             <div class="form-group" style=" width: 450px;">
-              <button class="btn btn-primary" type="submit" value="submit" style="margin-left: 20px;">Generate Plan</button>
+              <button class="btn btn-primary" type="submit" value="submit" style="margin-left: 20px;">Generate Plan
+              </button>
             </div>
 
 
@@ -58,10 +60,14 @@
           <span ng-include src="'app/ingredient/ingredient.html'"></span>
         </td>
         <td style="border-top-width: 0px;">
-          <button class="btn btn-default" ng-click="showme=true" ng-hide="showme" style="margin-top: 20px; margin-left: 350px;">Change set menu</button>
+          <button class="btn btn-default" ng-click="showme=true" ng-hide="showme"
+                  style="margin-top: 20px; margin-left: 350px;">Change set menu
+          </button>
         </td>
         <td style="border-top-width: 0px;">
-          <button class="btn btn-default" ng-click="showme=false" ng-show="showme" style="margin-top: 20px;margin-left: 400px;">Done</button>
+          <button class="btn btn-default" ng-click="showme=false" ng-show="showme"
+                  style="margin-top: 20px;margin-left: 400px;">Done
+          </button>
         </td>
       </tr>
       </tbody>
@@ -70,43 +76,22 @@
   </div>
 
 
-
-
-  <!--<h1>You selected: {{vm.selectedDisease}}</h1>-->
-
-
   <div ng-show="vm.currentR == 'member'">
-    <span class="pull-left" ng-include src="'app/ingredient/ingredient.html'" style="margin-left: 120px;margin-top: 20px;"></span>
-    <button class="btn btn-default" ng-click="showme=true" ng-hide="showme" style="margin-top: 20px; margin-left: 400px;">Change set menu</button>
-    <button class="btn btn-default" ng-click="showme=false" ng-show="showme" style="margin-top: 20px;margin-left: 410px;">Done</button>
+    <span class="pull-left" ng-include src="'app/ingredient/ingredient.html'"
+          style="margin-left: 120px;margin-top: 20px;"></span>
+    <button class="btn btn-default" ng-click="showme=true" ng-hide="showme"
+            style="margin-top: 20px; margin-left: 400px;">Change set menu
+    </button>
+    <button class="btn btn-default" ng-click="showme=false" ng-show="showme"
+            style="margin-top: 20px;margin-left: 410px;">Done
+    </button>
   </div>
-  <!--<span ng-include src="'app/ingredient/ingredient.html'"></span>-->
 
   <div class="row" style="width: 1200px;height: 300px;">
-
     <div class="col-md-5 col-md-offset-1" style="
          margin-left: 120px;
          margin-right: 20px;
     ">
-      <!-- <calendar-md flex layout layout-fill
-                    calendar-direction="direction"
-                    on-prev-month="prevMonth"
-                    on-next-month="nextMonth"
-                    on-day-click="dayClick"
-                    title-format="'MMMM y'"
-                    ng-model='selectedDate'
-                    day-format="'d'"
-                    day-label-format="'EEE'"
-                    day-label-tooltip-format="'EEEE'"
-                    day-tooltip-format="'fullDate'"
-                    week-starts-on="firstDayOfWeek"
-                    day-content="setDayContent"></calendar-md> -->
-
-      <!-- <div style="font-size: 32px; color: #fff; ">
-        <span style="background-color: blue;" ng-click="selectCalTab(1)">Tab 1</span>
-        <span style="background-color: green;" ng-click="selectCalTab(2)">Tab 2</span>
-      </div> -->
-
       <br>
       <div style="background-color: #999999" ng-if="calendarTab == 1">
         <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="calendarDate" calendar="myCalendar1"></div>
@@ -115,31 +100,19 @@
         Nothing to see in this tab
       </div>
       <br>
-
-
-
-
-      <!--<div hidden> {{calendarDate}} </div>-->
     </div>
 
-
-    <!--<div ng-controller="ModalIngredientController as vm">-->
-    <!--<button class="btn btn-primary" ng-click="vm.open()">Dislike ingredients</button>-->
-    <!--</div>-->
-
     <div class="col-md-5" style="overflow-y:auto;height: 300px;width: 480px;margin-right: 15px;top: 10px;">
-
-      <!--      <div>
-              <h1>Meal for  {{selectedDate}}</h1>
-            </div>-->
       <table class="table table-hover" width="100%">
         <thead>
         <tr>
           <th>
             Brakefast
-            <select ng-show="showme" ng-model="vm.selectedFoodBfast" class="pull-left" ng-change="setFood(vm.selectedFoodBfast,1)">
+            <select ng-show="showme" ng-model="vm.selectedFoodBfast" class="pull-left"
+                    ng-change="setFood(vm.selectedFoodBfast,1)">
               <option value="" disabled selected>Breakfast</option>
-              <option ng-repeat="fBfast in foodSetsBreakfast track by $index" value="{{fBfast[0]}}">{{fBfast[2]}}</option>
+              <option ng-repeat="fBfast in foodSetsBreakfast track by $index" value="{{fBfast[0]}}">{{fBfast[2]}}
+              </option>
             </select>
 
           </th>
@@ -168,7 +141,8 @@
         <thead>
         <tr>
           <th>Lunch
-            <select ng-show="showme" ng-model="vm.selectedFoodLunch" class="pull-left" ng-change="setFood(vm.selectedFoodLunch,2)">
+            <select ng-show="showme" ng-model="vm.selectedFoodLunch" class="pull-left"
+                    ng-change="setFood(vm.selectedFoodLunch,2)">
               <option value="" disabled selected>Lunch</option>
               <option ng-repeat="fLunch in foodSetsLunch track by $index" value="{{fLunch[0]}}">{{fLunch[2]}}</option>
             </select>
@@ -180,22 +154,16 @@
         <tr>
           <td>
             {{lunch1}}
-            <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
-            <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
         </tr>
         <tr>
           <td>
             {{lunch2}}
-            <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
-            <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
         </tr>
         <tr>
           <td>
             {{lunch3}}
-            <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
-            <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
         </tr>
         </tbody>
@@ -212,11 +180,12 @@
         <thead>
         <tr>
           <th>Dinner
-            <select ng-show="showme" ng-model="vm.selectedFoodDinner" class="pull-left" ng-change="setFood(vm.selectedFoodDinner,3)">
+            <select ng-show="showme" ng-model="vm.selectedFoodDinner" class="pull-left"
+                    ng-change="setFood(vm.selectedFoodDinner,3)">
               <option value="" disabled selected>Dinner</option>
-              <option ng-repeat="fDinner in foodSetsDinner track by $index" value="{{fDinner[0]}}">{{fDinner[2]}}</option>
+              <option ng-repeat="fDinner in foodSetsDinner track by $index" value="{{fDinner[0]}}">{{fDinner[2]}}
+              </option>
             </select>
-            <!--<span class="pull-right">Total:</span>-->
           </th>
         </tr>
         </thead>
@@ -224,22 +193,16 @@
         <tr>
           <td>
             {{dinner1}}
-            <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
-            <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
         </tr>
         <tr>
           <td>
             {{dinner2}}
-            <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
-            <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
         </tr>
         <tr>
           <td>
             {{dinner3}}
-            <!--<span class="pull-right glyphicon glyphicon-remove-circle"></span>-->
-            <!--<span class="pull-right glyphicon glyphicon-edit"></span>-->
           </td>
         </tr>
         </tbody>
@@ -255,8 +218,6 @@
     </div>
 
   </div>
-
-  <!-- <button ng-click="fetchPlan()" hidden>Check Plan</button>-->
 </div>
 
 

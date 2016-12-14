@@ -5,6 +5,9 @@ import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.disease.Disease;
 import com.drpweb.disease.DiseaseDao;
+import com.drpweb.food.FoodDao;
+import com.drpweb.ingredient_on_food.IngredientOnFoodDao;
+import com.drpweb.ingredient_set_dislike.IngredientDislikeDao;
 import com.drpweb.role.Role;
 import com.drpweb.setmenu.SetMenu;
 import com.drpweb.setmenu.SetMenuService;
@@ -14,6 +17,7 @@ import com.drpweb.util.DailyDiet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,25 +41,18 @@ public class DietPlanServiceImpl implements DietPlanService{
     SetMenuService setMenuService;
     @Autowired
     DiseaseDao diseaseDao;
-
+    @Autowired
+    IngredientDislikeDao ingredislikeDao;
+    @Autowired
+    FoodDao foodDao;
+    @Autowired
+    IngredientOnFoodDao ingreOnFoodDao;
 
     @Override
     public DietPlan findByUserId(Long id) {
         return dietPlanDao.findByUserId(id);
     }
 
-/*    @Override
-    public void setDietPlanDate(DietPlan dietPlan){
-        LocalDate today = LocalDate.now();
-        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        dietPlan.setStartDate(startDate);
-
-        LocalDate end = today.plusDays(user.getDuration()-1);
-        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        dietPlan.setEndDate(endDate);
-
-        dietPlan.setUserId(u.getId());
-    }*/
     @Override
     public void createPlan(String name) throws SQLException {
       User user = userService.findByUserName(name);
@@ -68,7 +65,8 @@ public class DietPlanServiceImpl implements DietPlanService{
         DailyDiet dailyDiet = new DailyDiet();
         Solver s;
 
-        List<SetMenu> setMenus = setMenuService.getSetMenu();
+        List<SetMenu> setMenus= setMenuService.getSetMenu(user);
+
         setMenu = setMenuService.toSetMenu(setMenus);
         System.out.println("setMenu" + setMenu);
 
@@ -89,6 +87,10 @@ public class DietPlanServiceImpl implements DietPlanService{
         System.out.println("Resultttttttttttttttttttttt"+result);
 
     }
+    public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 
     @Override
     public String createPatientPlan(String name) throws SQLException {
@@ -104,7 +106,7 @@ public class DietPlanServiceImpl implements DietPlanService{
         Solver s;
 
         Disease userDisease = diseaseDao.findOne(user.getDiseaseId());
-        List<SetMenu> setMenus = setMenuService.getSetMenuByDisease(userDisease.getId());
+        List<SetMenu> setMenus= setMenuService.getSetMenuByDisease(user);
         setMenu = setMenuService.toSetMenu(setMenus);
         System.out.println("Set to Eat" + setMenu);
         System.out.println("disease for plan :"+userDisease.getDiseaseName());
@@ -169,7 +171,10 @@ public class DietPlanServiceImpl implements DietPlanService{
 
             if (indexOfColon != -1 && indexOfComma != -1) {
                 foodId = meal.substring(indexOfColon + 1, indexOfComma - 1);
-                setMenuIds[setMenuNum] = Integer.parseInt(foodId);
+
+                    setMenuIds[setMenuNum] = Integer.parseInt(foodId);
+
+
 
 
                 System.out.println(meal);

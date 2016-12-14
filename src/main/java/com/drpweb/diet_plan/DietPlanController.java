@@ -65,7 +65,6 @@ public class DietPlanController {
         DietPlan dietPlan = dietPlanDao.findByUserId(user.getId());
         List<DailyMeal> dailyMeals = dailyMealDao.findByDietPlanId(dietPlan.getDietPlanId());
 
-
         if(dailyMeals.size()==0) {
 
                 Set<Role> roles = user.getRoles();
@@ -172,10 +171,11 @@ public class DietPlanController {
     }
 
    @RequestMapping(value = "/getFoods",method = RequestMethod.GET)
-    public List<List<String>> getFoods() throws SQLException {
-        List<SetMenu> setMenus = setMenuDao.findAll();
+    public List<List<String>> getFoods(@RequestParam("name")String username) throws SQLException {
+        List<SetMenu> setMenus = setMenuService.getSetMenu(userService.findByUserName(username));
         return setToJSON(setMenus);
     }
+
 
     public List<List<String>> setToJSON(List<SetMenu> setMenus) throws SQLException {
         List<List<String>> setName = new ArrayList<>();
@@ -202,24 +202,16 @@ public class DietPlanController {
     @RequestMapping(value = "/getFoodsByDisease",method = RequestMethod.GET)
     public List<List<String>> getFoodsByDisease(@RequestParam("name")String username) throws SQLException {
         User user = userService.findByUserName(username);
-        List<SetMenu> setMenus = setMenuService.getSetMenuByDisease(user.getDiseaseId());
+        List<SetMenu> setMenus = setMenuService.getSetMenuByDisease(user);
 
         return  setToJSON(setMenus);
     }
-  /*  @RequestMapping(value = "/getFoodsByDisease",method = RequestMethod.GET)
-    public List<Food> getFoodsByDisease(@RequestParam("name")String username) throws SQLException {
-        User user = userService.findByUserName(username);
-        List<SetMenu> setMenus = setMenuService.getSetMenuByDisease(user.getDiseaseId());
-        List<Food> foods = new ArrayList<>();
-        List<FoodSetMenu> foodSetMenus;
+    @RequestMapping(value = "/getAllSetMenu",method = RequestMethod.GET)
+    public List<List<String>> getAllSetMenu() throws SQLException {
+        List<SetMenu> setMenus = setMenuDao.findAll();
 
-        for (SetMenu s : setMenus) {
-                foodSetMenus = foodSetMenuDao.findBySetmenu(s.getSetmenu());
-            foods.addAll(foodSetMenus.stream().map(f -> foodDao.findOne(f.getFoodId())).collect(Collectors.toList()));
-        }
-
-        return  foods;
-    }*/
+        return  setToJSON(setMenus);
+    }
 
     @RequestMapping(value = "/getBmr",method = RequestMethod.GET)
     public String getBMR(@RequestParam("name")String username) throws SQLException {

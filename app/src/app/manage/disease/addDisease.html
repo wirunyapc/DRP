@@ -1,0 +1,110 @@
+<style>
+  .selected {
+    background-color: white;
+    color:black;
+  }
+  thead th {
+    background-color: rgba(45, 28, 7, 0.74);
+    color: white;
+  }
+
+  tbody td {
+    background-color: rgba(255, 255, 255, 0.28);
+  }
+
+
+</style>
+<div ng-controller="ModalAddDiseaseController as vm">
+  <button class="btn btn-info" ng-click="vm.open()" style="color: rgb(250,250,250)">Add&nbsp;&nbsp;</button>
+
+  <script type="text/ng-template" id="addDisease.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Add disease</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.ok()">
+        <div class="form-group">
+          <label for="diseaseName"> Disease Name</label>
+          <input type="text" class="form-control" id="diseaseName" placeholder="Enter disease name"
+                 ng-model="vm.disease.diseaseName"
+                 required>
+        </div>
+
+        <div class="form-group">
+          <label for="cal"> Calories</label>
+          <input type="number" class="form-control" id="cal" placeholder="Enter calories" ng-model="vm.disease.cal"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="fat"> Fat</label>
+          <input type="number" class="form-control" id="fat" placeholder="Enter fat" ng-model="vm.disease.fat"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="carboh"> Carbohydrate</label>
+          <input type="number" class="form-control" id="carboh" placeholder="Enter carbohydrate"
+                 ng-model="vm.disease.carboh" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="prote"> Protein</label>
+          <input type="number" class="form-control" id="prote" placeholder="Enter protein" ng-model="vm.disease.prote"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+        <select ng-model="vm.selected" class="form-control"
+                style="margin-left: 115px;height: 34px;width: 175.818182px;" required>
+          <option value="" disabled selected>{{currentDisease}}</option>
+          <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
+        </select>
+          </div>
+        <br>
+        <label for="selectSetMenus"> Select cannot eated set menu</label>
+<!--        <multiple-autocomplete ng-model="setMenus"
+                               id="selectSetMenus"
+                               object-property="name"
+                               suggestions-arr="optionsList2">
+        </multiple-autocomplete>
+        <label>Selected Model Value :<br/></label>{{setMenus}}-->
+        <table class="table" id="selectSetMenus">
+          <tbody>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="selectSetMenu">Select set menus:</label><br>
+                <select class="form-control" id="selectSetMenu" ng-model="selectedValues" multiple>
+
+                  <option ng-repeat="value in optionsList2 track by $index" value="{{value[2]}}">{{value[2]}}</option>
+                </select>
+              </div>
+            </td>
+            <td style="padding-top: 40px;padding-left: 20px;width: 83px;">
+              <button class="btn btn-default" type="button" ng-click="vm.selectSetMenu()">>></button>
+              <br>
+              <button class="btn btn-default" type="button" ng-click="vm.deselectSetMenu()"><<</button>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="example-getting-started">Selected set menus:</label><br>
+                <select class="form-control" id="example-getting-started" ng-model="selectedSetMenu" multiple>
+
+                  <option ng-repeat="j in selectedValues" value="{{j}}">{{j}}</option>
+                </select>
+              </div>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+        <div class="form-group" style="width: 100%">
+          <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+
+  </script>
+</div>
+

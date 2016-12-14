@@ -2,12 +2,13 @@
  * Created by ADMIN on 11/12/2016.
  */
 (function () {
-  'use strict'
-  angular.module('app').controller('ModalIngredientController',ModalIngredientController)
+  'use strict';
+  angular.module('app')
+    .controller('ModalIngredientController',ModalIngredientController)
     .controller('ModalIngredientInstanceController',ModalIngredientInstanceController);
 
   /**ngInject*/
-  function ModalIngredientController($http,$uibModal,$log,$location,$scope,$rootScope) {
+  function ModalIngredientController($uibModal,$log,$scope,$rootScope) {
     var vm = this;
     $rootScope.ingredients=[];
 
@@ -103,7 +104,7 @@
         $scope.ingredients = result.data;
         $log.debug('Ingredient to select', $rootScope.ingredients);
       });
-    }
+    };
 
     vm.getSelectedIngredients = function() {
       $http({
@@ -116,7 +117,7 @@
         $scope.selectedIngredients = result.data;
         $log.debug('Selected ingredient from server', $scope.selectedIngredients);
       });
-    }
+    };
 
     vm.getIngredientsToSelect();
     vm.getSelectedIngredients();
@@ -155,10 +156,18 @@
 
 
     vm.setIngredient = function(){
-      $log.debug('Selected values',$scope.selectedValues);
-      $log.debug('User for ingredient',$rootScope.currentuser);
-      $uibModalInstance.dismiss('ok');
-    }
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/setPlanByIngredients',
+        params: {
+          name: $rootScope.currentuser
+        }
+      }).then(function (result) {
+        $rootScope.requestPlan();
+        $uibModalInstance.dismiss('ok');
+        $log.debug('Set ingredient result', result);
+      });
+    };
 
     vm.deselectIngredient = function () {
       $http({
@@ -173,7 +182,7 @@
         vm.getSelectedIngredients();
         $log.debug('Set ingredient result', result);
       });
-    }
+    };
 
     vm.selectIngredient = function(){
       $http({
@@ -188,7 +197,7 @@
         vm.getSelectedIngredients();
         $log.debug('Set ingredient result', result);
       });
-    }
+    };
 
 
 

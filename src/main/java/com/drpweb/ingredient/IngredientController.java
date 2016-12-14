@@ -1,15 +1,21 @@
 package com.drpweb.ingredient;
 
+import com.drpweb.daily_meal.DailyMealService;
+import com.drpweb.diet_plan.DietPlan;
+import com.drpweb.diet_plan.DietPlanDao;
+import com.drpweb.diet_plan.DietPlanService;
 import com.drpweb.ingredient_set_dislike.IngredientDislike;
 import com.drpweb.ingredient_set_dislike.IngredientDislikeDao;
+import com.drpweb.role.Role;
 import com.drpweb.user.User;
 import com.drpweb.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 /**
  * Created by ADMIN on 11/13/2016.
@@ -23,6 +29,12 @@ public class IngredientController {
     UserService userService;
     @Autowired
     IngredientDislikeDao ingredientDisDao;
+    @Autowired
+    DietPlanService dietPlanService;
+    @Autowired
+    DietPlanDao dietPlanDao;
+    @Autowired
+    DailyMealService dailyMealService;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/getIngredientsToSelect",method = RequestMethod.GET)
@@ -52,6 +64,34 @@ public class IngredientController {
         return ingredients;
     }
 
+    @RequestMapping(value = "/setPlanByIngredients",method = RequestMethod.GET)
+    public boolean setPlanByIngredients(@RequestParam("name")String username) throws SQLException {
+        User user = userService.findByUserName(username);
+        DietPlan dietPlan = dietPlanService.findByUserId(user.getId());
+
+        LocalDate today = LocalDate.now();
+        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setStartDate(startDate);
+
+        LocalDate end = today.plusDays(user.getDuration() - 1);
+        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setEndDate(endDate);
+        dietPlanDao.update(dietPlan);
+
+        dailyMealService.delete(dietPlan.getDietPlanId());
+        Set<Role> roles = user.getRoles();
+        for (Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
+            Role role = it.next();
+            if (role.getRoleName().equals("member")) {
+                dietPlanService.createPlan(user.getUsername());
+            }
+            else{
+                dietPlanService.createPatientPlan(user.getUsername());
+            }
+
+        }
+        return true;
+    }
 
     @RequestMapping(value = "/getSelectedIngredients",method = RequestMethod.GET)
     public List<String> getSelectedIngredients(@RequestParam("name")String username) throws SQLException {

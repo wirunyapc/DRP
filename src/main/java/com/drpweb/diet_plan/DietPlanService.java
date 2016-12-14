@@ -17,4 +17,5 @@ public interface DietPlanService {
     int getBmr(double weight, double height, int age, String gender) throws SQLException;
     int getAge(Date db) throws SQLException;
     Date parseDate(String date);
+
 }

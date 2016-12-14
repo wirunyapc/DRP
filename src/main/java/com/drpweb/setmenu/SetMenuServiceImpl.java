@@ -4,7 +4,13 @@ import com.drpweb.diet_plan.DietPlanDao;
 import com.drpweb.disease.DiseaseDao;
 import com.drpweb.food_set_disease.FoodSetDisease;
 import com.drpweb.food_set_disease.FoodSetDiseaseDao;
+import com.drpweb.food_setmenu.FoodSetMenu;
 import com.drpweb.food_setmenu.FoodSetMenuDao;
+import com.drpweb.ingredient_on_food.IngredientOnFood;
+import com.drpweb.ingredient_on_food.IngredientOnFoodDao;
+import com.drpweb.ingredient_set_dislike.IngredientDislike;
+import com.drpweb.ingredient_set_dislike.IngredientDislikeDao;
+import com.drpweb.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,45 +33,126 @@ public class SetMenuServiceImpl implements SetMenuService {
     FoodSetMenuDao foodSetMenuDao;
     @Autowired
     DietPlanDao dietPlanDao;
+    @Autowired
+    IngredientOnFoodDao ingreOnFoodDao;
+    @Autowired
+    IngredientDislikeDao ingredislikeDao;
+
+/*    @Override
+    public List<SetMenu> getAllSetMenus() throws SQLException {
+        return setMenuDao.findAll();
+    }*/
 
     @Override
-    public List<SetMenu> getSetMenu() throws SQLException {
+    public List<Integer> getCantEatSetMenuByIngredient(User user) throws SQLException {
+        List<IngredientDislike> setDislike = ingredislikeDao.findByUserId(user.getId());
+        List<IngredientOnFood> ingreOnFoodDislike = new ArrayList<>();
+        for (IngredientDislike i: setDislike ) {
+            for (IngredientOnFood j:ingreOnFoodDao.findAll()) {
+                if(i.getIngredientId().equals(j.getIngredientId())){
+                    System.out.println("Ingredient dislike "+ j.getIngredientId()+"On food "+j.getFoodIndex());
+                    ingreOnFoodDislike.add(ingreOnFoodDao.findOne(j.getId()));
 
-        SetMenu setMenu = new SetMenu();
-        List<SetMenu> setMenus = setMenuDao.findAll();
-        System.out.println("SetMenulistttt" + setMenus);
+                }
+            }
+
+        }
+
+        List<Integer> setMenuDislike = new ArrayList<>();
+
+        for (IngredientOnFood i : ingreOnFoodDislike) {
+            for (FoodSetMenu f : foodSetMenuDao.findAll()) {
+                if(i.getFoodIndex()==(f.getFoodId())){
+                    System.out.println("Set menu dislike" + f.getSetmenu());
+                    setMenuDislike.add(f.getSetmenu());
+                }
+            }
+        }
+
+        return setMenuDislike;
+    }
+
+    @Override
+    public List<SetMenu> getSetMenu(User user) throws SQLException {
+        List<IngredientDislike> useridslike = ingredislikeDao.findByUserId(user.getId());
+        if(useridslike.isEmpty()){
+            return setMenuDao.findAll();
+        }
+
+        List<Integer> setMenuDislike = getCantEatSetMenuByIngredient(user);
+
+        List<SetMenu> setMenus = setMenuDao.findBySetmenuNotIn(setMenuDislike);
+        for (SetMenu s : setMenus) {
+            System.out.println("Set menu to use " + s.getSetmenu());
+        }
 
         return setMenus;
     }
 
     @Override
-    public  List<SetMenu> getSetMenuByDisease(Long diseaseId) throws SQLException {
+    public  List<SetMenu> getSetMenuByDisease(User user) throws SQLException {
        // SetMenu setMenu = new SetMenu();
 
-        List<FoodSetDisease> foodSetDiseases = foodSetDiseaseDao.findByDisease(diseaseId);
+        List<FoodSetDisease> foodSetDiseases = foodSetDiseaseDao.findByDisease(user.getDiseaseId());
 
 
         List<Integer> setMenuCantEatId = new ArrayList<>();
-        List<SetMenu> setToEat;
+        List<SetMenu> setFromDisease;
+        List<Integer> setCantEatFromIngre;
+        List<SetMenu> setToEat = new ArrayList<>();
+        List<Integer> setCantEatFromTwoCriteria = new ArrayList<>();
+        List<SetMenu> setCanEatFromTwoCriteria;
 
-        if(!foodSetDiseases.isEmpty()) {
+//        if(!foodSetDiseases.isEmpty()) {
             for (FoodSetDisease f : foodSetDiseases) {
                 setMenuCantEatId.add(f.getSetmenu());
             }
 
-            setToEat = setMenuDao.findBySetmenuNotIn(setMenuCantEatId);
-        }else{
-            setToEat = setMenuDao.findAll();
-        }
+            setFromDisease = setMenuDao.findBySetmenuNotIn(setMenuCantEatId);
+            List<IngredientDislike> useridslike = ingredislikeDao.findByUserId(user.getId());
+            if(useridslike.isEmpty()){
+                System.out.println("Patient dislike is empty");
+                return  setFromDisease;
+            }
 
-        for (Integer i: setMenuCantEatId) {
-            System.out.println("Set cant eat for "+diseaseId+"is :"+i);
-        }
-        for (SetMenu s: setToEat) {
-            System.out.println("Set menu to eat for "+diseaseId+"is :"+s.getSetmenu());
-        }
+            setCantEatFromIngre = getCantEatSetMenuByIngredient(user);
 
-    return setToEat;
+            for (int s : setMenuCantEatId) {
+                System.out.println("Set can not eat from disease" + s);
+                setCantEatFromTwoCriteria.add(s);
+            }
+            for (int a : setCantEatFromIngre) {
+                System.out.println("Set can not eat from ingredient" + a);
+                setCantEatFromTwoCriteria.add(a);
+            }
+
+            for (int i : setCantEatFromTwoCriteria) {
+                System.out.println("Set can not eat from two criteria" + i);
+            }
+
+            setCanEatFromTwoCriteria = setMenuDao.findBySetmenuNotIn(setCantEatFromTwoCriteria);
+            for (SetMenu i : setCanEatFromTwoCriteria) {
+                System.out.println("Set can eat from two criteria" + i.getSetmenu());
+            }
+/*            for (int  s : setCantEatFromIngre ) {
+                for ( SetMenu e: setFromDisease) {
+                    if(s!=e.getSetmenu()) {
+                        System.out.println("Set can eat from disease and ingre" + e.getSetmenu());
+                        setToEat.add(e);
+                    }else {
+                        System.out.println("Set can not eat from disease and ingre" + e.getSetmenu());
+                        setCantEatFromTwoCriteria.add(e);
+                    }
+                }
+            }*/
+
+
+//        }else{
+//            return getSetMenu(user);
+//        }
+
+
+    return setCanEatFromTwoCriteria;
 
     }
 

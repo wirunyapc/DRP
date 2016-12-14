@@ -7,8 +7,9 @@ import java.util.List;
  */
 public interface IngredientOnFoodDao {
     List<IngredientOnFood> findAll();
+    IngredientOnFood findOne(Long id);
     IngredientOnFood create(IngredientOnFood ingredientOnFood);
     IngredientOnFood update(IngredientOnFood ingredientOnFood);
     void delete(IngredientOnFood ingredientOnFood);
-    IngredientOnFood findByIngredientId(Long ingredientId);
+    List<IngredientOnFood> findByIngredientId(Long ingredientId);
 }

@@ -1,0 +1,30 @@
+<div ng-controller="DiseaseManageController as vm">
+  <h3><div style="text-align: center;">Disease Management</div></h3>
+  <div class="container">
+  <div class="row" style="text-align: center;">
+    <div class="col-sm-1"><span ng-include src="'app/manage/disease/addDisease.html'"></span></div>
+
+    <div class="col-sm-1"><button type="button" class="btn btn-secondary" ng-disabled="selectedRow==null" ng-click="updateDisease()">Update</button></div>
+    <div class="col-sm-1"><button type="button" class="btn btn-secondary" ng-disabled="selectedRow==null" ng-click="deleteDisease()">Delete</button></div></div>
+
+    <hr class="m-y-2">
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-default">
+      <tr>
+        <th>ID</th>
+        <th>Disease Name</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="item in diseases" ng-class="{'selected':item.diseaseName == selectedRow}" ng-click="setClickedRow(item.diseaseName)">
+        <td>{{item.id}}</td>
+        <td>{{item.diseaseName}}</td>
+      </tr>
+    </table>
+      </div>
+    <div>
+      selectedRow = {{selectedRow}}
+    </div>
+
+  </div>
+</div>

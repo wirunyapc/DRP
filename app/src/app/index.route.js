@@ -28,7 +28,27 @@
       })
       .when('/manage',{
         templateUrl: 'app/manage/mainManage.html',
-        controller: 'ModalLoginController',
+        controller: 'MainManageController',
+        controllerAs: 'vm'
+      })
+      .when('/diseaseManage',{
+        templateUrl: 'app/manage/disease/diseaseManage.html',
+        controller: 'DiseaseManageController',
+        controllerAs: 'vm'
+      })
+      .when('/foodManage',{
+        templateUrl: 'app/manage/food/foodManage.html',
+        controller: 'FoodManageController',
+        controllerAs: 'vm'
+      })
+      .when('/setMenuManage',{
+        templateUrl: 'app/manage/setMenu/setMenuManage.html',
+        controller: 'SetMenuManageController',
+        controllerAs: 'vm'
+      })
+      .when('/ingredientManage',{
+        templateUrl: 'app/manage/ingredient/ingredientManage.html',
+        controller: 'IngredientManageController',
         controllerAs: 'vm'
       })
       .otherwise({

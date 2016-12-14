@@ -1,6 +1,6 @@
 /**
  * Created by Asus on 6/8/2559.
- */
+ **/
 (function () {
   'use strict';
 
@@ -9,6 +9,7 @@
     .controller('mainDRPController',mainDRPController)
 
     .controller('MainCtrl',calendarController);
+
 
 
   /** @ngInject */
@@ -52,7 +53,7 @@
      $http({
      method: 'GET',
      url: 'http://localhost:8080/getBmr',
-     params: {name: $scope.currentuser},
+     params: {name: $scope.currentuser}
      })
      .then(function (result) {
        $log.debug('bmr ',result.data[0]);
@@ -86,6 +87,7 @@
   function calendarController($http,$scope, $filter, moment, uiCalendarConfig,$log,$rootScope){
     var vm = this;
     vm.currentR=$rootScope.currentrole;
+    $log.debug('Role in used', vm.currentR);
     vm.selectedFoodBfast = null;
     vm.selectedFoodLunch = null;
     vm.selectedFoodDinner = null;
@@ -104,46 +106,25 @@
         .then(function (result) {
 
         });
-    }
+    };
 
     $scope.connectRunKeeper = function(){
+      window.location.replace("https://runkeeper.com/apps/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fhome&scope=notifications&state=3(%230%2F!~&response_type=code&client_id=f18e3497b59c4329b683ed2bebe2d2cc");
 
-
-    //  var argv = require('optimist').argv,
-
-      // options = require('./config').options;
-        options = exports.options = {
-          client_id : "f18e3497b59c4329b683ed2bebe2d2cc",
-          client_secret : "bbfe866b93ec43a4bdf7763bcc2c12d5",
-          auth_url : "https://runkeeper.com/apps/authorize",
-          access_token_url : "https://runkeeper.com/apps/token",
-          redirect_uri : "http://localhost:3000/#/"
-        };
-
-      $log.debug("Getting token for code: " + argv.code);
-
-      // Set up client
-
-
-      var rkclient = new runkeeper.HealthGraph(options);
-
-      // Test getToken
-
-      rkclient.getNewToken(argv.code, function(access_token) {
-        rkclient.access_token = access_token;
-        console.log("client access_token: " + rkclient.access_token);
-      });
-
-    }
-
+    };
     /*DROPDOWN Food*/
 
     $scope.foods = [];
     $scope.caloriesMeal = { 'bFast': 0 , 'lunch':0, 'dinner':0};
     $scope.requestSetFoods = function(){
       if(vm.currentR=="member") {
-        $http
-          .get('http://localhost:8080/getFoods')
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8080/getFoods',
+          params: {
+            name: $scope.currentuser
+          }
+        })
           .then(function (result) {
             $scope.foods = result.data;
 
@@ -190,7 +171,7 @@
 
           });
       }
-    }
+    };
 
     $scope.filterSetFoodsByCal = function(baseCal,food){
         if(baseCal == 0){
@@ -199,7 +180,7 @@
             var cal =  parseInt(food[1]);
             return  cal <= baseCal;
         }
-    }
+    };
 
 
     $scope.setFood=function(setMenu,meal){
@@ -212,18 +193,18 @@
           set: setMenu,
           name: $scope.currentuser,
           meal: meal,
-          date: $scope.selectedDate,
+          date: $scope.selectedDate
         }
       }).then(function(result) {
 
         $log.debug('set Food'+result.data);
-        $scope.requestPlan();
+        $rootScope.requestPlan();
 
 
       }, function errorCallback(response) {
         $log.debug('Error set Food',response);
       });
-    }
+    };
 
 
     /*end*/
@@ -253,11 +234,11 @@ if(vm.currentR=='patient') {
           disease: vm.selectedDisease,
           name: $scope.currentuser
         }
-      }).then(function (result) {
+      }).then(function () {
         //$scope.diseasesName = result.data;
         $log.debug('set Disease');
         //console.log('set disease success', result);
-        $scope.requestPlan();
+        $rootScope.requestPlan();
       }, function errorCallback(response) {
         $log.debug('Error set Disease', response);
         $rootScope.selectDisease = true;
@@ -309,7 +290,7 @@ if(vm.currentR=='patient') {
         });
 
     };
-    $scope.requestPlan = function(){
+    $rootScope.requestPlan = function(){
       $log.debug('requestPlan');
       /*Diet Plan*/
       $http({
@@ -343,9 +324,9 @@ if(vm.currentR=='patient') {
       }, function errorCallback(response) {
        //Not enought food to solve
       });
-    }
+    };
     $scope.requestSetFoods();
-    $scope.requestPlan();
+    $rootScope.requestPlan();
 
     $scope.mealModel = [];
 
@@ -382,7 +363,7 @@ if(vm.currentR=='patient') {
                 start: mealDatePlan,
                 allDay: true,
                 rendering: 'background',
-                backgroundColor: '#f26522',
+                backgroundColor: '#f26522'
               };
 
               mealEvents.push(mealEvent);
@@ -398,7 +379,7 @@ if(vm.currentR=='patient') {
       console.log('mealModel',$scope.mealModel);
       return mealEvents;
 
-    }
+    };
 
     $scope.calendarDate = [
       {
@@ -426,7 +407,7 @@ if(vm.currentR=='patient') {
         $rootScope.bfast2 = bfastMeals[1].food;
         $rootScope.bfast3 = bfastMeals[2].food;
 
-        var bfastCal = parseInt(bfastMeals[0].calories)
+        var bfastCal = parseInt(bfastMeals[0].calories);
         $scope.caloriesMeal.bFast = bfastCal;
 
       }
@@ -445,7 +426,7 @@ if(vm.currentR=='patient') {
         $rootScope.lunch2 = lunchMeals[1].food;
         $rootScope.lunch3 = lunchMeals[2].food;
 
-        var lunchCal = parseInt(lunchMeals[0].calories)
+        var lunchCal = parseInt(lunchMeals[0].calories);
         $scope.caloriesMeal.lunch = lunchCal;
 
       }
@@ -464,7 +445,7 @@ if(vm.currentR=='patient') {
         $rootScope.dinner2 = dinnerMeals[1].food;
         $rootScope.dinner3 = dinnerMeals[2].food;
 
-        var dinnerCal = parseInt(dinnerMeals[0].calories)
+        var dinnerCal = parseInt(dinnerMeals[0].calories);
         $scope.caloriesMeal.dinner = dinnerCal;
 
       }
@@ -500,9 +481,9 @@ if(vm.currentR=='patient') {
           center : '',
           right : 'today prev,next'
         },
-        dayClick : $scope.setCalDate,
+        dayClick : $scope.setCalDate
         //background: '#f26522',
-      },
+      }
     };
 
     $scope.calendarTab = 1;

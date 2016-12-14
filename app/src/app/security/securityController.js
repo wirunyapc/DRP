@@ -100,6 +100,8 @@
               console.log('username from secure', $rootScope.currentuser)
 
               if($rootScope.user.roles['admin']==true){
+                $rootScope.currentrole = 'admin';
+                $log.debug($rootScope.currentrole);
                 $location.path('/manage')
               }else if($rootScope.user.roles['member']==true){
                 $rootScope.currentrole = 'member';
@@ -139,8 +141,8 @@
       var vm = this;
       vm.lofinFaild = lofinFail;
       vm.loginMessage = loginMessage;
-      vm.username = 'bowbow';
-      vm.password = '123456';
+      vm.username = 'admin';
+      vm.password = '1234';
       vm.ok = function () {
 
         $uibModalInstance.close({username:vm.username,password:vm.password,rememberMe:vm.rememberMe});

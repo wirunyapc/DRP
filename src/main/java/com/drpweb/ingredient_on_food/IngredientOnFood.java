@@ -15,7 +15,7 @@ public class IngredientOnFood {
     private Long ingredientId;
     @Column(name = "food_index")
     private int foodIndex;
-    @Column(name = "ingredient_amount")
+    @Column(name = "ingredient_amont")
     private double ingredientAmount;
     @Column(name = "unit")
     private String unit;

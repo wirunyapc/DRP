@@ -15,8 +15,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ng-show="user"><div ng-click="connectRunKeeper()" style="color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Connect RunKeeper</p></div></li>
-
+        <div ng-show="user">
+        <li ng-hide="currentrole == 'admin'"><div ng-click="connectRunKeeper()" style="color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Connect RunKeeper</p></div></li>
+        </div>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li ng-show="user"><a href="#/myaccount">MyAccount</a></li>

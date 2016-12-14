@@ -19,6 +19,11 @@ public class IngredientOnFoodDaoImpl implements IngredientOnFoodDao{
     }
 
     @Override
+    public IngredientOnFood findOne(Long id) {
+        return ingredientOnFoodRepository.findOne(id);
+    }
+
+    @Override
     public IngredientOnFood create(IngredientOnFood ingredientOnFood) {
         return ingredientOnFoodRepository.save(ingredientOnFood);
     }
@@ -34,7 +39,7 @@ public class IngredientOnFoodDaoImpl implements IngredientOnFoodDao{
     }
 
     @Override
-    public IngredientOnFood findByIngredientId(Long ingredientId) {
+    public List<IngredientOnFood> findByIngredientId(Long ingredientId) {
         return ingredientOnFoodRepository.findByIngredientId(ingredientId);
     }
 }
