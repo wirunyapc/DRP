@@ -22,7 +22,7 @@ public class Disease {
     public Disease() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

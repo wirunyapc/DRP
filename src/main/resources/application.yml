@@ -19,3 +19,16 @@ spring:
             enabled: false
 
 
+
+runkeeper:
+  client:
+    clientId: f18e3497b59c4329b683ed2bebe2d2cc
+    clientSecret: bbfe866b93ec43a4bdf7763bcc2c12d5
+    accessTokenUri: https://runkeeper.com/apps/token
+    userAuthorizationUri: https://runkeeper.com/apps/authorize
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+    scope: read
+  resource:
+    userInfoUri:  https://api.runkeeper.com/user

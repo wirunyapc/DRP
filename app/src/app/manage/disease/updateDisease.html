@@ -1,10 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div ng-controller="ModalUpdateDiseaseController as vm">
+  <button class="btn btn-secondary" ng-disabled="selectedRow==null" ng-click="vm.open()" style="color: rgba(0,0,0,0.87);">Update&nbsp;&nbsp;</button>
 
-</body>
-</html>
+  <script type="text/ng-template" id="updateDisease.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Update disease</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.edit()">
+        <div class="form-group">
+          <label for="diseaseName"> Disease Name</label>
+          <input type="text" class="form-control" id="diseaseName" ng-init="disease.dName=selectedRow.diseaseName" ng-model="disease.dName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="cal"> Calories</label>
+          <input type="number" class="form-control" id="cal" ng-init="disease.cal=selectedRow.kcal" placeholder="Enter calories" ng-model="disease.cal"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="fat"> Fat</label>
+          <input type="number" class="form-control" id="fat" ng-init="disease.fat=selectedRow.fat" placeholder="Enter fat" ng-model="disease.fat"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="carboh"> Carbohydrate</label>
+          <input type="number" class="form-control" id="carboh" ng-init="disease.carboh=selectedRow.carboh" placeholder="Enter carbohydrate"
+                 ng-model="disease.carboh" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="prote"> Protein</label>
+          <input type="number" class="form-control" id="prote" ng-init="disease.prote=selectedRow.prot" placeholder="Enter protein" ng-model="disease.prote"
+                 min="0" required>
+        </div>
+        <br>
+        <label for="selectSetMenus"> Select cannot eated set menu</label>
+
+        <table class="table" id="selectSetMenus">
+          <tbody>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="selectSetMenu">Select set menus:</label><br>
+                <select class="form-control" id="selectSetMenu" ng-model="top"  multiple>
+
+                  <option ng-repeat="value in datasTop track by $index" value="{{value[0]}}">{{value[0]}}</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;width: 83px;">
+
+              <button class="btn glyphicon glyphicon-arrow-down" type="button" ng-click="SelectData(top)"></button>
+              <button class="btn glyphicon glyphicon-arrow-up" type="button" ng-click="DeselectData(bottom)"></button>
+
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="example-getting-started">Selected set menus:</label><br>
+                <select class="form-control" id="example-getting-started" ng-model="bottom" multiple>
+
+                  <option ng-repeat="d in datasBottom track by $index" value="{{d}}">{{d}}</option>
+                </select>
+              </div>
+              <!--<div class="form-group">
+                <label for="example-getting-started">Selected set menus:</label><br>
+                <select class="form-control" id="example-getting-started" ng-model="selectedSetMenu" multiple>
+
+                  <option ng-repeat="j in selectedValues" value="{{j}}">{{j}}</option>
+                </select>
+              </div>-->
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+        <div class="form-group" style="width: 100%">
+          <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+
+  </script>
+</div>
+

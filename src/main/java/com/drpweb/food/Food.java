@@ -19,7 +19,7 @@ public class Food{
     @Column(name = "food_name")
     private String foodName;
     @Column(name = "food_name_eng")
-    private String foodName_eng;
+    private String foodNameEng;
     @Column(name = "food_kcal")
     private int foodKcal;
     @Column(name = "fat")
@@ -233,12 +233,12 @@ public class Food{
         this.foodId = foodId;
     }
 
-    public String getFoodName_eng() {
-        return foodName_eng;
+    public String getFoodNameEng() {
+        return foodNameEng;
     }
 
-    public void setFoodName_eng(String foodName_eng) {
-        this.foodName_eng = foodName_eng;
+    public void setFoodNameEng(String foodNameEng) {
+        this.foodNameEng = foodNameEng;
     }
 
 //    public int getFoodPatientTypeId() {

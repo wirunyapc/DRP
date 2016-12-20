@@ -27,7 +27,7 @@
     /*CalInfo*/
     vm.bmi = null;
     $rootScope.budget = null;
-    vm.net = 0;
+    $rootScope.net = 0;
 
 
     vm.activity = 0;
@@ -61,6 +61,22 @@
 
      });
 
+    $scope.requestAc = function(){
+      /*$http({
+       method: 'GET',
+       headers: {Authorization: 'Bearer https://runkeeper.com/apps/token',
+       Accept: 'application/vnd.com.runkeeper.FitnessActivityFeed+json'},
+       uri: 'http://api.runkeeper.com/fitnessActivities'
+       })
+       .then(function (result) {
+
+       });*/
+      $rootScope.totalCalAct = $rootScope.calculateActivities();
+      $rootScope.net = $rootScope.totalDietCal - $rootScope.totalCalAct;
+      $log.debug('Net value',$rootScope.net);
+      $rootScope.underCal = $rootScope.budget - $rootScope.net;
+
+    };
 
     vm.setDirection = function(direction) {
       vm.direction = direction;
@@ -94,23 +110,62 @@
     vm.selectedDisease = null;
    // $rootScope.notEnoughFood=false;
     $rootScope.selectDisease=false;
+    $rootScope.activities = null;
+    $rootScope.totalCalAct = 0;
 
     /*Activity*/
-    $scope.requestAc = function(){
-      $http({
-        method: 'GET',
-        headers: {Authorization: 'Bearer https://runkeeper.com/apps/token',
-          Accept: 'application/vnd.com.runkeeper.FitnessActivityFeed+json'},
-        uri: 'http://api.runkeeper.com/fitnessActivities'
-      })
-        .then(function (result) {
 
-        });
+
+    $rootScope.calculateActivities = function (){
+      var activity = $rootScope.activities["items"];
+      var total = 0;
+      total = 0;
+      for(var i=0;i<activity.length;i++){
+        var cal = activity[i].total_calories;
+        total += cal;
+      }
+    return total;
     };
 
-    $scope.connectRunKeeper = function(){
-      window.location.replace("https://runkeeper.com/apps/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fhome&scope=notifications&state=3(%230%2F!~&response_type=code&client_id=f18e3497b59c4329b683ed2bebe2d2cc");
+    $scope.requestAccessToken = function (){
+      var connectDiv = document.querySelector('#connectRun');
+      var disConnectDiv = document.querySelector('#disConnectRun');
+      $http({
+        method: 'GET',
+        url: 'http://localhost:8080/connectRunKeeper'
+      }).then(function(result){
+        $log.debug('Response access token', result.data);
+        if(result.data == ""){
+          $scope.requestAccessToken();
+        }else{
+          $rootScope.activities = result.data;
+          $rootScope.calculateActivities();
 
+          connectDiv.style.display = "none";
+          disConnectDiv.style.display = "";
+        }
+      });
+    };
+
+    $scope.connectRunKeeper = function(isConnect){
+     // window.location.replace("https://runkeeper.com/apps/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fhome&scope=notifications&state=3(%230%2F!~&response_type=code&client_id=f18e3497b59c4329b683ed2bebe2d2cc");
+      //window.location.replace("http://localhost:8080/login/runkeeper");
+      var connectDiv = document.querySelector('#connectRun');
+      var disConnectDiv = document.querySelector('#disConnectRun');
+
+      if(isConnect) {
+        $http.jsonp("http://localhost:8080/login/runkeeper")
+
+        $scope.requestAccessToken();
+
+
+      }else{
+        disConnectDiv.style.display = "none";
+        connectDiv.style.display = "";
+        $rootScope.net = $rootScope.totalDietCal;
+        $rootScope.totalCalAct = 0;
+
+      }
     };
     /*DROPDOWN Food*/
 
@@ -286,6 +341,7 @@ if(vm.currentR=='patient') {
         .then(function (result) {
           $rootScope.totalDietCal=result.data;
           $rootScope.underCal = $rootScope.budget-$rootScope.totalDietCal;
+          $rootScope.net = $rootScope.totalDietCal;
           $log.debug("Under calories", $rootScope.underCal);
         });
 

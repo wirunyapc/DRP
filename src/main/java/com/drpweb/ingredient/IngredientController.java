@@ -64,6 +64,42 @@ public class IngredientController {
         return ingredients;
     }
 
+    @RequestMapping(value = "/createIngredient",method = RequestMethod.GET)
+    public Ingredient createIngredient(@RequestParam("name")String name,
+                           @RequestParam("category")int category) throws SQLException {
+
+        Ingredient i = new Ingredient();
+        i.setIngredientName(name);
+        i.setCategoriesId(category);
+
+        return ingredientDao.create(i);
+    }
+
+    @RequestMapping(value = "/updateIngredient",method = RequestMethod.GET)
+    public Ingredient updateIngredient(
+                                 @RequestParam("id")Long id,
+                                 @RequestParam("name")String name,
+                                 @RequestParam("category")int category) throws SQLException {
+
+        Ingredient i = ingredientDao.findOne(id);
+        i.setIngredientName(name);
+        i.setCategoriesId(category);
+
+        return ingredientDao.update(i);
+    }
+
+    @RequestMapping(value = "/deleteIngredient",method = RequestMethod.GET)
+    public boolean deleteIngredient(@RequestParam("id")Long id) throws SQLException {
+        Ingredient infredient = ingredientDao.findOne(id);
+       ingredientDao.delete(infredient);
+        return true;
+    }
+    @RequestMapping(value = "/getAllIngredient",method = RequestMethod.GET)
+    public List<Ingredient> getAllIngredient() throws SQLException {
+
+        return ingredientDao.findAll();
+    }
+
     @RequestMapping(value = "/setPlanByIngredients",method = RequestMethod.GET)
     public boolean setPlanByIngredients(@RequestParam("name")String username) throws SQLException {
         User user = userService.findByUserName(username);
@@ -93,6 +129,8 @@ public class IngredientController {
         return true;
     }
 
+
+    //Define unwanted ingredient
     @RequestMapping(value = "/getSelectedIngredients",method = RequestMethod.GET)
     public List<String> getSelectedIngredients(@RequestParam("name")String username) throws SQLException {
         User user = userService.findByUserName(username);
@@ -149,4 +187,6 @@ public class IngredientController {
 
         return true;
     }
+
+
 }

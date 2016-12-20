@@ -10,4 +10,5 @@ import java.util.List;
 public interface IngredientRepository extends JpaRepository<Ingredient,Long> {
     Ingredient findByIngredientName(String name);
     List<Ingredient> findByIdNotIn(List<Long> selectedIngredient);
+    Ingredient findById(Long id);
 }

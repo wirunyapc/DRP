@@ -48,11 +48,11 @@
       })
       .when('/ingredientManage',{
         templateUrl: 'app/manage/ingredient/ingredientManage.html',
-        controller: 'IngredientManageController',
+        controller: 'IngreManageController',
         controllerAs: 'vm'
       })
       .otherwise({
-        redirectTo: '/'
+        //redirectTo: '/'
       });
   }
 

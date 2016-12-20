@@ -121,7 +121,7 @@ public class DietPlanController {
                         fooddata += "\"" + daily.getDate().toString() + "\",";
                         fooddata += "\"" + daily.getMealId().toString() + "\",";
                         fooddata += "\"" + f.getFoodIndex() + "\",";
-                        fooddata += "\"" + foodDao.findOne(f.getFoodId()).getFoodName_eng() + "\",";
+                        fooddata += "\"" + foodDao.findOne(f.getFoodId()).getFoodNameEng() + "\",";
                         fooddata += "\"" + setMenu.getTotal_cal() + "\"";
                         if (foodCount == foodSetMenus.size()) {
                             fooddata += "]";
@@ -186,11 +186,13 @@ public class DietPlanController {
             foodSetMenu = foodSetMenuDao.findBySetmenu(s.getSetmenu());
             String foodName = "";
             List<String> value = new ArrayList<>();
-            value.add(""+s.getSetmenu());
-            value.add(""+s.getTotal_cal());
+//            value.add(""+s.getSetmenu());
+//            value.add(""+s.getTotal_cal());
             for (FoodSetMenu foodSet: foodSetMenu) {
-                foodName += (foodDao.findOne(foodSet.getFoodId()).getFoodName_eng() + "|");
-
+                foodName += (foodDao.findOne(foodSet.getFoodId()).getFoodNameEng());
+                if(foodSet.getFoodIndex()!=3){
+                    foodName += "|";
+                }
             }
             value.add(foodName);
             setName.add(value);
@@ -211,6 +213,20 @@ public class DietPlanController {
         List<SetMenu> setMenus = setMenuDao.findAll();
 
         return  setToJSON(setMenus);
+    }
+    @RequestMapping(value = "/getSetMenuById",method = RequestMethod.GET)
+    public List<String> getSetMenuById(@RequestParam("id")String setMenuId) throws SQLException {
+        List<FoodSetMenu> foodSetMenu  = foodSetMenuDao.findBySetmenu(Integer.valueOf(setMenuId));
+        String foodName = "";
+        List<String> value = new ArrayList<>();
+        for (FoodSetMenu foodSet: foodSetMenu) {
+            foodName += (foodDao.findOne(foodSet.getFoodId()).getFoodNameEng());
+            if(foodSet.getFoodIndex()!=3){
+                foodName += "|";
+            }
+        }
+        value.add(foodName);
+        return value;
     }
 
     @RequestMapping(value = "/getBmr",method = RequestMethod.GET)

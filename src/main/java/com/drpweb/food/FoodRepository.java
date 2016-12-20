@@ -17,5 +17,6 @@ public interface FoodRepository extends JpaRepository<Food,Integer> {
 //    List<Food> findByDisease(String lastName);
 
     Food findByFoodName(String name);
+    Food findByFoodNameEng(String name);
 
 }

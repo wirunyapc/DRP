@@ -10,7 +10,6 @@ import java.util.ArrayList;
 @Table(name = "setmenu")
 public class SetMenu {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int setmenu;
     private int total_cal;

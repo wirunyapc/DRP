@@ -42,4 +42,9 @@ public class IngredientOnFoodDaoImpl implements IngredientOnFoodDao{
     public List<IngredientOnFood> findByIngredientId(Long ingredientId) {
         return ingredientOnFoodRepository.findByIngredientId(ingredientId);
     }
+
+    @Override
+    public List<IngredientOnFood> findByFoodIndex(int id) {
+        return ingredientOnFoodRepository.findByFoodIndex(id);
+    }
 }

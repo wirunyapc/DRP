@@ -13,4 +13,5 @@ public interface IngredientDao {
     void delete(Ingredient ingredient);
     Ingredient findByIngredientName(String name);
     List<Ingredient> findByIdNotIn(List<Long> selectedIngredient);
+    Ingredient findById(Long id);
 }

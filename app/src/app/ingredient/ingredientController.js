@@ -58,6 +58,10 @@
     var vm = this;
     $scope.selectedValues = [];
     $scope.selectedIngredient = [];
+
+    vm.getIngredientsToSelect();
+
+
     /*vm.ok = function () {
      $log.debug('error', vm.user.username);
      $log.debug('error', vm.user.password);
@@ -119,7 +123,7 @@
       });
     };
 
-    vm.getIngredientsToSelect();
+
     vm.getSelectedIngredients();
 
     /* Watch selectedValues model*/
@@ -155,7 +159,7 @@
     });
 
 
-    vm.setIngredient = function(){
+       vm.setIngredient = function(){
       $http({
         method: 'GET',
         url: 'http://localhost:8080/setPlanByIngredients',

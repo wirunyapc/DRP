@@ -9,14 +9,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/home" style="color: rgb(250,250,250)">DRPWeb</a>
+      <a class="navbar-brand" href="#/home" style="color: rgb(250,250,250)">DRP</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <div ng-show="user">
-        <li ng-hide="currentrole == 'admin'"><div ng-click="connectRunKeeper()" style="color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Connect RunKeeper</p></div></li>
+        <li ng-hide="currentrole == 'admin'"><div id="connectRun" ng-click="connectRunKeeper(true)" style="color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Connect RunKeeper</p></div>
+          <div id="disConnectRun" ng-click="connectRunKeeper(false)" style="display:none;color: rgb(250,250,250);padding-bottom: 0px;padding-top: 0px;margin-top: 15px;"><p>Disconnect RunKeeper</p></div></li>
         </div>
       </ul>
       <ul class="nav navbar-nav navbar-right">

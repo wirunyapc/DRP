@@ -16,4 +16,16 @@ public class FoodSetDiseaseDaoImpl implements FoodSetDiseaseDao {
     public List<FoodSetDisease> findByDisease(Long diseaseId) {
         return foodSetDiseaseRepositorty.findByDisease(diseaseId);
     }
+
+    @Override
+    public FoodSetDisease create(FoodSetDisease foodSetDisease) {
+        return foodSetDiseaseRepositorty.save(foodSetDisease);
+    }
+
+    @Override
+    public void delete(FoodSetDisease foodSetDisease) {
+        foodSetDiseaseRepositorty.delete(foodSetDisease);
+    }
+
+
 }

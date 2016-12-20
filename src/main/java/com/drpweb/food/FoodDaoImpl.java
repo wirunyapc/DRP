@@ -28,6 +28,21 @@ public class FoodDaoImpl implements FoodDao{
 //    }
 
     @Override
+    public Food create(Food food) {
+        return foodRepository.save(food);
+    }
+
+    @Override
+    public Food update(Food food) {
+        return foodRepository.save(food);
+    }
+
+    @Override
+    public void delete(Food food) {
+            foodRepository.delete(food);
+    }
+
+    @Override
     public Food findOne(int id) {
         return foodRepository.findOne(id);
     }
@@ -40,5 +55,10 @@ public class FoodDaoImpl implements FoodDao{
     @Override
     public Food findByFoodName(String name) {
         return foodRepository.findByFoodName(name);
+    }
+
+    @Override
+    public Food findByFoodNameEng(String name) {
+        return foodRepository.findByFoodNameEng(name);
     }
 }

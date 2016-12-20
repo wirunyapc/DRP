@@ -1,0 +1,53 @@
+<style>
+  .selected {
+    background-color: white;
+    color:black;
+  }
+  thead th {
+    background-color: rgba(45, 28, 7, 0.74);
+    color: white;
+  }
+
+  tbody td {
+    background-color: rgba(255, 255, 255, 0.28);
+  }
+
+
+</style>
+<div ng-controller="ModalAddIngreController as vm">
+  <button class="btn btn-info" ng-click="vm.open()" style="color: rgba(250,250,250,250);">Add&nbsp;&nbsp;</button>
+
+  <script type="text/ng-template" id="addIngredient.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Add ingredient</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.ok()">
+        <div class="form-group">
+          <label for="ingreName">Ingredient Name</label>
+          <input type="text" class="form-control" id="ingreName" placeholder="Enter ingredient name"
+                 ng-model="vm.ingredient.ingredientName" required>
+        </div>
+
+        <label for="selectIngreCategories"> Select ingredient category</label>
+        <div class="form-group">
+         <select class="form-control" id="selectIngreCategories" ng-model="vm.ingredient.category">
+           <option value="" disabled selected>Select ingredient category</option>
+            <option ng-repeat="value in categories track by $index" value="{{value.categoryId}}">{{value.categoryName}}</option>
+          </select>
+        </div>
+
+
+        <div class="form-group" style="width: 100%">
+          <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+
+  </script>
+</div>
+

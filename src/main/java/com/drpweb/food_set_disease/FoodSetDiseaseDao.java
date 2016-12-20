@@ -7,4 +7,6 @@ import java.util.List;
  */
 public interface FoodSetDiseaseDao {
         List<FoodSetDisease> findByDisease(Long diseaseId);
+        FoodSetDisease create(FoodSetDisease foodSetDisease);
+        void delete(FoodSetDisease foodSetDisease);
 }

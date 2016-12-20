@@ -1,0 +1,29 @@
+<div ng-controller="IngreManageController as vm">
+  <h3><div style="text-align: center;">Ingredient Management</div></h3>
+  <div class="container">
+  <div class="row" style="text-align: center;">
+    <div class="col-sm-1"><span ng-include src="'app/manage/ingredient/addIngredient.html'"></span></div>
+    <div class="col-sm-1"><span ng-include src="'app/manage/ingredient/updateIngredient.html'"></span></div>
+    <div class="col-sm-1"><button type="button" class="btn btn-secondary" style="margin-left: 20px;" ng-disabled="selectedRowIngredient==null" ng-click="delete()">Delete</button></div></div>
+
+    <hr class="m-y-2">
+    <div class="table-responsive" style="overflow-y:auto;height: 400px;">
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-default">
+      <tr>
+        <th>ID</th>
+        <th>Ingredient Name</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="item in ingredients" ng-class="{'selected':item == selectedRowIngredient}" ng-click="setClickedRow(item)">
+        <td>{{item.id}}</td>
+        <td>{{item.ingredientName}}</td>
+      </tr>
+    </table>
+      </div>
+    <div>
+      selectedRow = {{selectedRowIngredient.ingredientName}}
+    </div>
+
+  </div>
+</div>

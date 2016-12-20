@@ -3,9 +3,8 @@
   <div class="container">
   <div class="row" style="text-align: center;">
     <div class="col-sm-1"><span ng-include src="'app/manage/disease/addDisease.html'"></span></div>
-
-    <div class="col-sm-1"><button type="button" class="btn btn-secondary" ng-disabled="selectedRow==null" ng-click="updateDisease()">Update</button></div>
-    <div class="col-sm-1"><button type="button" class="btn btn-secondary" ng-disabled="selectedRow==null" ng-click="deleteDisease()">Delete</button></div></div>
+    <div class="col-sm-1"><span ng-include src="'app/manage/disease/updateDisease.html'"></span></div>
+    <div class="col-sm-1"><button type="button" class="btn btn-secondary" style="margin-left: 20px;" ng-disabled="selectedRow==null" ng-click="delete()">Delete</button></div></div>
 
     <hr class="m-y-2">
     <div class="table-responsive">
@@ -16,14 +15,14 @@
         <th>Disease Name</th>
       </tr>
       </thead>
-      <tr ng-repeat="item in diseases" ng-class="{'selected':item.diseaseName == selectedRow}" ng-click="setClickedRow(item.diseaseName)">
+      <tr ng-repeat="item in diseases" ng-class="{'selected':item == selectedRow}" ng-click="setClickedRow(item)">
         <td>{{item.id}}</td>
         <td>{{item.diseaseName}}</td>
       </tr>
     </table>
       </div>
     <div>
-      selectedRow = {{selectedRow}}
+      selectedRow = {{selectedRow.diseaseName}}
     </div>
 
   </div>

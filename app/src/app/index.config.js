@@ -31,7 +31,7 @@
           var url = config.url;
 
           if (status==404){
-            $location.path("/");
+            $location.path("/home");
           }else {
             $rootScope.error = method + "on"+url+"failed with status"+ status;
           }

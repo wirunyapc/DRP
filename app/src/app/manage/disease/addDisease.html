@@ -15,7 +15,7 @@
 
 </style>
 <div ng-controller="ModalAddDiseaseController as vm">
-  <button class="btn btn-info" ng-click="vm.open()" style="color: rgb(250,250,250)">Add&nbsp;&nbsp;</button>
+  <button class="btn btn-info" ng-click="vm.open()" style="color: rgba(250,250,250,250);">Add&nbsp;&nbsp;</button>
 
   <script type="text/ng-template" id="addDisease.html">
     <div class="modal-header" style="height: 61px;">
@@ -26,8 +26,7 @@
         <div class="form-group">
           <label for="diseaseName"> Disease Name</label>
           <input type="text" class="form-control" id="diseaseName" placeholder="Enter disease name"
-                 ng-model="vm.disease.diseaseName"
-                 required>
+                 ng-model="vm.disease.diseaseName" required>
         </div>
 
         <div class="form-group">
@@ -50,14 +49,7 @@
           <input type="number" class="form-control" id="prote" placeholder="Enter protein" ng-model="vm.disease.prote"
                  min="0" required>
         </div>
-        <div class="form-group">
-        <select ng-model="vm.selected" class="form-control"
-                style="margin-left: 115px;height: 34px;width: 175.818182px;" required>
-          <option value="" disabled selected>{{currentDisease}}</option>
-          <option ng-repeat="d in diseases" value="{{d.diseaseName}}">{{d.diseaseName}}</option>
-        </select>
-          </div>
-        <br>
+         <br>
         <label for="selectSetMenus"> Select cannot eated set menu</label>
 <!--        <multiple-autocomplete ng-model="setMenus"
                                id="selectSetMenus"
@@ -71,25 +63,37 @@
             <td>
               <div class="form-group">
                 <label for="selectSetMenu">Select set menus:</label><br>
-                <select class="form-control" id="selectSetMenu" ng-model="selectedValues" multiple>
+                <select class="form-control" id="selectSetMenu" ng-model="top" multiple>
 
-                  <option ng-repeat="value in optionsList2 track by $index" value="{{value[2]}}">{{value[2]}}</option>
+                  <option ng-repeat="value in datasTop track by $index" value="{{value[0]}}">{{value[0]}}</option>
                 </select>
               </div>
             </td>
-            <td style="padding-top: 40px;padding-left: 20px;width: 83px;">
-              <button class="btn btn-default" type="button" ng-click="vm.selectSetMenu()">>></button>
-              <br>
-              <button class="btn btn-default" type="button" ng-click="vm.deselectSetMenu()"><<</button>
+            </tr>
+          <tr>
+            <td style="text-align: center;width: 83px;">
+
+              <button class="btn glyphicon glyphicon-arrow-down" type="button" ng-click="SelectData(top)"></button>
+             <button class="btn glyphicon glyphicon-arrow-up" type="button" ng-click="DeselectData(bottom)"></button>
+
             </td>
+            </tr>
+          <tr>
             <td>
               <div class="form-group">
+                <label for="example-getting-started">Selected set menus:</label><br>
+                <select class="form-control" id="example-getting-started" ng-model="bottom" multiple>
+
+                  <option ng-repeat="d in datasBottom track by $index" value="{{d}}">{{d}}</option>
+                </select>
+              </div>
+              <!--<div class="form-group">
                 <label for="example-getting-started">Selected set menus:</label><br>
                 <select class="form-control" id="example-getting-started" ng-model="selectedSetMenu" multiple>
 
                   <option ng-repeat="j in selectedValues" value="{{j}}">{{j}}</option>
                 </select>
-              </div>
+              </div>-->
             </td>
 
           </tr>

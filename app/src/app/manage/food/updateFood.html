@@ -1,0 +1,104 @@
+<div ng-controller="ModalUpdateFoodController as vm">
+  <button class="btn btn-secondary" ng-click="vm.open()" ng-disabled="selectedRowFood==null" style="color: rgba(0,0,0,0.87);">Update&nbsp;&nbsp;</button>
+
+  <script type="text/ng-template" id="updateFood.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Update food</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.edit()">
+        <div class="form-group">
+          <label for="foodName">Food Name</label>
+          <input type="text" class="form-control" id="foodName" ng-init="food.foodName=selectedRowFood.foodNameEng" placeholder="Enter food name"
+                 ng-model="food.foodName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="cal">Food calories</label>
+          <input type="number" class="form-control" id="cal" ng-init="food.cal=selectedRowFood.kal" placeholder="Enter food calories" ng-model="food.cal"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="fat">Fat</label>
+          <input type="number" class="form-control" id="fat" ng-init="food.fat=selectedRowFood.fat" placeholder="Enter fat" ng-model="food.fat"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="carboh">Carbohydrate</label>
+          <input type="number" class="form-control" id="carboh" ng-init="food.carboh=selectedRowFood.carboh" placeholder="Enter carbohydrate"
+                 ng-model="food.carboh" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="prot">Protein</label>
+          <input type="number" class="form-control" id="prot" ng-init="food.protein=selectedRowFood.protein" placeholder="Enter protein" ng-model="food.protein"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number" class="form-control" id="amount" ng-init="food.amount=selectedRowFood.amount" placeholder="Enter food amount" ng-model="food.amount"
+                 min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="unit">Unit</label>
+          <input type="text" class="form-control" id="unit" ng-init="food.unit=selectedRowFood.unit" placeholder="Enter unit amount" ng-model="food.unit"
+                 min="0" required>
+        </div>
+
+        <label for="selectCategories"> Select food category</label>
+        <div class="form-group">
+          <select class="form-control" id="selectCategories" ng-model="food.category" required>
+            <option value="" disabled selected>{{selectedCategory}}</option>
+            <option ng-repeat="value in categories track by $index" value="{{value.categoryName}}">{{value.categoryName}}</option>
+          </select>
+        </div>
+
+        <label for="selectIngredients"> Select food ingredients</label>
+        <table class="table" id="selectIngredients">
+          <tbody>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="selectingre">Select ingredients:</label><br>
+                <select class="form-control" id="selectingre" ng-model="left" multiple>
+                  <option ng-repeat="value in datasLeft track by $index" value="{{value.ingredientName}}">{{value.ingredientName}}</option>
+                </select>
+              </div>
+            </td>
+            <td style="text-align: center;width: 83px;padding-top: 37px;">
+              <button class="btn glyphicon glyphicon-arrow-right" type="button" ng-click="SelectData(left)"></button>
+
+              <button class="btn glyphicon glyphicon-arrow-left" type="button" style="margin-top:5px;" ng-click="DeselectData(right)"></button>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="example-getting-started">Selected ingredients:</label><br>
+                <select class="form-control" id="example-getting-started" ng-model="right" multiple>
+
+                  <option ng-repeat="valueR in datasRight track by $index" value="{{valueR}}">{{valueR}}</option>
+                </select>
+              </div>
+              <!--<div class="form-group">
+                <label for="example-getting-started">Selected set menus:</label><br>
+                <select class="form-control" id="example-getting-started" ng-model="selectedSetMenu" multiple>
+
+                  <option ng-repeat="j in selectedValues" value="{{j}}">{{j}}</option>
+                </select>
+              </div>-->
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+        <div class="form-group" style="width: 100%">
+          <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+
+  </script>
+</div>
+

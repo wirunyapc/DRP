@@ -1,9 +1,6 @@
 package com.drpweb.food_set_disease;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by ADMIN on 10/17/2016.
@@ -13,6 +10,7 @@ import javax.persistence.Table;
 public class FoodSetDisease {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long foodDiseaseId;
 
     @Column(name = "disease_id")
@@ -20,6 +18,8 @@ public class FoodSetDisease {
 
     @Column(name = "setmenu_id")
     private int setmenu;
+
+
 
     public Long getDisease() {
         return disease;

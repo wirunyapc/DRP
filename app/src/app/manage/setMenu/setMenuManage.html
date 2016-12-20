@@ -1,0 +1,32 @@
+<div ng-controller="SetMenuManageController as vm">
+  <h3><div style="text-align: center;">Set menu Management</div></h3>
+  <div class="container">
+  <div class="row" style="text-align: center;">
+    <div class="col-sm-1"><span ng-include src="'app/manage/setMenu/addSetMenu.html'"></span></div>
+    <div class="col-sm-1"><span ng-include src="'app/manage/setMenu/updateSetMenu.html'"></span></div>
+    <div class="col-sm-1"><button type="button" class="btn btn-secondary" style="margin-left: 20px;" ng-disabled="selectedRowSetMenu==null" ng-click="delete()">Delete</button></div></div>
+
+    <hr class="m-y-2">
+    <div class="table-responsive" style="overflow-y:auto;height: 400px;">
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-default">
+      <tr>
+        <th>ID</th>
+        <th>Breakfast</th>
+        <th>Lunch</th>
+        <th>Dinner</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="item in setMenus" ng-class="{'selected':item == selectedRowSetMenu}" ng-click="setClickedRow(item)">
+        <td>{{item[0]}}</td>
+        <td>{{item[1]}}</td>
+        <td>{{item[2]}}</td>
+        <td>{{item[3]}}</td>
+      </tr>
+    </table>
+      </div>
+    <div>
+    </div>
+
+  </div>
+</div>

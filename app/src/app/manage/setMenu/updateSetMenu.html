@@ -1,0 +1,43 @@
+<div ng-controller="ModalUpdateSetMenuController as vm">
+  <button class="btn btn-default" ng-click="vm.open()" ng-disabled="selectedRowSetMenu==null" style="color: rgba(0,0,0,0.87);">Update&nbsp;&nbsp;</button>
+
+  <script type="text/ng-template" id="updateSetMenu.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Update set menu</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.edit()">
+        <label for="selectBfast"> Breakfast</label>
+        <div class="form-group">
+          <select class="form-control" id="selectBfast" ng-model="set.bfast" required>
+            <option value="" disabled selected>{{selectedRowSetMenu[1]}}</option>
+            <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
+          </select>
+        </div>
+        <label for="selectLunch"> Lunch</label>
+        <div class="form-group">
+          <select class="form-control" id="selectLunch" ng-model="set.lunch" required>
+            <option value="" disabled selected>{{selectedRowSetMenu[2]}}</option>
+            <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
+          </select>
+        </div>
+        <label for="selectDinner"> Dinner</label>
+        <div class="form-group">
+          <select class="form-control" id="selectDinner" ng-model="set.dinner" required>
+            <option value="" disabled selected>{{selectedRowSetMenu[3]}}</option>
+            <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="width: 100%">
+          <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+
+  </script>
+</div>

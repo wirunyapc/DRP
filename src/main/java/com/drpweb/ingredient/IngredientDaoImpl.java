@@ -47,4 +47,9 @@ public class IngredientDaoImpl implements IngredientDao {
     public List<Ingredient> findByIdNotIn(List<Long> selectedIngredient) {
         return ingredientRepository.findByIdNotIn(selectedIngredient);
     }
+
+    @Override
+    public Ingredient findById(Long id) {
+        return ingredientRepository.findById(id);
+    }
 }

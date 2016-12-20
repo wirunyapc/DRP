@@ -9,5 +9,4 @@ import java.util.List;
  */
 public interface SetMenuRepository extends JpaRepository<SetMenu,Integer> {
     List<SetMenu> findBySetmenuNotIn(List<Integer> setCantEat);
-
 }

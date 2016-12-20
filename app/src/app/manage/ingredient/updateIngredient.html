@@ -1,0 +1,36 @@
+<div ng-controller="ModalUpdateIngreController as vm">
+  <button class="btn btn-default" ng-disabled="selectedRowIngredient==null" ng-click="vm.open()" style="color: rgba(0,0,0,0.87);">Update&nbsp;&nbsp;</button>
+
+  <script type="text/ng-template" id="updateIngredient.html">
+    <div class="modal-header" style="height: 61px;">
+      <h3 class="modal-title">Update ingredient</h3>
+    </div>
+    <div class="modal-body">
+      <form role="form" ng-submit="vm.edit()">
+        <div class="form-group">
+          <label for="ingreName">Ingredient Name</label>
+          <input type="text" class="form-control" id="ingreName" ng-init="ingredient.ingredientName=selectedRowIngredient.ingredientName" placeholder="Enter ingredient name"
+                 ng-model="ingredient.ingredientName" required>
+        </div>
+
+        <label for="selectIngreCategories"> Select ingredient category</label>
+        <div class="form-group">
+          <select class="form-control" id="selectIngreCategories" ng-init="ingredient.category=selectedRowIngredient.category" ng-model="ingredient.category" required>
+            <option value="" disabled selected>Select ingredient category</option>
+            <option ng-repeat="value in categories track by $index" value="{{value.categoryId}}">{{value.categoryName}}</option>
+          </select>
+        </div>
+
+
+        <div class="form-group" style="width: 100%">
+          <button class="btn btn-primary" type="submit" value="submit" style="width: 100%">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+    </div>
+
+  </script>
+</div>

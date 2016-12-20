@@ -25,7 +25,7 @@
         size: size
       });
 
-      modalInstance.result.then(function (data) {
+        modalInstance.result.then(function (data) {
         userService.save(data);
         $rootScope.signUpSuccess = true;
         $location.path('/');

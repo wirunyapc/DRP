@@ -12,4 +12,5 @@ public interface IngredientOnFoodDao {
     IngredientOnFood update(IngredientOnFood ingredientOnFood);
     void delete(IngredientOnFood ingredientOnFood);
     List<IngredientOnFood> findByIngredientId(Long ingredientId);
+    List<IngredientOnFood> findByFoodIndex(int id);
 }
