@@ -38,6 +38,7 @@
       $cookies.remove('authToken');
       $location.path('/');
       $route.reload();
+      alert("You are logged out from the system.")
 
     };
     $location.path('/');

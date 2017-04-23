@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="PFS">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Documents/NetBeansProjects/PFS/dist/PFS.jar!/" />
+      <root url="jar://D:/Libraries/PFS.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -143,6 +143,7 @@
 
           connectDiv.style.display = "none";
           disConnectDiv.style.display = "";
+          alert("You are connected to RunKeeper!")
         }
       });
     };
@@ -154,7 +155,7 @@
       var disConnectDiv = document.querySelector('#disConnectRun');
 
       if(isConnect) {
-        $http.jsonp("http://localhost:8080/login/runkeeper")
+        $http.jsonp("http://localhost:8080/login/runkeeper");
 
         $scope.requestAccessToken();
 
@@ -164,6 +165,7 @@
         connectDiv.style.display = "";
         $rootScope.net = $rootScope.totalDietCal;
         $rootScope.totalCalAct = 0;
+        alert("You are disconnected to RunKeeper!")
 
       }
     };
@@ -181,6 +183,7 @@
           }
         })
           .then(function (result) {
+            $log.debug('Im a member to change foods');
             $scope.foods = result.data;
 
             $scope.foodSetsBreakfast = $scope.foods.filter(function(food){
@@ -208,6 +211,7 @@
           }
         })
           .then(function (result) {
+            $log.debug('Im a patient to change foods');
             $scope.foods = result.data;
             $scope.foodSetsBreakfast = $scope.foods.filter(function(food){
               return $scope.filterSetFoodsByCal($scope.caloriesMeal.bFast , food);

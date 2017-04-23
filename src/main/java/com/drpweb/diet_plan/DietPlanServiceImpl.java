@@ -1,6 +1,5 @@
 package com.drpweb.diet_plan;
 
-import choco.kernel.solver.Solver;
 import com.drpweb.daily_meal.DailyMeal;
 import com.drpweb.daily_meal.DailyMealDao;
 import com.drpweb.disease.Disease;
@@ -63,7 +62,6 @@ public class DietPlanServiceImpl implements DietPlanService{
         int bmr = getBmr(user.getWeight(),user.getHeight(),getAge(user.getDob()),user.getGender());
         System.out.print("bmr in create plan : "+bmr);
         DailyDiet dailyDiet = new DailyDiet();
-        Solver s;
 
         List<SetMenu> setMenus= setMenuService.getSetMenu(user);
 
@@ -74,7 +72,7 @@ public class DietPlanServiceImpl implements DietPlanService{
         for(Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
             Role role = it.next();
             if (role.getRoleName().equals("member")){
-                s = dailyDiet.solve(amount, period,
+                dailyDiet.solve(amount, period,
                         setMenu.getArr_setMenu_id(), setMenu.getArr_total_cal(),setMenu.getArr_total_fat(), setMenu.getArr_total_carboh(), setMenu.getArr_total_protein(),
                         setMenu.getTotal_cals(), setMenu.getTotal_fats(), setMenu.getTotal_carbohs(), setMenu.getTotal_proteins(),0,0,0,0, bmr,"member");
             }
@@ -103,7 +101,6 @@ public class DietPlanServiceImpl implements DietPlanService{
         int bmr = getBmr(user.getWeight(),user.getHeight(),getAge(user.getDob()),user.getGender());
         System.out.print("bmr in create plan : "+bmr);
         DailyDiet dailyDiet = new DailyDiet();
-        Solver s;
 
         Disease userDisease = diseaseDao.findOne(user.getDiseaseId());
         List<SetMenu> setMenus= setMenuService.getSetMenuByDisease(user);
@@ -116,7 +113,7 @@ public class DietPlanServiceImpl implements DietPlanService{
             Role role = it.next();
             if (role.getRoleName().equals("patient")) {
 
-                s = dailyDiet.solve(amount, period,
+               dailyDiet.solve(amount, period,
                         setMenu.getArr_setMenu_id(), setMenu.getArr_total_cal(), setMenu.getArr_total_fat(), setMenu.getArr_total_carboh(), setMenu.getArr_total_protein(),
                         setMenu.getTotal_cals(), setMenu.getTotal_fats(), setMenu.getTotal_carbohs(), setMenu.getTotal_proteins(), (int)userDisease.getKcal(),(int)userDisease.getFat(),(int)userDisease.getProt(),(int)userDisease.getCarboh(), bmr,"patient");
             }

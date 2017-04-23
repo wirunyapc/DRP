@@ -138,7 +138,7 @@
 
         }).then(function (result) {
           if(result!=null) {
-            alert('The disease has been created.')
+            alert('The disease has been added.')
             $uibModalInstance.dismiss('ok');
           }
           $scope.datasBottom = [];
@@ -160,7 +160,7 @@
 
         }).then(function (result) {
           if(result!=null) {
-            alert('The disease has been created.')
+            alert('The disease has been added.')
             $uibModalInstance.dismiss('ok');
           }
           $scope.datasBottom = [];

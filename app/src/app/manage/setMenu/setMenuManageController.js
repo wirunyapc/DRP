@@ -123,7 +123,7 @@
 
       }).then(function (result) {
         if (result != null) {
-          alert('The set menu has been created.')
+          alert('The set menu has been added.')
           $uibModalInstance.dismiss('ok');
         }
 
