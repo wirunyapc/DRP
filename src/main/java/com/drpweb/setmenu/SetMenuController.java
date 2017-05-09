@@ -74,14 +74,16 @@ public class SetMenuController {
                                        @RequestParam("lunch") int lunch,
                                        @RequestParam("dinner") int dinner
     ) throws SQLException {
-
+        List<SetMenu> setmenus = setMenuDao.findAll();
+        int id = setmenus.get(setmenus.size() - 1).getSetmenu();
+        System.out.println("Setmenu id !!!!!!!!!!!!!!!!!!" + id);
 
         Food breakfast = foodDao.findOne(bfast);
         Food lunchh = foodDao.findOne(lunch);
         Food dinnerr = foodDao.findOne(dinner);
 
         SetMenu setMenu = new SetMenu();
-        setMenu.setSetmenu(ID++);
+        setMenu.setSetmenu(id + 1);
         setMenu.setTotal_cal(breakfast.getKal()+lunchh.getKal()+dinnerr.getKal());
         setMenu.setTotal_fat(breakfast.getFat()+lunchh.getFat()+dinnerr.getFat());
         setMenu.setTotal_carboh(breakfast.getCarboh()+lunchh.getCarboh()+dinnerr.getCarboh());

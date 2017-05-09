@@ -7,21 +7,21 @@
     </div>
     <div class="modal-body">
       <form role="form" ng-submit="vm.edit()">
-        <label for="selectBfast"> Breakfast</label>
+        <label for="selectBfast"> 1</label>
         <div class="form-group">
           <select class="form-control" id="selectBfast" ng-model="set.bfast" required>
             <option value="" disabled selected>{{selectedRowSetMenu[1]}}</option>
             <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
           </select>
         </div>
-        <label for="selectLunch"> Lunch</label>
+        <label for="selectLunch"> 2</label>
         <div class="form-group">
           <select class="form-control" id="selectLunch" ng-model="set.lunch" required>
             <option value="" disabled selected>{{selectedRowSetMenu[2]}}</option>
             <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
           </select>
         </div>
-        <label for="selectDinner"> Dinner</label>
+        <label for="selectDinner"> 3</label>
         <div class="form-group">
           <select class="form-control" id="selectDinner" ng-model="set.dinner" required>
             <option value="" disabled selected>{{selectedRowSetMenu[3]}}</option>

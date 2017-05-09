@@ -23,21 +23,21 @@
     </div>
     <div class="modal-body">
       <form role="form" ng-submit="vm.ok()">
-       <label for="selectBfast"> Breakfast</label>
+       <label for="selectBfast"> 1</label>
         <div class="form-group">
          <select class="form-control" id="selectBfast" ng-model="vm.set.bfast">
            <option value="" disabled selected>Select set menu for breakfast</option>
             <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
           </select>
         </div>
-        <label for="selectLunch"> Lunch</label>
+        <label for="selectLunch"> 2</label>
         <div class="form-group">
           <select class="form-control" id="selectLunch" ng-model="vm.set.lunch">
             <option value="" disabled selected>Select set menu for lunch</option>
             <option ng-repeat="value in foods track by $index" value="{{value.foodId}}">{{value.foodNameEng}}</option>
           </select>
         </div>
-        <label for="selectDinner"> Dinner</label>
+        <label for="selectDinner"> 3</label>
         <div class="form-group">
           <select class="form-control" id="selectDinner" ng-model="vm.set.dinner">
             <option value="" disabled selected>Select set menu for dinner</option>
