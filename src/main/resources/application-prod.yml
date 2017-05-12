@@ -6,9 +6,10 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/drp?autoReconnect=true&useSSL=false
-    username: root
-    password: bow0839434347
+    #url: jdbc:mysql://localhost:3306/drp?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://ap-cdbr-azure-southeast-b.cloudapp.net:3306/drpdb?autoReconnect=true&useSSL=false
+    username: bbfabdc134b1e4
+    password: 1d3bf43b
   jpa:
     show_sql: true
     properties:
