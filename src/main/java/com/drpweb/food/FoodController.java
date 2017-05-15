@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by ADMIN on 10/13/2016.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class FoodController {
     @Autowired
@@ -46,7 +46,7 @@ public class FoodController {
     @Autowired
     IngredientDao ingredientDao;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @RequestMapping(value = "/getTotalDietCal",method = RequestMethod.GET)
     public int DietCal(@RequestParam("date")String date,@RequestParam("name")String name) throws SQLException {
         System.out.println("date to cal total diet "+date);

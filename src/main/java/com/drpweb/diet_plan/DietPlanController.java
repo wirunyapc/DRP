@@ -16,11 +16,11 @@ import com.drpweb.setmenu.SetMenuService;
 import com.drpweb.user.User;
 import com.drpweb.user.UserDao;
 import com.drpweb.user.UserService;
+import com.drpweb.util.DailyDiet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * Created by ADMIN on 8/22/2016.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class DietPlanController {
 
@@ -59,7 +59,7 @@ public class DietPlanController {
 
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @RequestMapping(value = "/getFoodPlan",method = RequestMethod.GET)
     public String getFoodPlan(@RequestParam("name")String username) throws SQLException {
         User user = userService.findByUserName(username);
@@ -297,12 +297,11 @@ public class DietPlanController {
         // String user = String.class.cast(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         User user = userService.findByUserName(username);
-        //DailyDiet dd = new DailyDiet();
-        //double bmi = dd.calBMI(user.getWeight(), user.getHeight());
-        double bmi = user.getWeight() / (user.getHeight() / 100.0D * (user.getHeight() / 100.0D));
-        DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
-        //bmi = (new Double(df.format(bmi))).doubleValue();
-        bmi = new Double(df.format(bmi));
+        DailyDiet dd = new DailyDiet();
+        double bmi = dd.calBMI(user.getWeight(), user.getHeight());
+//        double bmi = user.getWeight() / (user.getHeight() / 100.0D * (user.getHeight() / 100.0D));
+//        DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
+//        bmi = new Double(df.format(bmi));
 
         return  bmi < 18.5D?
                 "["+ "\"" +bmi+ "\"" +","+"\"" +"Underweight"+ "\"" + "]"

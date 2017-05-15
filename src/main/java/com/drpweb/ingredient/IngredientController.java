@@ -20,7 +20,7 @@ import java.util.*;
 /**
  * Created by ADMIN on 11/13/2016.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class IngredientController {
     @Autowired
@@ -36,7 +36,7 @@ public class IngredientController {
     @Autowired
     DailyMealService dailyMealService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/getIngredientsToSelect",method = RequestMethod.GET)
     public List<Ingredient> getIngredients(@RequestParam("name")String username) throws SQLException {
         User user = userService.findByUserName(username);

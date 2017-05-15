@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by ADMIN on 11/13/2016.
  */
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class SetMenuController {
     @Autowired
@@ -44,7 +44,7 @@ public class SetMenuController {
 
     public int ID = 43;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/getSetMenuToManage", method = RequestMethod.GET)
     public List<String[]> getSetMenuToManage() throws SQLException {
         List<SetMenu> all = setMenuDao.findAll();

@@ -17,7 +17,7 @@ import java.io.IOException;
  * Created by ADMIN on 12/15/2016.
  */
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class RunkeeperController  {
 
 
@@ -26,14 +26,14 @@ public class RunkeeperController  {
     private RestTemplate restTemplate;
 
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    //@CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value = "/callback", method = RequestMethod.POST)
     public void runKeeperCallback(@RequestBody String response)
             throws IOException {
         System.out.println("Response" + response);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/connectRunKeeper", method = RequestMethod.GET)
     public String connectRunKeeper()
             throws IOException {

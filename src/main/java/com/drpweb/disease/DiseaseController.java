@@ -18,7 +18,9 @@ import java.util.List;
 
 /**
  * Created by ADMIN on 12/18/2016.
- */@CrossOrigin
+ */
+
+@CrossOrigin(origins = "*")
 @RestController
 public class DiseaseController {
     @Autowired
@@ -34,7 +36,7 @@ public class DiseaseController {
     @Autowired
     DietPlanController dietPlanController;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @RequestMapping(value = "/createDiseaseWithSetMenu",method = RequestMethod.GET)
     public Disease createDiseaseWithSetMenu(@RequestParam("name")String name,
                                  @RequestParam("cal")int cal,
