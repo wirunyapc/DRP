@@ -93,7 +93,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getUser',
+      url: '/getUser',
       params: {name: $rootScope.currentuser}
     }).then(function (result) {
 
@@ -109,7 +109,7 @@
       $log.debug('error', vm.user.duration);
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/updateUser',
+        url: '/updateUser',
         params: {
                 currentUser: $rootScope.currentuser,
                 weight: vm.user.weight,

@@ -65,7 +65,7 @@
     vm.getIngredientsToSelect = function() {
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getIngredientsToSelect',
+        url: '/getIngredientsToSelect',
         params: {
           name: $rootScope.currentuser
         }
@@ -80,7 +80,7 @@
     vm.getSelectedIngredients = function() {
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getSelectedIngredients',
+        url: '/getSelectedIngredients',
         params: {
           name: $rootScope.currentuser
         }
@@ -112,7 +112,7 @@
         $log.debug('Set not null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updatePlanWithIngredient',
+          url: '/updatePlanWithIngredient',
           params: {
             name: $rootScope.currentuser,
             ingredients: $scope.datasRight
@@ -131,7 +131,7 @@
         $log.debug('Set null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updatePlanWithOutIngredient',
+          url: '/updatePlanWithOutIngredient',
           params: {
             name: $rootScope.currentuser
           }
@@ -149,84 +149,6 @@
 
     };
 
-/*
-    /!* Watch selectedValues model*!/
-    $scope.$watch('selected', function(nowSelected){
-      $scope.selectedValues = [];
-      $log.debug('Im now selected',nowSelected);
-      if( ! nowSelected ){
-        $log.debug('Im now not selected',nowSelected);
-        // here we've initialized selected already
-        // but sometimes that's not the case
-        // then we get null or undefined
-        return;
-      }
-      angular.forEach(nowSelected, function(val){
-        $scope.selectedValues.push( val.ingredientName );
-      });
-    });
-
-    /!*Watch selectedIngredient model*!/
-    $scope.$watch('selected', function(nowSelected){
-      $scope.selectedIngredient = [];
-      $log.debug('Im now selected',nowSelected);
-      if( ! nowSelected ){
-        $log.debug('Im now not selected',nowSelected);
-        // here we've initialized selected already
-        // but sometimes that's not the case
-        // then we get null or undefined
-        return;
-      }
-      angular.forEach(nowSelected, function(val){
-        $scope.selectedIngredient.push(val);
-      });
-    });
-
-
-       vm.setIngredient = function(){
-      $http({
-        method: 'GET',
-        url: 'http://localhost:8080/setPlanByIngredients',
-        params: {
-          name: $rootScope.currentuser
-        }
-      }).then(function (result) {
-        $rootScope.requestPlan();
-        $uibModalInstance.dismiss('ok');
-        $log.debug('Set ingredient result', result);
-      });
-    };
-
-    vm.deselectIngredient = function () {
-      $http({
-        method: 'GET',
-        url: 'http://localhost:8080/deselectIngredient',
-        params: {
-          ingredient: $scope.selectedIngredient,
-          name: $rootScope.currentuser
-        }
-      }).then(function (result) {
-        vm.getIngredientsToSelect();
-        vm.getSelectedIngredients();
-        $log.debug('Set ingredient result', result);
-      });
-    };
-
-    vm.selectIngredient = function(){
-      $http({
-        method: 'GET',
-        url: 'http://localhost:8080/selectIngredient',
-        params: {
-          ingredient: $scope.selectedValues,
-          name: $rootScope.currentuser
-        }
-      }).then(function (result) {
-        vm.getIngredientsToSelect();
-        vm.getSelectedIngredients();
-        $log.debug('Set ingredient result', result);
-      });
-    };
-*/
 
 
     vm.cancel = function () {

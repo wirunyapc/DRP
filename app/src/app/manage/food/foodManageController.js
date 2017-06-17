@@ -15,7 +15,7 @@
     $scope.foods = [];
     $rootScope.getFoodToManage = function() {
       $http
-        .get('http://localhost:8080/getFoodToManage')
+        .get('/getFoodToManage')
         .then(function (result) {
           $scope.foods = result.data;
           $log.debug('food ', result.data);
@@ -30,7 +30,7 @@
     $scope.delete = function(){
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/deleteFood',
+        url:'/deleteFood',
         params: {
           id: $rootScope.selectedRowFood.foodId
         }
@@ -100,7 +100,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllIngredient'
+      url: '/getAllIngredient'
     })
       .then(function (result) {
         $scope.datasLeft = result.data;
@@ -108,7 +108,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllCategory'
+      url: '/getAllCategory'
     })
       .then(function (result) {
         $scope.categories = result.data;
@@ -135,7 +135,7 @@
         $log.debug('Set not null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/createFoodWithIngre',
+          url: '/createFoodWithIngre',
           params: {
             name: vm.food.foodName,
             cal: vm.food.cal,
@@ -161,7 +161,7 @@
         $log.debug('Set  null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/createFood',
+          url: '/createFood',
           params: {
             name: vm.food.foodName,
             cal: vm.food.cal,
@@ -239,7 +239,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllCategory'
+      url: '/getAllCategory'
     })
       .then(function (result) {
         $scope.categories = result.data;
@@ -248,7 +248,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getSelectedCategory',
+      url: '/getSelectedCategory',
       params: {
         name: $rootScope.selectedRowFood.foodNameEng
       }
@@ -260,7 +260,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllIngredient'
+      url: '/getAllIngredient'
     })
       .then(function (result) {
         $scope.datasLeft = result.data;
@@ -268,7 +268,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getSelectedIngreByFood',
+      url: '/getSelectedIngreByFood',
       params: {
         id: $rootScope.selectedRowFood.foodId
       }
@@ -306,7 +306,7 @@
         $log.debug('Set not null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updateFoodWithIngredient',
+          url: '/updateFoodWithIngredient',
           params: {
             id: $rootScope.selectedRowFood.foodId,
             name: $scope.food.foodName,
@@ -333,7 +333,7 @@
         $log.debug('Set null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updateFood',
+          url: '/updateFood',
           params: {
             id: $rootScope.selectedRowFood.foodId,
             name: $scope.food.foodName,

@@ -16,7 +16,7 @@
     $scope.setMenus = [];
     $rootScope.getSetMenuToManage = function() {
       $http
-        .get('http://localhost:8080/getSetMenuToManage')
+        .get('/getSetMenuToManage')
         .then(function (result) {
           $scope.setMenus = result.data;
         });
@@ -31,7 +31,7 @@
       $log.debug('Set menu to delete',$rootScope.selectedRowSetMenu[0]);
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/deleteSetMenu',
+        url: '/deleteSetMenu',
         params: {
           id: $rootScope.selectedRowSetMenu[0]
         }
@@ -101,7 +101,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getFoodToManage'
+      url: '/getFoodToManage'
     })
       .then(function (result) {
         $scope.foods = result.data;
@@ -114,7 +114,7 @@
       $log.debug('dinner', vm.set.dinner);
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/createSetMenu',
+        url: '/createSetMenu',
         params: {
           bfast: vm.set.bfast,
           lunch: vm.set.lunch,
@@ -187,7 +187,7 @@
 
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getFoodToManage'
+        url: '/getFoodToManage'
       })
         .then(function (result) {
           $scope.foods = result.data;
@@ -198,7 +198,7 @@
       $log.debug('Set id to update',$rootScope.selectedRowSetMenu[0]);
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updateSetMenu',
+          url: '/updateSetMenu',
           params: {
             id: $rootScope.selectedRowSetMenu[0],
             bfast: $scope.set.bfast,

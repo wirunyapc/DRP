@@ -15,7 +15,7 @@
     $scope.diseases = [];
     $rootScope.getDiseaseToManage = function() {
       $http
-        .get('http://localhost:8080/getDiseases')
+        .get('/getDiseases')
         .then(function (result) {
           $scope.diseases = result.data;
           $log.debug('disease ', result.data);
@@ -30,7 +30,7 @@
     $scope.delete = function(){
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/deleteDisease',
+        url: '/deleteDisease',
         params: {
           name: $rootScope.selectedRow.diseaseName
         }
@@ -99,7 +99,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllSetMenu'
+      url: '/getAllSetMenu'
     })
       .then(function (result) {
         $scope.datasTop = result.data;
@@ -126,7 +126,7 @@
         $log.debug('Set not null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/createDiseaseWithSetMenu',
+          url: '/createDiseaseWithSetMenu',
           params: {
             name: vm.disease.diseaseName,
             cal: vm.disease.cal,
@@ -149,7 +149,7 @@
         $log.debug('Set  null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/createDisease',
+          url: '/createDisease',
           params: {
             name: vm.disease.diseaseName,
             cal: vm.disease.cal,
@@ -223,7 +223,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllSetMenu'
+      url: '/getAllSetMenu'
     })
       .then(function (result) {
         $scope.datasTop = result.data;
@@ -231,7 +231,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getSelectedSetMenuByDisease',
+      url: '/getSelectedSetMenuByDisease',
       params: {
         name: $rootScope.selectedRow.diseaseName
       }
@@ -266,7 +266,7 @@
         $log.debug('Set not null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updateDiseaseWithSetMenu',
+          url: '/updateDiseaseWithSetMenu',
           params: {
             id: $rootScope.selectedRow.id,
             name: $scope.disease.dName,
@@ -290,7 +290,7 @@
         $log.debug('Set null');
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/updateDisease',
+          url: '/updateDisease',
           params: {
             id: $rootScope.selectedRow.id,
             name: $scope.disease.dName,

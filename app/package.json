@@ -4,6 +4,7 @@
   "dependencies": {
     "angular-material-calendar": "^0.2.14",
     "angular-oauth2": "^4.1.0",
+    "angular-resource": "^1.6.4",
     "lodash": "^3.10.1",
     "query-string": "^4.2.3",
     "semantic-ui": "^2.2.6"

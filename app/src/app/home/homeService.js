@@ -15,7 +15,7 @@
       getBmi: function() {
         var deferred = $q.defer();
         $http
-          .get('http://localhost:8080/bmi', {
+          .get('/bmi', {
             header: {'Content-Type' : 'application/x-www-form-urlencoded'}
           })
           .then(function(response) {

@@ -39,9 +39,9 @@
     /* BMI request*/
 
     $http({
-      method: 'GET',
-      url: 'http://localhost:8080/bmi',
-      params: {name: $scope.currentuser}
+        method: 'GET',
+        url: '/bmi',
+        params: {name: $scope.currentuser}
     })
       .then(function (result) {
         $log.debug(result.data[0]);
@@ -52,7 +52,7 @@
     /* BMR request*/
      $http({
      method: 'GET',
-     url: 'http://localhost:8080/getBmr',
+     url: '/getBmr',
      params: {name: $scope.currentuser}
      })
      .then(function (result) {
@@ -132,7 +132,7 @@
       var disConnectDiv = document.querySelector('#disConnectRun');
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/connectRunKeeper'
+        url: '/connectRunKeeper'
       }).then(function(result){
         $log.debug('Response access token', result.data);
         if(result.data == ""){
@@ -149,13 +149,11 @@
     };
 
     $scope.connectRunKeeper = function(isConnect){
-     // window.location.replace("https://runkeeper.com/apps/authorize?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fhome&scope=notifications&state=3(%230%2F!~&response_type=code&client_id=f18e3497b59c4329b683ed2bebe2d2cc");
-      //window.location.replace("http://localhost:8080/login/runkeeper");
       var connectDiv = document.querySelector('#connectRun');
       var disConnectDiv = document.querySelector('#disConnectRun');
 
       if(isConnect) {
-        $http.jsonp("http://localhost:8080/login/runkeeper");
+        $http.jsonp("/login/runkeeper");
 
         $scope.requestAccessToken();
 
@@ -177,7 +175,7 @@
       if(vm.currentR=="member") {
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/getFoods',
+          url: '/getFoods',
           params: {
             name: $scope.currentuser
           }
@@ -205,7 +203,7 @@
       if(vm.currentR=="patient"){
         $http({
           method: 'GET',
-          url: 'http://localhost:8080/getFoodsByDisease',
+          url: '/getFoodsByDisease',
           params: {
             name: $scope.currentuser
           }
@@ -247,7 +245,7 @@
       $scope.getTotalDietCal();
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/setFood',
+        url: '/setFood',
         params: {
           set: setMenu,
           name: $scope.currentuser,
@@ -274,7 +272,7 @@
     $scope.diseases = [];
 if(vm.currentR=='patient') {
   $http
-    .get('http://localhost:8080/getDiseases')
+    .get('/getDiseases')
     .then(function (result) {
       $scope.diseases = result.data;
       $log.debug('disease ', result.data);
@@ -288,7 +286,7 @@ if(vm.currentR=='patient') {
     //}else {
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/setDisease',
+        url: '/setDisease',
         params: {
           disease: vm.selectedDisease,
           name: $scope.currentuser
@@ -306,7 +304,7 @@ if(vm.currentR=='patient') {
 
   $http({
     method: 'GET',
-    url: 'http://localhost:8080/getCurrentDisease',
+    url: '/getCurrentDisease',
     params: {
       name: $scope.currentuser
     }
@@ -336,7 +334,7 @@ if(vm.currentR=='patient') {
     $scope.getTotalDietCal = function(){
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getTotalDietCal',
+        url: '/getTotalDietCal',
         params: {
           date: $scope.selectedDate,
           name: $scope.currentuser
@@ -355,7 +353,7 @@ if(vm.currentR=='patient') {
       /*Diet Plan*/
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getFoodPlan',
+        url: '/getFoodPlan',
         params: {name: $scope.currentuser}
       }).then(function(response) {
         $log.debug('response from request plan',response.data[0]);

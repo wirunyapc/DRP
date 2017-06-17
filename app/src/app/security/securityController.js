@@ -4,7 +4,7 @@
 (function () {
 
   angular.module('app')
-    .controller('ModalLoginController',ModalLoginController )
+    .controller('ModalLoginController',['$uibModal', '$log','$rootScope','$location','homeService','securityService',ModalLoginController])
     .controller('ModalLoginInstanceController',ModalLoginInstanceController );
 
   function serializeData(data) {
@@ -27,7 +27,7 @@
     var source = buffer.join("&").replace(/%20/g,"+");
     return(source);
   }
-  /**ngInject*/
+
   // function LoginController($rootScope,$location,$cookies,UserService)
   // {
   //
@@ -55,6 +55,8 @@
   //       })
   //   }
   // }
+
+
     function ModalLoginController( $uibModal, $log,$rootScope,$location,homeService,securityService) {
 
     var vm = this;

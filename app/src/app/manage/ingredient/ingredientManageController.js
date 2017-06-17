@@ -15,7 +15,7 @@
     $scope.ingredients = [];
     $rootScope.getIngredientToManage = function() {
       $http
-        .get('http://localhost:8080/getAllIngredient')
+        .get('/getAllIngredient')
         .then(function (result) {
           $scope.ingredients = result.data;
         });
@@ -29,7 +29,7 @@
     $scope.delete = function(){
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/deleteIngredient',
+        url: '/deleteIngredient',
         params: {
           id: $rootScope.selectedRowIngredient.id
         }
@@ -99,7 +99,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://localhost:8080/getAllCategory'
+      url: '/getAllCategory'
     })
       .then(function (result) {
         $scope.categories = result.data;
@@ -110,7 +110,7 @@
 
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/createIngredient',
+        url: '/createIngredient',
         params: {
           name: vm.ingredient.ingredientName,
           category: vm.ingredient.category
@@ -181,7 +181,7 @@
 
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getAllCategory'
+        url: '/getAllCategory'
       })
         .then(function (result) {
           $scope.categories = result.data;
@@ -190,7 +190,7 @@
 
       $http({
         method: 'GET',
-        url: 'http://localhost:8080/getSelectedCategory',
+        url: '/getSelectedCategory',
         params: {
           name: $rootScope.selectedRowIngredient.ingredientName
         }
@@ -206,7 +206,7 @@
 
           $http({
             method: 'GET',
-            url: 'http://localhost:8080/updateIngredient',
+            url: '/updateIngredient',
             params: {
               id: $rootScope.selectedRowIngredient.id,
               name: $scope.ingredient.ingredientName,
