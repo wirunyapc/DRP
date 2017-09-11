@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -58,6 +59,7 @@ public class DietPlanController {
     FoodSetDiseaseDao foodSetDiseaseDao;
 
 
+
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/getFoodPlan",method = RequestMethod.GET)
     public String getFoodPlan(@RequestParam("name")String username) throws SQLException {
@@ -67,90 +69,90 @@ public class DietPlanController {
 
         if(dailyMeals.size()==0) {
 
-                Set<Role> roles = user.getRoles();
-                for(Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
-                    Role role = it.next();
-                    if (role.getRoleName().equals("member")){
-                        System.out.println("Diet plan nullll");
-                        LocalDate today = LocalDate.now();
-                        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                        dietPlan.setStartDate(startDate);
+            Set<Role> roles = user.getRoles();
+            for(Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
+                Role role = it.next();
+                if (role.getRoleName().equals("member")){
+                    System.out.println("Diet plan nullll");
+                    LocalDate today = LocalDate.now();
+                    Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    dietPlan.setStartDate(startDate);
 
-                        LocalDate end = today.plusDays(user.getDuration()-1);
-                        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                        dietPlan.setEndDate(endDate);
+                    LocalDate end = today.plusDays(user.getDuration()-1);
+                    Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    dietPlan.setEndDate(endDate);
 
-                        dietPlanDao.update(dietPlan);
-                        System.out.println("Plan set date" + dietPlan.getStartDate());
+                    dietPlanDao.update(dietPlan);
+                    System.out.println("Plan set date" + dietPlan.getStartDate());
 
-                       dietPlanService.createPlan(user.getUsername());
-                        dailyMeals=dailyMealDao.findByDietPlanId(dietPlan.getDietPlanId());
+                    dietPlanService.createPlan(user.getUsername());
+                    dailyMeals=dailyMealDao.findByDietPlanId(dietPlan.getDietPlanId());
 
 //                       if(dailyMeals.isEmpty()){
 //                           return "["+"\""+"error"+"\""+"]";
 //                       }
-                    }else{
-                        return "["+"\""+"null"+"\""+"]";
-                    }
-
-
+                }else{
+                    return "["+"\""+"null"+"\""+"]";
                 }
+
+
+            }
 
         }
 
 
-            System.out.println("====================================================");
+        System.out.println("====================================================");
         //String result = "[";
 
-            String day = "[";
+        String day = "[";
 
-            int foodCount = 1;
-            int count = 1;
-            int daycount=1;
+        int foodCount = 1;
+        int count = 1;
+        int daycount=1;
 
-            for (DailyMeal daily : dailyMeals) {
+        for (DailyMeal daily : dailyMeals) {
 
-                    String meal = "[";
+            String meal = "[";
 
-                    SetMenu setMenu = setMenuDao.findOne(daily.getSetMenu_id());
+            SetMenu setMenu = setMenuDao.findOne(daily.getSetMenu_id());
 
-                    List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(setMenu.getSetmenu());
-                    for (FoodSetMenu f : foodSetMenus) {
-                        String fooddata = "[";
-                        System.out.println("foodidx count" + f.getFoodIndex());
-                        fooddata += "\"" + daily.getDate().toString() + "\",";
-                        fooddata += "\"" + daily.getMealId().toString() + "\",";
-                        fooddata += "\"" + f.getFoodIndex() + "\",";
-                        fooddata += "\"" + foodDao.findOne(f.getFoodId()).getFoodNameEng() + "\",";
-                        fooddata += "\"" + setMenu.getTotal_cal() + "\"";
-                        if (foodCount == foodSetMenus.size()) {
-                            fooddata += "]";
-                            foodCount = 1;
-                        } else {
-                            fooddata += "],";
-                            foodCount++;
-                        }
+            List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(setMenu.getSetmenu());
+            for (FoodSetMenu f : foodSetMenus) {
+                String fooddata = "[";
+                System.out.println("foodidx count" + f.getFoodIndex());
+                fooddata += "\"" + daily.getDate().toString() + "\",";
+                fooddata += "\"" + daily.getMealId().toString() + "\",";
+                fooddata += "\"" + f.getFoodIndex() + "\",";
+                fooddata += "\"" + foodDao.findOne(f.getFoodId()).getFoodNameEng() + "\",";
+                fooddata += "\"" + setMenu.getTotal_cal() + "\"";
+                if (foodCount == foodSetMenus.size()) {
+                    fooddata += "]";
+                    foodCount = 1;
+                } else {
+                    fooddata += "],";
+                    foodCount++;
+                }
 
-                        meal += fooddata;
-                    }
+                meal += fooddata;
+            }
 
 
-                    if (count == dailyMeals.size()) {
-                        meal += "]";
-                    } else {
-                        meal += "],";
-                        count++;
-                    }
+            if (count == dailyMeals.size()) {
+                meal += "]";
+            } else {
+                meal += "],";
+                count++;
+            }
 
-                    day += meal;
-           }
-            day += "]";
+            day += meal;
+        }
+        day += "]";
 //            result += day;
 //
 //            result += "]";
 
 
-            return day;
+        return day;
 
 
     }
@@ -158,8 +160,8 @@ public class DietPlanController {
     @RequestMapping(value = "/getDiseases",method = RequestMethod.GET)
     public List<Disease> getDisease() throws SQLException {
 
-    return  diseaseDao.findAll();
-}
+        return  diseaseDao.findAll();
+    }
 
     @RequestMapping(value = "/getCurrentDisease",method = RequestMethod.GET)
     public String getCurrentDisease(@RequestParam("name")String username) throws SQLException {
@@ -170,7 +172,7 @@ public class DietPlanController {
         return  "["+"\""+disease.getDiseaseName()+"\""+"]";
     }
 
-   @RequestMapping(value = "/getFoods",method = RequestMethod.GET)
+    @RequestMapping(value = "/getFoods",method = RequestMethod.GET)
     public List<List<String>> getFoods(@RequestParam("name")String username) throws SQLException {
         List<SetMenu> setMenus = setMenuService.getSetMenu(userService.findByUserName(username));
         return setToJSON(setMenus);
@@ -255,9 +257,9 @@ public class DietPlanController {
                    /* List<FoodSetMenu> foodSetMenus = foodSetMenuDao.findBySetmenu(setMenu.getSetmenu());
                     foodSetMenus.stream().filter(f -> f.getFoodIndex() == foodIndex).forEach(f -> {
                         f.setFoodId(food.getFoodId());*/
-                        daily.setSetMenu_id(setMenu.getSetmenu());
-                        dailyMealDao.update(daily);
-                  //  });
+                    daily.setSetMenu_id(setMenu.getSetmenu());
+                    dailyMealDao.update(daily);
+                    //  });
 
                 }
             }

@@ -74,7 +74,6 @@ public class SetMenuController {
                                        @RequestParam("lunch") int lunch,
                                        @RequestParam("dinner") int dinner
     ) throws SQLException {
-
         List<SetMenu> setmenus = setMenuDao.findAll();
         int id = setmenus.get(setmenus.size() - 1).getSetmenu();
         System.out.println("Setmenu id !!!!!!!!!!!!!!!!!!" + id);
