@@ -100,9 +100,29 @@ public class IngredientController {
         return ingredientDao.findAll();
     }
 
-    @RequestMapping(value = "/setPlanByIngredients",method = RequestMethod.GET)
-    public boolean setPlanByIngredients(@RequestParam("name")String username) throws SQLException {
+    @RequestMapping(value = "/updatePlanWithIngredient",method = RequestMethod.GET)
+    public boolean updatePlanWithIngredient(@RequestParam("name")String username, @RequestParam("ingredients")String[] ingredientsName) throws SQLException {
         User user = userService.findByUserName(username);
+        List<IngredientDislike> ingreDis = ingredientDisDao.findByUserId(user.getId());
+        if(ingreDis!=null) {
+            for (IngredientDislike id : ingreDis
+                    ) {
+                ingredientDisDao.delete(id);
+            }
+        }
+        List<Ingredient> ingredientToSet = new ArrayList<>();
+        for (String i : ingredientsName
+             ) {
+            ingredientToSet.add(ingredientDao.findByIngredientName(i));
+        }
+        for (Ingredient in : ingredientToSet
+             ) {
+            IngredientDislike ingre = new IngredientDislike();
+            ingre.setUserId(user.getId());
+            ingre.setIngredientId(in.getId());
+            IngredientDislike added = ingredientDisDao.create(ingre);
+        }
+
         DietPlan dietPlan = dietPlanService.findByUserId(user.getId());
 
         LocalDate today = LocalDate.now();
@@ -129,6 +149,42 @@ public class IngredientController {
         return true;
     }
 
+    @RequestMapping(value = "/updatePlanWithOutIngredient",method = RequestMethod.GET)
+    public boolean updatePlanWithIngredient(@RequestParam("name")String username) throws SQLException {
+        User user = userService.findByUserName(username);
+        List<IngredientDislike> ingreDis = ingredientDisDao.findByUserId(user.getId());
+        if(ingreDis!=null) {
+            for (IngredientDislike id : ingreDis
+                    ) {
+                ingredientDisDao.delete(id);
+            }
+        }
+
+        DietPlan dietPlan = dietPlanService.findByUserId(user.getId());
+
+        LocalDate today = LocalDate.now();
+        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setStartDate(startDate);
+
+        LocalDate end = today.plusDays(user.getDuration() - 1);
+        Date endDate = Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        dietPlan.setEndDate(endDate);
+        dietPlanDao.update(dietPlan);
+
+        dailyMealService.delete(dietPlan.getDietPlanId());
+        Set<Role> roles = user.getRoles();
+        for (Iterator<Role> it = roles.iterator(); it.hasNext(); ) {
+            Role role = it.next();
+            if (role.getRoleName().equals("member")) {
+                dietPlanService.createPlan(user.getUsername());
+            }
+            else{
+                dietPlanService.createPatientPlan(user.getUsername());
+            }
+
+        }
+        return true;
+    }
 
     //Define unwanted ingredient
     @RequestMapping(value = "/getSelectedIngredients",method = RequestMethod.GET)
@@ -140,52 +196,6 @@ public class IngredientController {
             ingredients.add(ingredientDao.findOne(ingreDisk.getIngredientId()).getIngredientName());
         }
         return ingredients;
-    }
-
-    @RequestMapping(value = "/selectIngredient",method = RequestMethod.GET)
-    public Boolean selectIngredient(@RequestParam("ingredient")String [] ingredients,@RequestParam("name")String username) throws SQLException {
-        IngredientDislike ingredientDislike;
-        Ingredient ingredient;
-
-        User user = userService.findByUserName(username);
-        for (String ingre : ingredients) {
-            ingredient = ingredientDao.findByIngredientName(ingre);
-
-            ingredientDislike = new IngredientDislike();
-            ingredientDislike.setUserId(user.getId());
-            ingredientDislike.setIngredientId(ingredient.getId());
-
-            ingredientDisDao.create(ingredientDislike);
-        }
-
-
-        return true;
-    }
-    @RequestMapping(value = "/deselectIngredient",method = RequestMethod.GET)
-    public Boolean deselectIngredient(@RequestParam("ingredient")String [] ingredients,@RequestParam("name")String username) throws SQLException {
-        User user = userService.findByUserName(username);
-        List<IngredientDislike> userDisliked = ingredientDisDao.findByUserId(user.getId());
-        List<Ingredient> ingredientToDeSelect = new ArrayList<>();
-
-        for (String in : ingredients) {
-            ingredientToDeSelect.add(ingredientDao.findByIngredientName(in));
-        }
-
-        for (Ingredient i : ingredientToDeSelect) {
-            for (IngredientDislike d : userDisliked) {
-                if(d.getIngredientId().equals(i.getId())) {
-                    ingredientDisDao.delete(d);
-                    //ingredientToDelete.add(ingredientDisDao.findByIngredientId(i.getId()));
-                }
-            }
-
-        }
-
-
-
-
-
-        return true;
     }
 
 

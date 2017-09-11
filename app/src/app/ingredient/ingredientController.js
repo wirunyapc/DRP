@@ -4,15 +4,12 @@
 (function () {
   'use strict';
   angular.module('app')
-    .controller('ModalIngredientController',ModalIngredientController)
-    .controller('ModalIngredientInstanceController',ModalIngredientInstanceController);
+    .controller('ModalSelectIngredientController',ModalSelectIngredientController)
+    .controller('ModalSelectIngredientInstanceController',ModalSelectIngredientInstanceController);
 
   /**ngInject*/
-  function ModalIngredientController($uibModal,$log,$scope,$rootScope) {
+  function ModalSelectIngredientController($uibModal,$log,$scope,$rootScope) {
     var vm = this;
-    $rootScope.ingredients=[];
-
-
 
     $scope.switchBool = function (value) {
       $scope[value] = !$scope[value];
@@ -25,7 +22,7 @@
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'ingredient.html',
-        controller: 'ModalIngredientInstanceController',
+        controller: 'ModalSelectIngredientInstanceController',
         controllerAs: 'vm',
         size: size
       });
@@ -54,49 +51,17 @@
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
   /**ngInject*/
-  function ModalIngredientInstanceController($scope,$rootScope,$http,$uibModalInstance,$log,$location) {
+  function ModalSelectIngredientInstanceController($scope,$rootScope,$http,$uibModalInstance,$log,$location) {
     var vm = this;
-    $scope.selectedValues = [];
-    $scope.selectedIngredient = [];
-
-    vm.getIngredientsToSelect();
-
-
-    /*vm.ok = function () {
-     $log.debug('error', vm.user.username);
-     $log.debug('error', vm.user.password);
-     $log.debug('error', vm.user.email);
-     $log.debug('error', vm.user.dob);
-     $log.debug('error', vm.user.gender);
-     $log.debug('error', vm.user.role);
-     $log.debug('error', vm.user.weight);
-     $log.debug('error', vm.user.height);
-     $log.debug('error', vm.user.duration);
+    $scope.datasLeft = [];
+    $scope.datasRight =[];
+    $scope.left ={};        // ข้อมูลที่ผูกกับ form
+    $scope.right ={};
+    $scope.selectedIngre = [];
+    $scope.selectedIngredients = [];
+    $scope.ingredients = [];
 
 
-     if (vm.user.username != "" && vm.user.password != "" && vm.user.email != "") {
-     $uibModalInstance.close({
-     username: vm.user.username,
-     password: vm.user.password,
-     email: vm.user.email,
-     dob: vm.user.dob,
-     name: vm.user.name,
-     lastName: vm.user.lastName,
-     gender: vm.user.gender,
-     roles: [{roleName: vm.role}],
-     weight: vm.user.weight,
-     height: vm.user.height,
-     duration: vm.user.duration
-     });
-     }
-     ;
-     }*/
-    /*    $http
-     .get('http://localhost:8080/getIngredientsToSelect')
-     .then(function (result) {
-     $rootScope.ingredients = result.data;
-     $log.debug('Ingredient ', result.data);
-     });*/
     vm.getIngredientsToSelect = function() {
       $http({
         method: 'GET',
@@ -105,10 +70,12 @@
           name: $rootScope.currentuser
         }
       }).then(function (result) {
-        $scope.ingredients = result.data;
-        $log.debug('Ingredient to select', $rootScope.ingredients);
+        $scope.datasLeft = result.data;
+        $log.debug('Ingredient to select', $scope.ingredients);
       });
     };
+
+    vm.getIngredientsToSelect();
 
     vm.getSelectedIngredients = function() {
       $http({
@@ -118,15 +85,72 @@
           name: $rootScope.currentuser
         }
       }).then(function (result) {
-        $scope.selectedIngredients = result.data;
+        $scope.datasRight = result.data;
         $log.debug('Selected ingredient from server', $scope.selectedIngredients);
       });
     };
 
-
     vm.getSelectedIngredients();
 
-    /* Watch selectedValues model*/
+    $scope.SelectData = function (left) {
+      $log.debug('error left', left);
+      $scope.datasRight.push(left[0]);
+      $log.debug('data right', $scope.datasRight);
+      //$scope.datasTop.splice($scope.datasTop.indexOf(top[0]),1);
+      $scope.left = {};
+    };
+    $scope.DeselectData = function (right) {
+      $log.debug('error right', right);
+      //$scope.datasTop.push(bottom);
+      $scope.datasRight.splice($scope.datasRight.indexOf(right[0]),1);
+      $scope.right = {};
+    };
+
+    vm.ok = function(){
+      $log.debug('error', $scope.datasRight);
+      if($scope.datasRight.length > 0){
+        $log.debug('Set not null');
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8080/updatePlanWithIngredient',
+          params: {
+            name: $rootScope.currentuser,
+            ingredients: $scope.datasRight
+          }
+
+        }).then(function (result) {
+          if(result!=null) {
+            $rootScope.requestPlan();
+            $scope.datasRight = [];
+            $uibModalInstance.dismiss('ok');
+            alert('The diet plan has been updated.');
+          }
+        });
+
+      }else{
+        $log.debug('Set null');
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8080/updatePlanWithOutIngredient',
+          params: {
+            name: $rootScope.currentuser
+          }
+
+        }).then(function (result) {
+          if(result!=null) {
+            $rootScope.requestPlan();
+            $scope.datasRight = [];
+            $uibModalInstance.dismiss('ok');
+            alert('The diet plan has been updated.');
+          }
+
+        });
+      }
+
+    };
+
+/*
+    /!* Watch selectedValues model*!/
     $scope.$watch('selected', function(nowSelected){
       $scope.selectedValues = [];
       $log.debug('Im now selected',nowSelected);
@@ -142,7 +166,7 @@
       });
     });
 
-    /*Watch selectedIngredient model*/
+    /!*Watch selectedIngredient model*!/
     $scope.$watch('selected', function(nowSelected){
       $scope.selectedIngredient = [];
       $log.debug('Im now selected',nowSelected);
@@ -202,7 +226,7 @@
         $log.debug('Set ingredient result', result);
       });
     };
-
+*/
 
 
     vm.cancel = function () {

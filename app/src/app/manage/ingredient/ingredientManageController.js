@@ -118,7 +118,7 @@
 
       }).then(function (result) {
         if (result != null) {
-          alert('The ingredient has been created.')
+          alert('The ingredient has been added.')
           $uibModalInstance.dismiss('ok');
         }
         $scope.datasRight = [];

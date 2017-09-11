@@ -117,6 +117,12 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>
 		</dependency>
+		<dependency>
+			<groupId>choco</groupId>
+			<artifactId>choco</artifactId>
+			<version>2.1.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

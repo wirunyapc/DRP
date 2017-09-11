@@ -186,8 +186,8 @@ public class DietPlanController {
             foodSetMenu = foodSetMenuDao.findBySetmenu(s.getSetmenu());
             String foodName = "";
             List<String> value = new ArrayList<>();
-//            value.add(""+s.getSetmenu());
-//            value.add(""+s.getTotal_cal());
+            value.add(""+s.getSetmenu());
+            value.add(""+s.getTotal_cal());
             for (FoodSetMenu foodSet: foodSetMenu) {
                 foodName += (foodDao.findOne(foodSet.getFoodId()).getFoodNameEng());
                 if(foodSet.getFoodIndex()!=3){
@@ -297,7 +297,21 @@ public class DietPlanController {
 
         User user = userService.findByUserName(username);
         DailyDiet dd = new DailyDiet();
-        return dd.calBMI(user.getWeight(), user.getHeight());
+        double bmi = dd.calBMI(user.getWeight(), user.getHeight());
+
+
+        return  bmi < 18.5D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Underweight"+ "\"" + "]"
+                :(18.5D <= bmi && bmi <= 24.9D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Normal weight"+ "\"" + "]"
+
+                :(25.0D <= bmi && bmi <= 29.9D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Overweight"+ "\"" + "]"
+
+                :(bmi >= 30.0D?
+                "["+ "\"" +bmi+ "\"" +","+"\"" +"Obese"+ "\"" + "]"
+
+                :"Value not found")));
 
     }
 

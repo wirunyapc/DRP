@@ -7,23 +7,30 @@
     <div class="col-sm-1"><button type="button" class="btn btn-secondary" style="margin-left: 20px;" ng-disabled="selectedRow==null" ng-click="delete()">Delete</button></div></div>
 
     <hr class="m-y-2">
-    <div class="table-responsive">
+    <div class="table-responsive" style="overflow-y:auto;height: 350px;">
     <table class="table table-bordered table-hover table-sm">
       <thead class="thead-default">
       <tr>
         <th>ID</th>
         <th>Disease Name</th>
+        <th>Calories</th>
+        <th>Fat</th>
+        <th>Carboh</th>
+        <th>Protein</th>
       </tr>
       </thead>
       <tr ng-repeat="item in diseases" ng-class="{'selected':item == selectedRow}" ng-click="setClickedRow(item)">
         <td>{{item.id}}</td>
         <td>{{item.diseaseName}}</td>
+        <td>{{item.kcal}}</td>
+        <td>{{item.fat}}</td>
+        <td>{{item.carboh}}</td>
+        <td>{{item.prot}}</td>
       </tr>
     </table>
       </div>
     <div>
-      selectedRow = {{selectedRow.diseaseName}}
-    </div>
+       </div>
 
   </div>
 </div>

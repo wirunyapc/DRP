@@ -150,7 +150,7 @@
 
         }).then(function (result) {
           if(result!=null) {
-            alert('The food has been created.')
+            alert('The food has been added.')
             $uibModalInstance.dismiss('ok');
           }
           $scope.datasRight = [];
@@ -175,7 +175,7 @@
 
         }).then(function (result) {
           if(result!=null) {
-            alert('The food has been created.')
+            alert('The food has been added.')
             $uibModalInstance.dismiss('ok');
           }
           $scope.datasRight = [];

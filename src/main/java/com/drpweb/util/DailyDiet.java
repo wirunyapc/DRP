@@ -216,21 +216,10 @@ public class DailyDiet {
         return vars;
     }
 
-    public String calBMI(double weight, double height) {
+    public double calBMI(double weight, double height) {
         double bmi = weight / (height / 100.0D * (height / 100.0D));
         DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
         bmi = (new Double(df.format(bmi))).doubleValue();
-        return bmi < 18.5D?
-                "["+ "\"" +bmi+ "\"" +","+"\"" +"Underweight"+ "\"" + "]"
-                :(18.5D <= bmi && bmi <= 24.9D?
-                "["+ "\"" +bmi+ "\"" +","+"\"" +"Normal weight"+ "\"" + "]"
-
-                :(25.0D <= bmi && bmi <= 29.9D?
-                "["+ "\"" +bmi+ "\"" +","+"\"" +"Overweight"+ "\"" + "]"
-
-                :(bmi >= 30.0D?
-                "["+ "\"" +bmi+ "\"" +","+"\"" +"Obese"+ "\"" + "]"
-
-                :"Value not found")));
+        return bmi;
     }
 }
